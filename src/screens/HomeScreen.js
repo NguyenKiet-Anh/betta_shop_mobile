@@ -221,6 +221,7 @@ export default function Home({ navigation }) {
         };
         getPromotion();
     }, []);
+    
     const promotionView = ({ item }) => {
         return (            
             <TouchableOpacity style={styles.fishInCategoryFlatlistSection} onPress={() => {navigation.navigate("Detail", {
