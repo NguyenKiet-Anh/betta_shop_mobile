@@ -140,7 +140,6 @@ export default function Home({ navigation }) {
     const [showModal, setShowModal] = useState(false);
     const [isAdmin, setIsAdmin] = useState(true);
     const [isNight, setIsNight] = useState(true);
-    const [defaultCategory, setDefaultCategory] = useState('All');
     const [fishList, setFishList] = useState(fishData);
     const [promotionList, setPromotionList] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -179,15 +178,19 @@ export default function Home({ navigation }) {
         );
     };
     // Showing all Fish in selected Category
+    const hanldleNavigationForCategories = (id, type) => {    
+        if (id === "seeAll") {
+            navigation.navigate("Category", {type: type});
+        } else {
+            navigation.navigate("Detail", {itemId: id});
+        }
+    };
     const FishInCatView = ({ item }) => {        
         return (            
-            <TouchableOpacity style={styles.fishInCategoryFlatlistSection} onPress={() => {navigation.navigate("Detail", {
-                itemId: item.id
-              })}}>
+            <TouchableOpacity style={styles.fishInCategoryFlatlistSection} onPress={() => {hanldleNavigationForCategories(item.id, item.type);}}>
                 { item.id === "seeAll" ? (
                     <View style={styles.fishInCategoryFlatlistContent}>
                         <View style={styles.seeAll}>
-                            {/* <Text style={styles.fishInCategoryFlatlistNameSeeAll} numberOfLines={2}>{item.title}</Text> */}
                             <Feather name="more-vertical" size={100} color={'#bfacaa'}></Feather>
                         </View>                        
                     </View>
@@ -224,9 +227,7 @@ export default function Home({ navigation }) {
     
     const promotionView = ({ item }) => {
         return (            
-            <TouchableOpacity style={styles.fishInCategoryFlatlistSection} onPress={() => {navigation.navigate("Detail", {
-                itemId: item.id
-              })}}>
+            <TouchableOpacity style={styles.fishInCategoryFlatlistSection} onPress={() => {navigation.navigate("Promotion")}}>
                 {
                     item.id === "seeAll" ? (
                         <View style={styles.fishInCategoryFlatlistContent}>
@@ -319,19 +320,8 @@ export default function Home({ navigation }) {
             {/* For Home's content */}
 
             <ScrollView style={styles.contentContainer}>
-                <View style={styles.header}>
-                    <View style={styles.profile}>
-                        <TouchableOpacity onPress={() => {setShowModal(prevValue => !prevValue);}}>
-                            <Image
-                                source={require('../assets/images/testImage/avatar1.jpeg')}
-                                style={styles.avatarStyle}
-                            ></Image>
-                        </TouchableOpacity>                    
-                    </View>                    
+                <View style={styles.header}>         
                     <View style={styles.headerComponent}>
-                        <TouchableOpacity style={styles.headerButton} onPress={() => {navigation.navigate("Cart");}}>
-                            <FontAwesome5 name="shopping-cart" size={15}></FontAwesome5>
-                        </TouchableOpacity>
                         <TouchableOpacity style={styles.headerButton} onPress={() => {navigation.navigate("Notification")}}>
                             <MaterialIcons name="notifications" size={20}></MaterialIcons>
                         </TouchableOpacity>
@@ -388,7 +378,7 @@ export default function Home({ navigation }) {
                         <View>
                             <FlatList
                                 horizontal={true}
-                                data={[...fishList.slice(0, 2), {id: 'seeAll'}]}
+                                data={[...fishList.slice(0, 2), {id: 'seeAll', type: selectedCategory}]}
                                 renderItem={FishInCatView}
                                 keyExtractor={item => item.id.toString()}
                             ></FlatList>
@@ -425,9 +415,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    profile: {
-
-    },
     avatarStyle: {
         width: 40,
         height: 40,
@@ -445,9 +432,10 @@ const styles = StyleSheet.create({
     },  
 
     headerComponent: {
-        width: '25%',
+        width: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
+        
     },
     headerButton: {
         width: 35,
