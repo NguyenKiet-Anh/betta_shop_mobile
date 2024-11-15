@@ -319,15 +319,7 @@ export default function Home({ navigation }) {
             </Modal>
             {/* For Home's content */}
 
-            <ScrollView style={styles.contentContainer}>
-                <View style={styles.header}>         
-                    <View style={styles.headerComponent}>
-                        <TouchableOpacity style={styles.headerButton} onPress={() => {navigation.navigate("Notification")}}>
-                            <MaterialIcons name="notifications" size={20}></MaterialIcons>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                
+            <ScrollView style={styles.contentContainer}>                                
                 <View style={styles.body}>
                     <Text style={{fontSize: 23, fontWeight: '700', marginVertical: 15}}>Discover</Text>
                     <View style={styles.searchSection}>

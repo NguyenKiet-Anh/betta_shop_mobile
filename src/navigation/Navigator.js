@@ -16,6 +16,8 @@ import Detail from "../screens/DetailScreen";
 import Profile from "../screens/ProfileScreen";
 import Review from "../screens/ReviewScreen";
 import AllPromotion from "../screens/AllPromotionsScreen";
+import AboutUs from "../screens/AboutUsScreen";
+import StoreLocation from "../screens/LocationScreen";
 // Import Icon
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -32,20 +34,36 @@ export default function StackNavigator() {
     const Drawer = createDrawerNavigator();
     // Get all fish in wishlist before rendering
     // Drawer Navigator here
-    function DrawerMenu() {
+    function DrawerMenu({ navigation }) {
         return (
             <Drawer.Navigator>
-                {/* Route for Profile management */}
+                {/* Route for Home drawer */}
                 <Drawer.Screen 
-                    name="Profile Management"                    
+                    name="Home"
+                    component={Home}
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'Home',
+                        headerRight: () => (
+                        <View style={styles.header}>         
+                            <View style={styles.headerComponent}>
+                                <TouchableOpacity style={styles.headerButton} onPress={() => {navigation.navigate("Notification")}}>
+                                    <MaterialIcons name="notifications" size={20}></MaterialIcons>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    ),
+                    }}
                 ></Drawer.Screen>
-                {/* Route for Store Management - Just for Admin */}
+                {/* Route for Store location */}
                 <Drawer.Screen
-                    name="Store Management"
+                    name="Store Location"
+                    component={StoreLocation}
                 ></Drawer.Screen>
                 {/* Route for Help */}
                 <Drawer.Screen
-                    name="Help"
+                    name="About Us"
+                    component={AboutUs}
                 ></Drawer.Screen>                
             </Drawer.Navigator>
         );
@@ -56,8 +74,8 @@ export default function StackNavigator() {
             <Tab.Navigator>
                 {/* Tab for Home */}
                 <Tab.Screen
-                    name="Home"
-                    component={Home}
+                    name="HomeTab"
+                    component={DrawerMenu}
                     options={{
                         headerShown: false,
                         tabBarLabel: ({ focused }) =>
@@ -223,5 +241,28 @@ const styles = StyleSheet.create({
         fontSize: 12, 
         fontWeight: '500', 
         color: '#b141aa'
-    }
+    },
+
+    header: {
+        height: '5%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginRight: 10
+    },
+    headerComponent: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        
+    },
+    headerButton: {
+        width: 35,
+        height: 35,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+        backgroundColor: '#d4d6d9'
+    },
 })
