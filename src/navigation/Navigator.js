@@ -26,6 +26,8 @@ import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Octicons from "react-native-vector-icons/Octicons";
 import CategoryScreen from "../screens/CategoryScreen";
+// Import useAuth
+import { useAuth } from "../context/authContext";
 
 export default function StackNavigator() {
     // Create StackNavigator & BottomNavigator here
