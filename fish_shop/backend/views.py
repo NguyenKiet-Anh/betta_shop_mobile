@@ -30,18 +30,18 @@ from validate_email import validate_email    # pip install py3-validate-email==1
 
 # api for logging in
 @api_view(['POST'])
-def logIn(request):
-     username = request.data.get('username')
-     password = request.data.get('password')
-
+def logIn(request):     
      try:
-          account = TaiKhoan.objects.get(TenTaiKhoan=username, MatKhau=password)
-          if account.isActived:     
-               return Response({'success': True, 'message': 'Đăng nhập thành công!', 'isAdmin': account.iAdmin,
+          password = request.data.get('password')
+          username = request.data.get('username')     
+          account = TaiKhoan.objects.get(TenTaiKhoan=username, MatKhau=password)          
+          if account.isActivated:
+               return Response({'success': True, 'message': 'Đăng nhập thành công!', 'isAdmin': account.isAdmin,
                               'isLoggedIn': account.isCustomer, 'ma_tai_khoan': account.MaTaiKhoan})
           else:
                return Response({'success': False, 'message': 'Tài khoản chưa được xác nhận!'})
-     except:
+     except Exception as e:
+          print("Error: ", e)
           return Response({'success': False, 'message': 'Đăng nhập thất bại!'})
 
 # api for signing up     
@@ -91,7 +91,7 @@ def signUp(request):
                new_account = TaiKhoan.objects.create(
                     isAdmin = False,
                     isCustomer = True,
-                    isActived = False,
+                    isActivated = False,
                     TenTaiKhoan = username,
                     MatKhau = password,
                     verification_token=verification_token,

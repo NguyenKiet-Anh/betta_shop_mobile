@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-!w71yu$jfvs6r0_i^qbl67sb$ue3ai(739t5rc-knyk4#&@lm%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.10.118', 'localhost', '127.0.0.1', '192.168.68.102']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.1.14']
 
 
 # Application definition
@@ -139,6 +139,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# CORS Config
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = False
 CORS_ALLOW_ALL_ORIGINS = True
 
 # Email Verification
