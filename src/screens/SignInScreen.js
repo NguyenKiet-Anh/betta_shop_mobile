@@ -1,40 +1,53 @@
 // import components of react native
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Image, Alert } from "react-native";
 // import custom components
 import { InputField } from "../components/InputField";
 import { SubmitButton } from "../components/SubmitButton";
-// import icon
-
+// import useAuth
+import { useAuth } from "../context/authContext";
+// import other function api
+import { signIn } from "../routes/LogInAndSignUp/LogInAndSignUp";
 export default function SignIn({ navigation }) {
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const { login } = useAuth();
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSignIn = () => {
-        navigation.navigate("HomeTabs");
-        // if (phoneNumber !== '' && password !== '') {
-        //     // Check username
+    const handleSignIn = async() => {
+        try {
+            const response = await fetch('http://192.168.1.14:8000/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: userName,
+                    password: password,
+                }),
+            });
 
-        //     // Check password
-
-        //     if (true) {
-        //         navigation.navigate("Home");
-        //     }
-        // }
-        // else {
-        //     if (phoneNumber === '') {
-        //         Alert.alert(
-        //             'Đăng nhập thất bại',
-        //             'Tên người dùng rỗng'
-        //         )
-        //     }
-        //     else {
-        //         Alert.alert(
-        //             'Đăng nhập thất bại',
-        //             'Mật khẩu rỗng'
-        //         )
-        //     };
-        // };
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                if (data.success) {
+                    console.log("data response: ", data);
+                    alert('Đăng nhập thành công!');
+                    login({
+                        ma_nguoi_dung: data.ma_tai_khoan,
+                        isAdmin: data.isAdmin,
+                    });
+                    navigation.navigate("HomeTabs");
+                } else if (data.message === 'Tài khoản chưa được xác nhận!') {
+                    alert('Đăng nhập thất bại! Tài khoản chưa được xác nhận! Kiểm tra email để xác nhận!');
+                } else {
+                    alert('Đăng nhập thất bại!');
+                }
+            } else {
+                alert('Đăng nhập thất bại!');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
@@ -51,10 +64,10 @@ export default function SignIn({ navigation }) {
                 <View style={styles.body}>
                     <Text style={[styles.titleText, styles.bodyMarginVertical]}>Sign In</Text>
                     <View style={[styles.bodyMarginVertical, styles.buttonHeight]}>
-                        <InputField title="Phone number" setValue={setPhoneNumber}></InputField>
+                        <InputField title="Username" setValue={(e) => setUserName(e)}></InputField>
                     </View>
                     <View style={[styles.bodyMarginVertical, styles.buttonHeight]}>
-                        <InputField title="Password" setValue={setPassword}></InputField>
+                        <InputField title="Password" setValue={(e) => setPassword(e)}></InputField>
                     </View>                
                     <View style={styles.bodyMarginVertical}>
                         <SubmitButton title="SIGN IN" onPress={() => {handleSignIn();}}></SubmitButton>

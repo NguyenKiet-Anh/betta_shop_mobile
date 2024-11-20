@@ -9,6 +9,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+// import useAuth
+import { useAuth } from '../context/authContext';
 
 // Testing data
 const posterData = [
@@ -137,6 +139,11 @@ const fishData = [
 ];
 
 export default function Home({ navigation }) {
+    // Declare variables here
+    // For getting data
+    const { userInfo } = useAuth();
+    console.log(userInfo);
+    // For other task
     const [showModal, setShowModal] = useState(false);
     const [isAdmin, setIsAdmin] = useState(true);
     const [isNight, setIsNight] = useState(true);

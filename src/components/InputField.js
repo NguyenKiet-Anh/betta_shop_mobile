@@ -1,13 +1,14 @@
 import { View, Text, TextInput, StyleSheet} from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 export const InputField = ({ title, setValue }) => {
     return (
         <View style={styles.buttonCover}>
-            { title === 'Full name' &&
+            { title === 'Email' &&
                 <>
-                    <FontAwesome name="user-o" size={20}></FontAwesome>
+                    <MaterialIcons name='alternate-email' size={22}></MaterialIcons>
                     <TextInput
                         onChangeText={setValue}
                         placeholder={title}
@@ -16,9 +17,9 @@ export const InputField = ({ title, setValue }) => {
                     </TextInput>
                 </>
             }
-            { title === 'Phone number' &&
+            { title === 'Username' &&
                 <>
-                    <Feather name="phone" size={20}></Feather>
+                    <FontAwesome name="user-o" size={20}></FontAwesome>
                     <TextInput
                         onChangeText={setValue}
                         placeholder={title}

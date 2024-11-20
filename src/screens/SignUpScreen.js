@@ -9,12 +9,12 @@ import { TouchableOpacity } from "react-native";
 
 export default function SignUp({ navigation }) {
     const [username, setUsername] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordAgain, setPasswordAgain] = useState('');
 
     const handleSignUp = () => {
-
+        
     };
 
     return (
@@ -28,19 +28,19 @@ export default function SignUp({ navigation }) {
 
             <View style={styles.contentContainer}>
                 <View style={styles.body}>
-                    <Text style={[styles.titleText, styles.bodyMarginVertical]}>Sign Up</Text>
+                    <Text style={[styles.titleText, styles.bodyMarginVertical]}>Sign Up</Text>                    
                     <View style={[styles.bodyMarginVertical, styles.buttonHeight]}>
-                        <InputField title="Full name" setValue={setUsername}></InputField>
-                    </View>
-                    <View style={[styles.bodyMarginVertical, styles.buttonHeight]}>
-                        <InputField title="Phone number" setValue={setPhoneNumber}></InputField>
+                        <InputField title="Username" setValue={(e) => setUsername(e)}></InputField>
                     </View>                
                     <View style={[styles.bodyMarginVertical, styles.buttonHeight]}>
-                        <InputField title="Password" setValue={setPassword}></InputField>
+                        <InputField title="Password" setValue={(e) => setPassword(e)}></InputField>
                     </View>                
                     <View style={[styles.bodyMarginVertical, styles.buttonHeight]}>
-                        <InputField title="Password again" setValue={setPasswordAgain}></InputField>
-                    </View>                
+                        <InputField title="Password again" setValue={(e) => setPasswordAgain(e)}></InputField>
+                    </View>         
+                    <View style={[styles.bodyMarginVertical, styles.buttonHeight]}>
+                        <InputField title="Email" setValue={(e) => setEmail(e)}></InputField>
+                    </View>       
                     <View style={styles.bodyMarginVertical}>
                         <SubmitButton title="SIGN UP" onPress={() => {handleSignUp();}}></SubmitButton>
                     </View>           
