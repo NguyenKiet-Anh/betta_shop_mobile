@@ -33,7 +33,7 @@ from validate_email import validate_email    # pip install py3-validate-email==1
 def logIn(request):     
      try:
           password = request.data.get('password')
-          username = request.data.get('username')     
+          username = request.data.get('username')
           account = TaiKhoan.objects.get(TenTaiKhoan=username, MatKhau=password)          
           if account.isActivated:
                return Response({'success': True, 'message': 'Đăng nhập thành công!', 'isAdmin': account.isAdmin,
@@ -136,7 +136,7 @@ def signUp(request):
           try:
                verification_token = cached_data.get('token')
 
-               activate_account = TAIKHOAN.objects.get(verification_token = verification_token)
+               activate_account = TaiKhoan.objects.get(verification_token = verification_token)
                if activate_account:
                     activate_account.is_actived = True
                     activate_account.save()
@@ -146,86 +146,243 @@ def signUp(request):
           except:
                return Response({'success': False, 'message': 'Lỗi hệ thống!!!'})
 
-# Tất cả loai mặt hàng
+# Get all categories
 @api_view(['GET'])
 def getCategories(request):
-     # Lấy dữ liệu từ database
+     # Get data from database
      categories = LoaiMatHang.objects.all()
-     # Chuyển từ dạng Queryset sang định dạng Json, many = True vì có nhiều dòng dữ liệu
+     # Convert from Queryset format to Json format, many = True because there are many data rows.
      serializers = LOAIMATHANG_Serializer(categories, many=True)    
-     # Trả về dạng Json
+     # Return Json format
      return Response(serializers.data)
 
+# get all fishes both promotion or not promotion
 @api_view(['GET'])
-def getFish_no_promotion(request):
-     # Lấy dữ liệu từ database
-     fishes = MatHang.objects.filter(KhuyenMai=False)
-     # Chuyển từ dạng Queryset sang định dạng Json, many = True vì có nhiều dòng dữ liệu
+def getFish_all(request):
+     # Get data from database
+     fishes = MatHang.objects.all()
+     # Convert from Queryset format to Json format, many = True because there are many data rows.
      serializers = MATHANG_Serializer(fishes, many=True)
-     # Mã hóa hình ảnh trước khi gửi
+     # Encode images before sending
      for item in serializers.data:
-          # Mã hóa HinhAnh1
+          # Encode HinhAnh1 before sending
           if item["HinhAnh1"]:
                with open (item["HinhAnh1"], 'rb') as file:
                     data = file.read()
                     base64_encoded_data = base64.b64encode(data).decode("utf-8")
                     item["HinhAnh1"] = base64_encoded_data
-          # Mã hóa HinhAnh2
+          # Encode HinhAnh2 before sending
           if item["HinhAnh2"]:
                with open (item["HinhAnh2"], 'rb') as file:
                     data = file.read()
                     base64_encoded_data = base64.b64encode(data).decode("utf-8")
                     item["HinhAnh2"] = base64_encoded_data
-          # Mã hóa HinhAnh3
+          # Encode HinhAnh3 before sending
           if item["HinhAnh3"]:
                with open (item["HinhAnh3"], 'rb') as file:
                     data = file.read()
                     base64_encoded_data = base64.b64encode(data).decode("utf-8")
                     item["HinhAnh3"] = base64_encoded_data
-          # Mã hóa HinhAnh4
+          # Encode HinhAnh4 before sending
           if item["HinhAnh4"]:
                with open (item["HinhAnh4"], 'rb') as file:
                     data = file.read()
                     base64_encoded_data = base64.b64encode(data).decode("utf-8")
                     item["HinhAnh4"] = base64_encoded_data     
-     # Trả về dạng Json
+     # Return Json format
      return Response(serializers.data)
 
+# get all fishes not in promotion
 @api_view(['GET'])
-def getFish_promotion(request):
-     # Lấy dữ liệu từ database
-     fishes = MatHang.objects.filter(KhuyenMai=True)
-     # Chuyển từ dạng Queryset sang định dạng Json, many = True vì có nhiều dòng dữ liệu
+def getFish_no_promotion(request):
+     # Get data from database
+     fishes = MatHang.objects.filter(KhuyenMai=False)
+     # Convert from Queryset format to Json format, many = True because there are many data rows.
      serializers = MATHANG_Serializer(fishes, many=True)
-     # Mã hóa hình ảnh trước khi gửi
+     # Encode images before sending
      for item in serializers.data:
-          # Mã hóa HinhAnh1
+          # Encode HinhAnh1 before sending
           if item["HinhAnh1"]:
                with open (item["HinhAnh1"], 'rb') as file:
                     data = file.read()
                     base64_encoded_data = base64.b64encode(data).decode("utf-8")
                     item["HinhAnh1"] = base64_encoded_data
-          # Mã hóa HinhAnh2
+          # Encode HinhAnh2 before sending
           if item["HinhAnh2"]:
                with open (item["HinhAnh2"], 'rb') as file:
                     data = file.read()
                     base64_encoded_data = base64.b64encode(data).decode("utf-8")
                     item["HinhAnh2"] = base64_encoded_data
-          # Mã hóa HinhAnh3
+          # Encode HinhAnh3 before sending
           if item["HinhAnh3"]:
                with open (item["HinhAnh3"], 'rb') as file:
                     data = file.read()
                     base64_encoded_data = base64.b64encode(data).decode("utf-8")
                     item["HinhAnh3"] = base64_encoded_data
-          # Mã hóa HinhAnh4
+          # Encode HinhAnh4 before sending
+          if item["HinhAnh4"]:
+               with open (item["HinhAnh4"], 'rb') as file:
+                    data = file.read()
+                    base64_encoded_data = base64.b64encode(data).decode("utf-8")
+                    item["HinhAnh4"] = base64_encoded_data     
+     # Return Json format
+     return Response(serializers.data)
+
+# Get all fishes in promotion
+@api_view(['GET'])
+def getFish_promotion(request):
+     # Get data from database
+     fishes = MatHang.objects.filter(KhuyenMai=True)
+     # Convert from Queryset format to Json format, many = True because there are many data rows.
+     serializers = MATHANG_Serializer(fishes, many=True)
+     # Encode images before sending
+     for item in serializers.data:
+          # Encode HinhAnh1 before sending
+          if item["HinhAnh1"]:
+               with open (item["HinhAnh1"], 'rb') as file:
+                    data = file.read()
+                    base64_encoded_data = base64.b64encode(data).decode("utf-8")
+                    item["HinhAnh1"] = base64_encoded_data
+          # Encode HinhAnh2 before sending
+          if item["HinhAnh2"]:
+               with open (item["HinhAnh2"], 'rb') as file:
+                    data = file.read()
+                    base64_encoded_data = base64.b64encode(data).decode("utf-8")
+                    item["HinhAnh2"] = base64_encoded_data
+          # Encode HinhAnh3 before sending
+          if item["HinhAnh3"]:
+               with open (item["HinhAnh3"], 'rb') as file:
+                    data = file.read()
+                    base64_encoded_data = base64.b64encode(data).decode("utf-8")
+                    item["HinhAnh3"] = base64_encoded_data
+          # Encode HinhAnh4 before sending
           if item["HinhAnh4"]:
                with open (item["HinhAnh4"], 'rb') as file:
                     data = file.read()
                     base64_encoded_data = base64.b64encode(data).decode("utf-8")
                     item["HinhAnh4"] = base64_encoded_data    
-     # Trả về dạng Json
+     # Return Json format
      return Response(serializers.data)
 
+# Get fish by fish's id
+@api_view(['GET'])
+def get_fish_by_id(request, id):
+     try:
+          # Get data from database
+          fish = MatHang.objects.get(MaMatHang=id)
+     except MatHang.DoesNotExist:
+          return Response({"message": "Fish not found"}, status=404)
+     
+     serializers = MATHANG_Serializer(fish)
+     data = serializers.data
+
+     # Encode images before sending
+     if data.get("HinhAnh1"):
+        with open(data["HinhAnh1"], 'rb') as file:
+            image_data = file.read()
+            base64_encoded = base64.b64encode(image_data).decode("utf-8")
+            data["HinhAnh1"] = base64_encoded
+
+     if data.get("HinhAnh2"):
+        with open(data["HinhAnh2"], 'rb') as file:
+            image_data = file.read()
+            base64_encoded = base64.b64encode(image_data).decode("utf-8")
+            data["HinhAnh2"] = base64_encoded
+
+     if data.get("HinhAnh3"):
+        with open(data["HinhAnh3"], 'rb') as file:
+            image_data = file.read()
+            base64_encoded = base64.b64encode(image_data).decode("utf-8")
+            data["HinhAnh3"] = base64_encoded
+
+     if data.get("HinhAnh4"):
+        with open(data["HinhAnh4"], 'rb') as file:
+            image_data = file.read()
+            base64_encoded = base64.b64encode(image_data).decode("utf-8")
+            data["HinhAnh4"] = base64_encoded
+     # Return as Json format
+     return Response(data)
+
+# Get wishlist of each customer
+@api_view(['GET'])
+def get_wishList(request, ma_khach_hang):
+     # Get yeuthich
+     yeuthichs = YeuThich.objects.filter(MaKhachHang=ma_khach_hang)
+     # Serializing data
+     serializers = YEUTHICH_Serializer(yeuthichs, many=True)
+     # # Encode images before sending
+     for item in serializers.data:
+          # Encode HinhAnh1 before sending
+          if item["ca_info"]["HinhAnh1"]:
+               with open (item["ca_info"]["HinhAnh1"], 'rb') as file:
+                    data = file.read()
+                    base64_encoded_data = base64.b64encode(data).decode("utf-8")
+                    item["ca_info"]["HinhAnh1"] = base64_encoded_data
+          # Encode HinhAnh2 before sending
+          if item["ca_info"]["HinhAnh2"]:
+               with open (item["ca_info"]["HinhAnh2"], 'rb') as file:
+                    data = file.read()
+                    base64_encoded_data = base64.b64encode(data).decode("utf-8")
+                    item["ca_info"]["HinhAnh2"] = base64_encoded_data
+          # Encode HinhAnh3 before sending
+          if item["ca_info"]["HinhAnh3"]:
+               with open (item["ca_info"]["HinhAnh3"], 'rb') as file:
+                    data = file.read()
+                    base64_encoded_data = base64.b64encode(data).decode("utf-8")
+                    item["ca_info"]["HinhAnh3"] = base64_encoded_data
+          # Encode HinhAnh4 before sending
+          if item["ca_info"]["HinhAnh4"]:
+               with open (item["ca_info"]["HinhAnh4"], 'rb') as file:
+                    data = file.read()
+                    base64_encoded_data = base64.b64encode(data).decode("utf-8")
+                    item["ca_info"]["HinhAnh4"] = base64_encoded_data    
+     return Response(serializers.data)
+
+# Add fish to wishlist
+@api_view(['POST'])
+def add_wishList(request):
+     ma_khach_hang = request.data.get('userId')
+     ma_ca = request.data.get('fishId')
+     # Get KhachHang
+     user_id = KhachHang.objects.get(MaKhachHang=ma_khach_hang)
+     # Get fish
+     fish = MatHang.objects.get(MaMatHang=ma_ca)
+     # Check if fish exists or not
+     check_fish = YeuThich.objects.filter(MaKhachHang=user_id, MaMatHang=fish)
+     if check_fish:
+          # Return message that annouces to client the problem in process
+          return Response({'success': False, 'message': 'Cá đã tồn tại trong yêu thích'})
+     else:
+          # Add fish to Yeuthich table
+          YeuThich.objects.create(
+               MaKhachHang = user_id,
+               MaMatHang = fish,
+          )
+          # Return message anoucing successful process
+          return Response({'success': True, 'message': 'Thêm cá vào yêu thích thành công'})
+
+# Remove fish from wishlist
+@api_view(['DELETE'])
+def remove_wishList(request, ma_khach_hang, ma_ca):
+     try:
+          # Get Yeuthich table     
+          yeuthich_instance = YeuThich.objects.filter(MaKhachHang=ma_khach_hang, MaMatHang=ma_ca)
+          yeuthich_instance.delete()
+          return Response({'success': True, 'message': 'Xóa thành công cá khỏi yêu thích!'})
+     except:
+          return Response({'success': False, 'message': 'Xóa cá khỏi yêu thích thất bại!'})
+
+# Delete all items in wishlist
+@api_view(['DELETE'])
+def delete_wishList(request, ma_khach_hang):
+     print(ma_khach_hang)
+     try:
+          # Get Yeuthich table     
+          yeuthich_instance = YeuThich.objects.filter(MaKhachHang=ma_khach_hang)
+          yeuthich_instance.delete()
+          return Response({'success': True, 'message': 'Xóa thành công tất cả cá khỏi yêu thích!'})
+     except:
+          return Response({'success': False, 'message': 'Xóa tất cả cá khỏi yêu thích thất bại!'})
 
 # ----- OLD VERSION -----
 # # Thực hiện mua cá - dọn giỏ hàng
@@ -712,79 +869,6 @@ def getFish_promotion(request):
 #      return Response({'success': True})
 
 # # Xử lý giỏ hàng yêu thích
-# @api_view(['POST'])
-# def select_wishlist(request):
-#      ma_tai_khoan = request.data.get('ma_tai_khoan')
-#      if ma_tai_khoan == None:
-#           return Response({'success': False})
-#      taikhoan = TAIKHOAN.objects.get(ma_tai_khoan=ma_tai_khoan)
-#      yeuthich = YEUTHICH.objects.get(ma_tai_khoan=taikhoan)
-#      yeuthich_danhmuc_ca = YEUTHICH_DANHMUC_CA.objects.filter(ma_yeuthich=yeuthich)
-
-#      yeuthich_danhmuc_thucan = YEUTHICH_DANHMUC_THUCAN.objects.filter(ma_yeuthich=yeuthich)
-
-#      serializer1 = YEUTHICH_DANHMUC_CA_Serializer(yeuthich_danhmuc_ca, many=True)
-#      serializer2 = YEUTHICH_DANHMUC_THUCAN_Serializer(yeuthich_danhmuc_thucan, many=True)
-
-#      merged_data = {'yeuthich_ca': serializer1.data, 'yeuthich_thucan': serializer2.data}
-
-#      # Sử dụng serializer tổng hợp để gộp cả hai serializer
-#      # Truy cập dữ liệu đã gộp bằng cách sử dụng data attribute
-#      return Response({'success': True, 'data': merged_data})
-
-# @api_view(['POST'])
-# def add_wishlist(request):
-#      ma_tai_khoan = request.data.get('ma_tai_khoan')
-#      ma_ca = request.data.get('ma_ca')
-     
-#      # Lấy YEUTHICH
-#      user_id = YEUTHICH.objects.get(ma_tai_khoan=ma_tai_khoan)
-
-#      # Lấy tên tên cá
-#      fish_name = CA_BETTA.objects.get(ma_ca=ma_ca)
-#      # Kiểm tra cá đã tồn tại trong wishlist hay không ?
-#      check_fish = YEUTHICH_DANHMUC_CA.objects.filter(ma_ca=fish_name, ma_yeuthich=user_id)
-#      if check_fish:
-#           return Response({'success': False, 'message': 'cá đã tồn tại'})
-#      else:
-#           # Thêm cá vào YEUTHICH_DANHMUC_CA
-#           new_yeuthich_ca = YEUTHICH_DANHMUC_CA.objects.create(
-#                ma_yeuthich = user_id,
-#                ma_ca = fish_name,
-#           )
-
-#           taikhoan = TAIKHOAN.objects.get(ma_tai_khoan=ma_tai_khoan)
-#           yeuthich = YEUTHICH.objects.get(ma_tai_khoan=taikhoan)
-#           yeuthich_danhmuc_ca = YEUTHICH_DANHMUC_CA.objects.filter(ma_yeuthich=yeuthich, ma_ca=ma_ca)
-#           serializer = YEUTHICH_DANHMUC_CA_Serializer(yeuthich_danhmuc_ca, many=True)
-
-#           return Response(serializer.data)
-     
-#      return Response({'success': True})
-
-# @api_view(['POST'])
-# def remove_wishlist(request):
-#      ma_tai_khoan = request.data.get('ma_tai_khoan')
-#      ma_ca = request.data.get('ma_ca')
-#      ma_thucan = request.data.get('ma_thucan')
-
-#      if ma_ca != None:
-#           # Lấy YEUTHICH_DANHMUC_CA instance
-#           tai_khoan = YEUTHICH.objects.get(ma_tai_khoan=ma_tai_khoan)
-#           fish_name_remove = CA_BETTA.objects.get(ma_ca=ma_ca)
-#           yeuthich_danhmuc_ca_instance = YEUTHICH_DANHMUC_CA.objects.get(ma_ca=fish_name_remove, ma_yeuthich=tai_khoan)
-#           yeuthich_danhmuc_ca_instance.delete()
-
-#           return Response({'success': True, 'message': 'Xóa thành công sản phẩm!'})
-     
-#      if ma_thucan != None:
-#           # Lấy YEUTHICH_DANHMUC_THUCAN instance
-#           tai_khoan = YEUTHICH.objects.get(ma_tai_khoan=ma_tai_khoan)
-#           food_name_remove = THUCAN.objects.get(ma_thucan=ma_thucan)
-#           yeuthich_danhmuc_thucan_instance = YEUTHICH_DANHMUC_THUCAN.objects.get(ma_thucan=food_name_remove, ma_yeuthich=tai_khoan)
-#           yeuthich_danhmuc_thucan_instance.delete()
-
-#           return Response({'success': True, 'message': 'Xóa thành công sản phẩm!'})
 
 # # Xử lý mua bán rong rêu, thức ăn
 # @api_view(['GET'])

@@ -45,6 +45,10 @@ class LoaiMatHang(models.Model):
 
 # Table 5
 class MatHang(models.Model):
+    # Class for gender choices
+    class Gioitinh(models.TextChoices):
+        Duc = ('M', 'đực')
+        Cai = ('F', 'cái')
     MaMatHang = models.SmallAutoField(primary_key=True)
     TenMatHang = models.CharField(max_length=100, unique=True)
     SoLuongTon = models.IntegerField(default=0)
@@ -52,6 +56,7 @@ class MatHang(models.Model):
     KhuyenMai = models.BooleanField(default=False)
     GiaKhuyenMai = models.DecimalField(max_digits=12, decimal_places=4, default=0)
     TenDVT = models.CharField(max_length=50)
+    Gioitinh = models.CharField(max_length=1, choices=Gioitinh.choices, default=Gioitinh.Duc)
     HinhAnh1 = models.CharField(max_length=200, blank=True, null=True)
     HinhAnh2 = models.CharField(max_length=200, blank=True, null=True)
     HinhAnh3 = models.CharField(max_length=200, blank=True, null=True)

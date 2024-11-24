@@ -23,6 +23,14 @@ class KHACHHANG_Serializer(ModelSerializer):
         model = KhachHang
         fields = '__all__'
 
+# Serialize 4
+class YEUTHICH_Serializer(ModelSerializer):
+    ca_info = MATHANG_Serializer(source='MaMatHang', read_only=True)
+    class Meta:
+        model = YeuThich
+        fields = '__all__'
+
+
 # ----- OLD VERSION -----
 # from rest_framework.serializers import ModelSerializer
 # from rest_framework import serializers
@@ -96,25 +104,3 @@ class KHACHHANG_Serializer(ModelSerializer):
 #     class Meta:
 #         model = THUCAN
 #         fields = '__all__'
-
-# class YEUTHICH_Serializer(ModelSerializer):
-#     class Meta:
-#         model = YEUTHICH
-#         fields = '__all__'
-
-# class YEUTHICH_DANHMUC_CA_Serializer(ModelSerializer):
-#     ca_betta_info = CA_BETTA_Serializer_for_GIOHANG_CA(source='ma_ca', read_only=True)
-#     class Meta:
-#         model = YEUTHICH_DANHMUC_CA
-#         fields = '__all__'         
-
-# class THUCAN_FOR_DANHMUC_YEUTHICH(ModelSerializer):
-#     class Meta:
-#         model = THUCAN
-#         fields = ['ten_thucan', 'gia', 'hinhanh1', 'hinhanh2', 'hinhanh3']
-
-# class YEUTHICH_DANHMUC_THUCAN_Serializer(ModelSerializer):
-#     thucan_info = THUCAN_FOR_DANHMUC_YEUTHICH(source='ma_thucan', read_only=True)
-#     class Meta:
-#         model = YEUTHICH_DANHMUC_THUCAN
-#         fields = '__all__'         
