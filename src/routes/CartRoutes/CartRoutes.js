@@ -7,6 +7,16 @@ export const getCartById = async(id) => {
     }
 };
 
+// For adding - POST method
+export const addFishToCart = async(id) => {
+    try {
+        return await fetch(`h`)
+    } catch (error) {
+        console.error("Error posting data");
+    }
+};
+
+
 // For changing amount of product - PUT method
 export const changeAmount = async(action, amount) => {
     try {

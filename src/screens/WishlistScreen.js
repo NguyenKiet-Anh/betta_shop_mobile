@@ -1,150 +1,94 @@
 import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, SafeAreaView } from "react-native";
 // Import icons
 import Feather from "react-native-vector-icons/Feather";
-
-const fishData = [
-    {
-        id: 1,
-        title: "Cá betta 1583 – Koi nemo galaxy tiger hổ rừng xanh",
-        type: "Galaxy",
-        gender: "Male",
-        image1: require("../assets/images/testImage/Fish/Galaxy/Fish1/fish1_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Galaxy/Fish1/fish1_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Galaxy/Fish1/fish1_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Galaxy/Fish1/fish1_img4.jpg"),
-        price: 180000
-    },
-    {
-        id: 2,
-        title: "Cá betta 1250 – Koi nemo galaxy hero Thuella",
-        type: "Galaxy",
-        gender: "Male",
-        image1: require("../assets/images/testImage/Fish/Galaxy/Fish2/fish2_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Galaxy/Fish2/fish2_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Galaxy/Fish2/fish2_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Galaxy/Fish2/fish2_img4.jpg"),
-        price: 140000
-    },
-    {
-        id: 3,
-        title: "Cá betta 1521 – Koi nemo galaxy dãi ngân hà avenger",
-        type: "Galaxy",
-        gender: "Male",
-        image1: require("../assets/images/testImage/Fish/Galaxy/Fish3/fish3_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Galaxy/Fish3/fish3_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Galaxy/Fish3/fish3_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Galaxy/Fish3/fish3_img4.jpg"),
-        price: 140000,
-        newPrice: 100000
-    },
-    {
-        id: 4,
-        title: "Cá betta 1844 – Koi nemo galaxy butterfly champion of freedom zeus",
-        type: "Galaxy",
-        gender: "Male",
-        image1: require("../assets/images/testImage/Fish/Galaxy/Fish4/fish4_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Galaxy/Fish4/fish4_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Galaxy/Fish4/fish4_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Galaxy/Fish4/fish4_img4.jpg"),
-        price: 140000
-    },
-    {
-        id: 5,
-        title: "Cá betta 1320 – Halfmoon samurai super star Oda Nobunaga",
-        type: "Halfmoon",
-        gender: "Male",
-        image1: require("../assets/images/testImage/Fish/Halfmoon/Fish1/fish1_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Halfmoon/Fish1/fish1_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Halfmoon/Fish1/fish1_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Halfmoon/Fish1/fish1_img4.jpg"),
-        price: 180000
-    },
-    {
-        id: 6,
-        title: "Cá betta 1437 – Halfmoon dumbo white angel zeus",
-        type: "Halfmoon",
-        gender: "Male",
-        image1: require("../assets/images/testImage/Fish/Halfmoon/Fish2/fish2_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Halfmoon/Fish2/fish2_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Halfmoon/Fish2/fish2_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Halfmoon/Fish2/fish2_img4.jpg"),
-        price: 80000
-    },
-    {
-        id: 7,
-        title: "Cá betta 1773 – Halfmoon grizzle thái bạch ironwill balder",
-        type: "Halfmoon",
-        gender: "Male",
-        image1: require("../assets/images/testImage/Fish/Halfmoon/Fish3/fish3_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Halfmoon/Fish3/fish3_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Halfmoon/Fish3/fish3_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Halfmoon/Fish3/fish3_img4.jpg"),
-        price: 80000
-    },
-    {
-        id: 8,
-        title: "Cá betta 1856 – Halfmoon grizzle mustard gas swordmaster cernunnos",
-        type: "Halfmoon",
-        gender: "Male",
-        image1: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img4.jpg"),
-        price: 80000,
-        newPrice: 40000
-    }
-];
-
-export default function Cart({ navigation }) {
-    // Variables here    
-
+import Ionicons from "react-native-vector-icons/Ionicons";
+// Import Hook
+import { useIsFocused } from '@react-navigation/native';
+import { useEffect, useState } from "react";
+// Import context
+import { useAuth } from "../context/authContext";
+// Import api routes
+import { getWishList, removeFishFromWishList } from "../routes/WishListRoutes/WishListRoutes";
+// Main function
+export default function WishList({ navigation }) {
+    // Variables here
+    const { userInfo } = useAuth();   
+    const [fishData, setFishData] = useState([]); // Store data fetched from server
+    const [isLoading, setIsLoading] = useState(true);
+    const isFocused = useIsFocused(); // For re-run useEffect
+    // useEffect for getting wishlsit for the first time accessing wishlist screen
+    const refreshWishList = async () => {
+        const wishListData = await getWishList(userInfo.ma_nguoi_dung);
+        setFishData(wishListData);
+        setIsLoading(false);
+    };    
+    useEffect(() => {        
+        if (isFocused) {
+            refreshWishList();
+        }        
+    }, [isFocused]);
     // Functions here
+    const handleRemoveFish = async(id) => {
+        const response = await removeFishFromWishList(userInfo.ma_nguoi_dung, id);
+        if (response.success) {
+            setFishData(fishData.filter(item => item.MaMatHang !== id));
+            alert(response.message);
+        } else {
+            alert(response.message);
+        }
+    };
+    // Card rendered here
     const itemView = ({ item }) => {
         return (
             // Fish Cards
             <TouchableOpacity 
                 style={styles.listCell}
                 onPress={() => {navigation.navigate("Detail", {
-                    itemId: item.id
+                    itemId: item.MaMatHang
                   })}}
             >
                 <Image
-                    source={item.image1}
+                    source={{ uri: `data:image/jpeg;base64,${item.ca_info.HinhAnh1}` }}
                     style={styles.imageStyle}
                 ></Image>
                 <View style={styles.fishInfo}>                    
                     <View>
-                        <Text style={styles.fishType}>{item.type}</Text>
-                        <Text style={styles.fishGender}>{item.gender}</Text>
+                        <Text style={styles.fishType}>{item.ca_info.ma_loai_ca_info.TenLoaiMatHang}</Text>
+                        {
+                            item.ca_info.Gioitinh === "M" ? (
+                                <Ionicons size={22} name="male"></Ionicons>
+                            ) : (
+                                <Ionicons size={22} name="female"></Ionicons>
+                            )
+                        }                        
                     </View>                    
                     <View>
                         {
-                            item.newPrice ? (
+                            item.ca_info.KhuyenMai ? (
                                 <>
                                     <View style={styles.priceInfo}>
                                         <Feather name="dollar-sign" size={20} color={'#ff5863'}></Feather>
-                                        <Text style={[styles.fishPrice, styles.fishOldPrice]}>{item.price}</Text>                        
+                                        <Text style={[styles.fishPrice, styles.fishOldPrice]}>{parseInt(item.ca_info.Dongia)}</Text>                        
                                     </View>                    
                                     <View style={styles.priceInfo}>
                                         <Feather name="dollar-sign" size={20} color={'#b141aa'}></Feather>
-                                        <Text style={[styles.fishPrice, styles.fishNewPrice]}>{item.price}</Text>                        
+                                        <Text style={[styles.fishPrice, styles.fishNewPrice]}>{parseInt(item.ca_info.GiaKhuyenMai)}</Text>                        
                                     </View>                    
                                 </>
                             ) : (
                                 <View style={styles.priceInfo}>
                                     <Feather name="dollar-sign" size={20} color={'#b141aa'}></Feather>
-                                    <Text style={[styles.fishPrice, styles.fishNewPrice]}>{item.price}</Text>                        
+                                    <Text style={[styles.fishPrice, styles.fishNewPrice]}>{parseInt(item.ca_info.Dongia)}</Text>                        
                                 </View>                    
                             )
                         }
                     </View>
-                    {/* <View style={styles.priceInfo}>
-                        <Feather name="dollar-sign" size={25} color={'#b141aa'}></Feather>
-                        <Text style={styles.fishPrice}>{item.price}</Text>
-                    </View>                     */}
                 </View>
                 <View style={styles.actionButton}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity
+                        onPress={() => {handleRemoveFish(item.MaMatHang);}}
+                        style={styles.button}
+                    >
                         <Feather name="trash" size={20}></Feather>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button}>
@@ -154,22 +98,29 @@ export default function Cart({ navigation }) {
             </TouchableOpacity>
         );
     };    
-
     // Return render here
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.listContainer}>
-                <FlatList
-                    data={fishData}
-                    keyExtractor={item => item.id.toString()}
-                    renderItem={itemView}
-                >                                        
-                </FlatList>
-            </View>            
-        </SafeAreaView>
+        <>
+        {
+            isLoading ? (
+                <Text>Loading ...</Text>
+            ) : (
+                <SafeAreaView style={styles.container}>
+                    <View style={styles.listContainer}>
+                        <FlatList
+                            data={fishData}
+                            keyExtractor={item => item.MaMatHang}
+                            renderItem={itemView}
+                        >                                        
+                        </FlatList>
+                    </View>            
+                </SafeAreaView>
+            )
+        }
+        </>
     );
 };
-
+// Styles declared here
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -203,10 +154,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '500',
         marginBottom: 5
-    },
-    fishGender: {
-        fontSize: 15,
-        fontWeight: '100'
     },
     priceInfo: {
         flexDirection: 'row',

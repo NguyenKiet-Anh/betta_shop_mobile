@@ -28,8 +28,22 @@ import Octicons from "react-native-vector-icons/Octicons";
 import CategoryScreen from "../screens/CategoryScreen";
 // Import useAuth
 import { useAuth } from "../context/authContext";
-
-export default function StackNavigator() {
+// Import api routes
+import { deleteWishList } from "../routes/WishListRoutes/WishListRoutes";
+// Function main
+export default function StackNavigator({ navigation }) {
+    // Variables for userId
+    const { userInfo } = useAuth();
+    // Function declared here
+    const handleDeleteWishList = async(id, navigation) => {
+        const response = await deleteWishList(id);
+        if (response.success) {
+            // Refresh wishlist page here
+            alert(response.message)
+        } else {
+            alert(response.message);
+        }
+    };
     // Create StackNavigator & BottomNavigator here
     const RootStack = createStackNavigator();
     const Tab = createBottomTabNavigator();
@@ -94,7 +108,7 @@ export default function StackNavigator() {
                             )   
                     }}
                 ></Tab.Screen>
-                {/* Tab for Store Location */}
+                {/* Tab for Cart */}
                 <Tab.Screen
                     name="Cart"
                     component={Cart}
@@ -102,9 +116,9 @@ export default function StackNavigator() {
                         headerTitle: "Cart",
                         tabBarLabel: ({ focused }) => 
                             focused ? (
-                                <Text style={styles.tabStyleFocused}>Location</Text>
+                                <Text style={styles.tabStyleFocused}>Cart</Text>
                             ) : (
-                                <Text style={styles.tabStyle}>Location</Text>
+                                <Text style={styles.tabStyle}>Cart</Text>
                             ),
                         tabBarIcon: ({ focused }) =>
                             focused ? (
@@ -120,7 +134,10 @@ export default function StackNavigator() {
                     component={Wishlist}
                     options={{       
                         headerRight: () => (
-                            <TouchableOpacity style={{marginRight: 15}}>
+                            <TouchableOpacity
+                                onPress={() => {handleDeleteWishList(userInfo.ma_nguoi_dung, navigation);}}
+                                style={{marginRight: 15}}
+                            >
                                 <Octicons name="trash" size={25}></Octicons>
                             </TouchableOpacity>                            
                         ),

@@ -34,6 +34,7 @@ export const InputField = ({ title, setValue }) => {
                     <TextInput
                         onChangeText={setValue}
                         placeholder={title}
+                        secureTextEntry={true}
                         style={{width: '90%', height: 40, marginHorizontal: 5}}
                     >                            
                     </TextInput>
@@ -45,6 +46,7 @@ export const InputField = ({ title, setValue }) => {
                     <TextInput
                         onChangeText={setValue}
                         placeholder={title}
+                        secureTextEntry={true}
                         style={{width: '90%', height: 40, marginHorizontal: 5}}
                     >                            
                     </TextInput>

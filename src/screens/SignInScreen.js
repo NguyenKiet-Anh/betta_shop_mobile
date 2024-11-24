@@ -1,21 +1,20 @@
 // import components of react native
 import { useState, useEffect } from "react";
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Image, Alert } from "react-native";
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 // import custom components
 import { InputField } from "../components/InputField";
 import { SubmitButton } from "../components/SubmitButton";
 // import useAuth
 import { useAuth } from "../context/authContext";
-// import other function api
-import { signIn } from "../routes/LogInAndSignUp/LogInAndSignUp";
 export default function SignIn({ navigation }) {
+    const ipAddress = '192.168.232.102';
     const { login } = useAuth();
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSignIn = async() => {
         try {
-            const response = await fetch('http://192.168.1.14:8000/login/', {
+            const response = await fetch(`http://${ipAddress}:8000/login/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -28,9 +27,7 @@ export default function SignIn({ navigation }) {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
                 if (data.success) {
-                    console.log("data response: ", data);
                     alert('Đăng nhập thành công!');
                     login({
                         ma_nguoi_dung: data.ma_tai_khoan,

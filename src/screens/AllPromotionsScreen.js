@@ -1,176 +1,55 @@
-import { useEffect, useState } from "react";
+// Import component
 import { Image } from "react-native";
 import { SafeAreaView, View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from "react-native";
+// Import Hook
+import { useEffect, useState } from "react";
+// Import icons
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-
-const fishData = [
-    {
-        id: 1,
-        title: "Cá betta 1583 – Koi nemo galaxy tiger hổ rừng xanh",
-        type: "Galaxy",
-        image1: require("../assets/images/testImage/Fish/Galaxy/Fish1/fish1_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Galaxy/Fish1/fish1_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Galaxy/Fish1/fish1_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Galaxy/Fish1/fish1_img4.jpg"),
-        price: 180000
-    },
-    {
-        id: 2,
-        title: "Cá betta 1250 – Koi nemo galaxy hero Thuella",
-        type: "Galaxy",
-        image1: require("../assets/images/testImage/Fish/Galaxy/Fish2/fish2_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Galaxy/Fish2/fish2_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Galaxy/Fish2/fish2_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Galaxy/Fish2/fish2_img4.jpg"),
-        price: 140000
-    },
-    {
-        id: 3,
-        title: "Cá betta 1521 – Koi nemo galaxy dãi ngân hà avenger",
-        type: "Galaxy",
-        image1: require("../assets/images/testImage/Fish/Galaxy/Fish3/fish3_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Galaxy/Fish3/fish3_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Galaxy/Fish3/fish3_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Galaxy/Fish3/fish3_img4.jpg"),
-        price: 140000,
-        newPrice: 100000
-    },
-    {
-        id: 4,
-        title: "Cá betta 1844 – Koi nemo galaxy butterfly champion of freedom zeus",
-        type: "Galaxy",
-        image1: require("../assets/images/testImage/Fish/Galaxy/Fish4/fish4_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Galaxy/Fish4/fish4_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Galaxy/Fish4/fish4_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Galaxy/Fish4/fish4_img4.jpg"),
-        price: 140000
-    },
-    {
-        id: 5,
-        title: "Cá betta 1320 – Halfmoon samurai super star Oda Nobunaga",
-        type: "Halfmoon",
-        image1: require("../assets/images/testImage/Fish/Halfmoon/Fish1/fish1_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Halfmoon/Fish1/fish1_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Halfmoon/Fish1/fish1_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Halfmoon/Fish1/fish1_img4.jpg"),
-        price: 180000
-    },
-    {
-        id: 6,
-        title: "Cá betta 1437 – Halfmoon dumbo white angel zeus",
-        type: "Halfmoon",
-        image1: require("../assets/images/testImage/Fish/Halfmoon/Fish2/fish2_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Halfmoon/Fish2/fish2_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Halfmoon/Fish2/fish2_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Halfmoon/Fish2/fish2_img4.jpg"),
-        price: 80000
-    },
-    {
-        id: 7,
-        title: "Cá betta 1773 – Halfmoon grizzle thái bạch ironwill balder",
-        type: "Halfmoon",
-        image1: require("../assets/images/testImage/Fish/Halfmoon/Fish3/fish3_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Halfmoon/Fish3/fish3_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Halfmoon/Fish3/fish3_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Halfmoon/Fish3/fish3_img4.jpg"),
-        price: 80000
-    },
-    {
-        id: 8,
-        title: "Cá betta 1856 – Halfmoon grizzle mustard gas swordmaster cernunnos",
-        type: "Halfmoon",
-        image1: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img4.jpg"),
-        price: 80000,
-        newPrice: 40000
-    },
-    {
-        id: 9,
-        title: "Cá betta 1856 – Halfmoon grizzle mustard gas swordmaster cernunnos",
-        type: "Halfmoon",
-        image1: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img4.jpg"),
-        price: 80000,
-        newPrice: 40000
-    },
-    {
-        id: 10,
-        title: "Cá betta 1857 – Halfmoon grizzle mustard gas swordmaster cernunnos",
-        type: "Halfmoon",
-        image1: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img1.jpg"),
-        image2: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img2.jpg"),
-        image3: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img3.jpg"),
-        image4: require("../assets/images/testImage/Fish/Halfmoon/Fish4/fish4_img4.jpg"),
-        price: 80000,
-        newPrice: 40000
-    }
-];
-
-export default function AllPromotion({ route, navigation }) {
+// Import api routes
+import { getAllFishesPromotion } from "../routes/HomeAndCategoriesScreen/HomeAndCategoriesRoutes";
+// Main function here
+export default function AllPromotion({ navigation }) {
     // Declare variables here
-    const [countFish, setCountFish] = useState(0);
-    const [data, setData] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
-
+    const [countFish, setCountFish] = useState(0); // Used for count amount of fish in this list
+    const [data, setData] = useState([]); // Store fishes for showing
+    const [searchTerm, setSearchTerm] = useState(''); // Used for searching
+    const [searchResults, setSearchResults] = useState([]); // For showing fishes as searching demand
+    const [isLoading, setIsLoading] = useState(true);
     // Declare function here
         // useEffect for getting all promotion for the first time
     useEffect(() => {
-        const fetchData = () => {                        
-            const filteredData = fishData
-            .filter(fish => fish.newPrice)
-            .reduce((acc, current) => {
-                const x = acc.find(item => item.id === current.id);
-                if (!x) {
-                    return acc.concat([current]);
-                } else {
-                    return acc;
-                }
-            }, []);
-            setCountFish(filteredData.length);
-            setData(filteredData);        
+        // Fetch fishes from database
+        const fetchFishes = async() => {
+            const allFishes = await getAllFishesPromotion();            
+            setData(allFishes);
+            setIsLoading(false);
         };
-        fetchData();
+        fetchFishes();    
     }, []);
-
-    //  Navigate to selected fish
-    const hanldleNavigationForCategories = (id, type) => {    
-        if (id === "seeAll") {
-            navigation.navigate("Category", {type: type});
-        } else {
-            navigation.navigate("Detail", {itemId: id});
-        }
-    };
-    
     // Search as fish's name
     useEffect(() => {
         if (searchTerm.trim() !== "") {
             const results = data.filter((item) => 
-                item.title
+                item.TenMatHang
                 .toLowerCase()
                 .includes(searchTerm.toLowerCase())
             );    
-            setCountFish(results.length)        ;
+            setCountFish(results.length);
             setSearchResults(results);
           } else {
             setCountFish(data.length);
             setSearchResults(data);
           }
     }, [searchTerm]);
-    
-    // Variable for showing filtered fish
+        // Variable for showing filtered fish
     const items = searchTerm ? searchResults : data;
     // Return render here
     const renderItem = ({ item }) => {
         return(
-            <TouchableOpacity style={styles.fishInCategoryFlatlistSection} onPress={() => {hanldleNavigationForCategories(item.id, item.type);}}>
+            <TouchableOpacity style={styles.fishInCategoryFlatlistSection} onPress={() => { navigation.navigate("Detail", { itemId: item.MaMatHang})}}>
                 { item.id === "seeAll" ? (
                     <View style={styles.fishInCategoryFlatlistContent}>
                         <View style={styles.seeAll}>
@@ -180,22 +59,16 @@ export default function AllPromotion({ route, navigation }) {
                 ) : (
                     <View style={styles.fishInCategoryFlatlistContent}>
                         <Image
-                            source={item.image1}
+                            source={{ uri: `data:image/jpeg;base64,${item.HinhAnh1}` }}
                             style={styles.fishInCategoryFlatlistImage}
                         ></Image>
                         <View style={{marginHorizontal: 5}}>
-                            <Text style={styles.fishInCategoryFlatlistName} numberOfLines={2}>{item.title}</Text>
+                            <Text style={styles.fishInCategoryFlatlistName} numberOfLines={2}>{item.TenMatHang}</Text>
                             <View style={styles.fishInCategoryFlatlistBuyFeature}>
-                                {
-                                    item.newPrice ? (
-                                        <View>
-                                            <Text style={styles.fishInCategoryFlatlistPrice}>{item.price}</Text>
-                                            <Text style={styles.fishInCategoryFlatlistNewPrice}>{item.newPrice}</Text>
-                                        </View>
-                                    ) : (
-                                        <Text style={styles.fishInCategoryFlatlistPrice}>{item.price}</Text>
-                                    )
-                                }                                                           
+                                    <View>
+                                        <Text style={styles.fishInCategoryFlatlistPrice}>{parseInt(item.Dongia)}</Text>
+                                        <Text style={styles.fishInCategoryFlatlistNewPrice}>{parseInt(item.GiaKhuyenMai)}</Text>
+                                    </View>
                                 <View style={styles.buttonSection}>
                                     <TouchableOpacity>
                                         <MaterialIcons name="favorite" size={25}></MaterialIcons>
@@ -212,44 +85,52 @@ export default function AllPromotion({ route, navigation }) {
         );
     };
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.sContainer}>
-                <View style={styles.headerSection}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 5, borderWidth: 1, borderColor: '#a2b0a6', borderRadius: 5}}>
-                        <TouchableOpacity 
-                            onPress={() => {handleSearch();}}
-                        >
-                            <AntDesign name="search1" size={24}></AntDesign>
-                        </TouchableOpacity>
-                        <TextInput 
-                            style={{width: 230, height: 40, marginLeft: 5}}
-                            placeholder="Fish's name ...."
-                            value={searchTerm}
-                            onChangeText={(e) => setSearchTerm(e)}
-                        ></TextInput>
-                    </View>                    
-                    <AntDesign name="filter" size={24}></AntDesign>
-                </View>
-                <View style={styles.bodySection}>
-                    <View style={{marginVertical: 15}}>
-                        <Text style={{fontSize: 18, fontWeight: 600}}>Tất cả ({countFish})</Text>                        
+        <>
+        {
+            isLoading ? (
+                <Text>Loading ...</Text>
+            ) : (
+                <SafeAreaView style={styles.container}>
+                    <View style={styles.sContainer}>
+                        <View style={styles.headerSection}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 5, borderWidth: 1, borderColor: '#a2b0a6', borderRadius: 5}}>
+                                <TouchableOpacity 
+                                    onPress={() => {handleSearch();}}
+                                >
+                                    <AntDesign name="search1" size={24}></AntDesign>
+                                </TouchableOpacity>
+                                <TextInput 
+                                    style={{width: 230, height: 40, marginLeft: 5}}
+                                    placeholder="Fish's name ...."
+                                    value={searchTerm}
+                                    onChangeText={(e) => setSearchTerm(e)}
+                                ></TextInput>
+                            </View>                    
+                            <AntDesign name="filter" size={24}></AntDesign>
+                        </View>
+                        <View style={styles.bodySection}>
+                            <View style={{marginVertical: 15}}>
+                                <Text style={{fontSize: 18, fontWeight: 600}}>Tất cả ({countFish})</Text>                        
+                            </View>
+                            <View>
+                                { data.length > 0 ? (
+                                    <FlatList
+                                        key={'#'}
+                                        data={items}
+                                        renderItem={renderItem}
+                                        keyExtractor={item => item.MaMatHang}
+                                        numColumns={2}                        
+                                    ></FlatList>
+                                ) : (
+                                    <Text style={{fontSize: 18, fontWeight: '400', fontStyle: 'italic', color: '#a4abb5', textAlign: 'center'}}>Empty</Text>
+                                )}                    
+                            </View>                    
+                        </View>
                     </View>
-                    <View>
-                        { data.length > 0 ? (
-                            <FlatList
-                                key={'#'}
-                                data={items}
-                                renderItem={renderItem}
-                                keyExtractor={item => item.id.toString()}
-                                numColumns={2}                        
-                            ></FlatList>
-                        ) : (
-                            <Text style={{fontSize: 18, fontWeight: '400', fontStyle: 'italic', color: '#a4abb5', textAlign: 'center'}}>Empty</Text>
-                        )}                    
-                    </View>                    
-                </View>
-            </View>
-        </SafeAreaView>
+                </SafeAreaView>
+            )
+        }
+        </>
     );
 };
 
