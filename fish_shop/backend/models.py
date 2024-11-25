@@ -88,6 +88,7 @@ class KhachHang(models.Model):
     TenKhachHang = models.CharField(max_length=100)
     SoDienThoai = models.CharField(max_length=20, unique=True)
     Email = models.TextField(blank=True, null=True)
+    HinhAnh = models.CharField(max_length=200, blank=True, null=True)
     class Meta:
         db_table = 'KHACHHANG'
 

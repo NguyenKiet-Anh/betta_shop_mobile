@@ -10,21 +10,20 @@ urlpatterns = [
     path('getFishes/', getFish_no_promotion, name='get_fishes_no_promotion'),
     path('getFishesPromotion/', getFish_promotion, name='get_fishes_promotion'),
     path('getFishById/<int:id>/', get_fish_by_id, name='get_fish_by_id'),
-    path('addWishList/', add_wishList, name='add_wishList'),
     path('getWishList/<int:ma_khach_hang>/', get_wishList, name='get_wishList'),
+    path('addWishList/', add_wishList, name='add_wishList'),    
     path('removeWishList/<int:ma_khach_hang>/<int:ma_ca>/', remove_wishList, name='remove_wishList'),
     path('deleteWishList/<int:ma_khach_hang>/', delete_wishList, name='delete_wishList'),
+    path('getCart/<int:ma_khach_hang>/', get_cart, name='get_cart'),
+    path('addCart/<int:ma_khach_hang>/<int:ma_ca>/', add_cart, name='add_cart'),
+    path('updateCart/<int:ma_khach_hang>/<int:action_option>/<int:amount>/', update_cart, name='update_cart'),
+    path('removeCart/<int:ma_khach_hang>/<int:ma_ca>/', remove_cart, name='remove_cart'),
+    path('deleteCart/<int:ma_khach_hang>/', delete_cart, name='delete_cart'),
 ]
-
-
 
 # ----- OLD VERSION -----
 # urlpatterns = [
 #     path('check_out/', views.check_out, name='check_out'),
-#     path('add_cart/', views.addCart, name='add_cart'),
-#     path('remove_cart/', views.removeCart, name='remove_cart'),
-#     path('update_cart/', views.updateCart, name='update_cart'),
-#     path('select_cart/', views.selectCart, name='select_cart'),
 #     path('user_info/', views.user_info, name='user_info'),
 #     path('get_user_info/', views.get_user_info, name='get_user_info'),
 #     path('get_reports/', views.getReports, name='get_reports'),
