@@ -43,9 +43,21 @@ class CT_GIOHANG_Serializer(ModelSerializer):
         fields = '__all__'
 
 # # Serializer 7
+class TAIKHOAN_Serializer(ModelSerializer):
+    class Meta:
+        model = TaiKhoan
+        fields = '__all__'
+
+# # Serializer 8
 class NGUOIDUNG_Serializer(ModelSerializer):
     class Meta:
         model = KhachHang
+        fields = '__all__'
+
+# # Serializer 9
+class NGUOIDUNG_DIACHI_Serializer(ModelSerializer):
+    class Meta:
+        model = KhachHangDiaChi
         fields = '__all__'
         
 # ----- OLD VERSION -----

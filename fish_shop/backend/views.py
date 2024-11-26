@@ -423,38 +423,41 @@ def get_cart(request, ma_khach_hang):
 # Add cart
 @api_view(['POST'])
 def add_cart(request, ma_khach_hang, ma_ca):
-     # Get fish from database
-     fish = MatHang.objects.filter(MaMatHang=ma_ca).first()     
-     # Get cart
-     giohang = GioHang.objects.filter(MaKhachHang=ma_khach_hang)
-     # Get cart detail
-     chitiet = ChiTietGioHang.object.filter(MaGioHang=giohang)
-     # Add item to cart
-     check_fish = ChiTietGioHang.objects.filter(MaGioHang=chitiet, MaMatHang=fish)
-     if check_fish:
-          # Return message that annouces to client the problem in process
-          return Response({'success': False, 'message': 'Cá đã tồn tại trong giỏ hàng'})
-     else:
-          # Add fish to ChiTietGioHang table
-          # If khuyenmai = false
-          if fish.KhuyenMai == False:
-               ChiTietGioHang.objects.create(               
-                    MaGioHang = giohang,
-                    MaMatHang = fish,
-                    SoLuong = 1,
-                    ThanhTien = fish.Dongia,
-                    TinhTrang = False
-               )
-          else:
-               ChiTietGioHang.objects.create(               
-                    MaGioHang = giohang,
-                    MaMatHang = fish,
-                    SoLuong = 1,
-                    ThanhTien = fish.GiaKhuyenMai,
-                    TinhTrang = False
-               )
-          # Return message anoucing successful process
+     try:
+          # Get fish from database
+          fish = MatHang.objects.filter(MaMatHang=ma_ca).first()     
+          # Get cart
+          giohang = GioHang.objects.filter(MaKhachHang=ma_khach_hang).first()
+          # Add item to cart
+          check_fish = ChiTietGioHang.objects.filter(MaGioHang=giohang, MaMatHang=fish).first()
+          if check_fish:
+               
+               # Return message that annouces to client the problem in process
+               return Response({'success': False, 'message': 'Cá đã tồn tại trong giỏ hàng'})
+          else:               
+               # Add fish to ChiTietGioHang table
+               # If khuyenmai = false
+               if fish.KhuyenMai == False:
+                    ChiTietGioHang.objects.create(               
+                         MaGioHang = giohang,
+                         MaMatHang = fish,
+                         SoLuong = 1,
+                         ThanhTien = fish.Dongia,
+                         TinhTrang = False
+                    )
+               else:
+                    ChiTietGioHang.objects.create(               
+                         MaGioHang = giohang,
+                         MaMatHang = fish,
+                         SoLuong = 1,
+                         ThanhTien = fish.GiaKhuyenMai,
+                         TinhTrang = False
+                    )
+               # Return message anoucing successful process
           return Response({'success': True, 'message': 'Thêm cá vào giỏ hàng thành công'})
+     except Exception as e:
+          print(e)
+          return Response({'success': False, 'message': 'Thêm cá vào giỏ hàng thất bại'})
 
 # Update cart
 @api_view(['PUT'])
@@ -466,12 +469,14 @@ def update_cart(request):
 def remove_cart(request, ma_khach_hang, ma_ca):
      try:
           # Get cart
-          giohang = GioHang.objects.filter(MaKhachHang=ma_khach_hang)
+          giohang = GioHang.objects.filter(MaKhachHang=ma_khach_hang).first()
           # Get cart detail
-          chitiet = ChiTietGioHang.get(MaGioHang=giohang)
+          chitiet = ChiTietGioHang.objects.filter(MaGioHang=giohang, MaMatHang=ma_ca)
+          print(chitiet)
           chitiet.delete()
           return Response({'success': True, 'message': 'Xóa thành công cá khỏi giỏ hàng!'})
-     except:
+     except Exception as e:
+          print(e)
           return Response({'success': False, 'message': 'Xóa cá khỏi giỏ hàng thất bại!'})
 
 # Delete cart
@@ -488,23 +493,37 @@ def delete_cart(request, ma_khach_hang):
 
 # Get profile information
 @api_view(['GET'])
-def getProfile(request, ma_khach_hang):     
+def get_user(request, ma_khach_hang):     
      # Get user information
      user = KhachHang.objects.filter(MaKhachHang=ma_khach_hang).first()
+     # Serializing data     
      serializers = NGUOIDUNG_Serializer(user)
      data = serializers.data
+     print(data["HinhAnh"])
      # Encode avatar before sending
      if data["HinhAnh"]:
           with open (data["HinhAnh"], 'rb') as file:
                data_img = file.read()
                base64_encoded_data = base64.b64encode(data_img).decode("utf-8")
                data["HinhAnh"] = base64_encoded_data
+     # Get account information
+     account = TaiKhoan.objects.filter(MaTaiKhoan=ma_khach_hang).first()
+     # Serializing data     
+     serializers2 = TAIKHOAN_Serializer(account)
+     # Get user address
+     address = KhachHangDiaChi.objects.filter(MaKhachHang=ma_khach_hang).first()
+     # Serializing data     
+     serializers3 = NGUOIDUNG_DIACHI_Serializer(address)
      # Return as JSON format
-     return Response(data)
+     return Response({
+          "khach_hang_info": data,
+          "tai_khoan_info": serializers2.data,
+          "khach_hang_diachi": serializers3.data
+     })
 
 # Update profile
 @api_view(['PUT'])
-def updateProfile(request):
+def update_user(request):
      user_id = request.data.get('user_id')
      full_name = request.data.get('full_name')
      phone_number = request.data.get('phone_number')
@@ -536,6 +555,9 @@ def updateProfile(request):
 
      return Response({'success': True})
 
+@api_view(["PUT"])
+def change_password(request, ma_khach_hang):
+     pass
 # Checking out cart
 
 
