@@ -7,12 +7,16 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 // Import Hook
 import { useEffect, useState } from "react";
+// Import context
+import { useAuth } from "../context/authContext";
 // Import api routes
 import { getFishById } from "../routes/DetailScreen/DetailRoutes";
+import { addFishToCart } from "../routes/CartRoutes/CartRoutes";
 // Function here
 export default function Detail({ route, navigation }) {
     // Variable for storing Fish'id
     const { itemId } = route.params;
+    const { userInfo } = useAuth();
     // Variable for other stuff
     const { width } = Dimensions.get('window');
     const [fish, setFish] = useState([]); // Store data for fish
@@ -47,9 +51,18 @@ export default function Detail({ route, navigation }) {
         fetchFish(itemId);
     }, []);    
     // Function for add to cart
-    
-    // Function for add to wishlist
-
+    const handleAddFishToCart = async(id) => {
+        const response = await addFishToCart(userInfo.ma_nguoi_dung, id);
+        if (response.success) {
+            alert(response.message);
+        } else {
+            if (response.message === "Cá đã tồn tại trong giỏ hàng") {
+                alert("Cá đã tồn tại trong giỏ hàng");
+            } else {
+                alert("Thêm cá vào giỏ hàng thất bại");
+            }
+        }
+    };
     return (
         <>
             {
@@ -192,7 +205,10 @@ export default function Detail({ route, navigation }) {
                                             >
                                                 <Text style={{fontWeight: 'bold', color: 'white'}}>See reviews</Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity style={styles.addCartButton}>
+                                            <TouchableOpacity
+                                                onPress={() => {handleAddFishToCart(fish.MaMatHang);}}
+                                                style={styles.addCartButton}
+                                            >
                                                 <Text style={{fontWeight: 'bold', color: 'white'}}>Add to cart</Text>
                                                 <Text style={{fontSize: 20, color: 'white'}}>|</Text>
                                                 <FontAwesome5 name="cart-plus" size={22} color={'white'}></FontAwesome5>
@@ -208,7 +224,7 @@ export default function Detail({ route, navigation }) {
         </>
     );
 };
-
+// Create styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,

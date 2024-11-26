@@ -9,10 +9,14 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+// Import context
+import { useAuth } from "../context/authContext";
 // Import api routes
 import { getAllFishesAll, getAllCategories } from "../routes/HomeAndCategoriesScreen/HomeAndCategoriesRoutes";
+import { addFishToCart } from "../routes/CartRoutes/CartRoutes";
 // Main Function here
 export default function Category({ route, navigation }) {
+    const { userInfo } = useAuth();
     // Declare variables here
     const { type } = route.params; // Get type passed through navigation    
     const [fishData, setFishData] = useState([]); // Store fishes fetched from database
@@ -99,6 +103,19 @@ export default function Category({ route, navigation }) {
         };
         setSelectedCategory(category);    
     };    
+    // Add fish to cart
+    const handleAddFishToCart = async(id) => {
+        const response = await addFishToCart(userInfo.ma_nguoi_dung, id);
+        if (response.success) {
+            alert(response.message);
+        } else {
+            if (response.message === "Cá đã tồn tại trong giỏ hàng") {
+                alert("Cá đã tồn tại trong giỏ hàng");
+            } else {
+                alert("Thêm cá vào giỏ hàng thất bại");
+            }
+        }
+    };
     // Variable for showing filtered items
     const items = searchTerm ? searchResults : data;
     // Show list of categories
@@ -150,7 +167,9 @@ export default function Category({ route, navigation }) {
                                     <TouchableOpacity>
                                         <MaterialIcons name="favorite" size={25}></MaterialIcons>
                                     </TouchableOpacity>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {handleAddFishToCart(item.MaMatHang);}}
+                                    >
                                         <FontAwesome name="cart-plus" size={25}></FontAwesome>
                                     </TouchableOpacity>
                                 </View>                        

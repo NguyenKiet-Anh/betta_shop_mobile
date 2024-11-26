@@ -1,4 +1,4 @@
-const ipAddress = '192.168.232.102';
+const ipAddress = '192.168.153.102';
 // For Home
 // For getting all fishes in both promotion and non-promotion
 export const getAllFishesAll = async() => {

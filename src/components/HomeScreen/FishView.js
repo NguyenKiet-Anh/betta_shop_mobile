@@ -7,6 +7,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useAuth } from "../../context/authContext";
 // Import api routes here
 import { addFishToWishList } from "../../routes/WishListRoutes/WishListRoutes";
+import { addFishToCart } from "../../routes/CartRoutes/CartRoutes";
 // Main Function here
 export default function FishView({ navigation, item }) {
     // Variable for user id
@@ -31,7 +32,20 @@ export default function FishView({ navigation, item }) {
         } else {
             alert(response.message);
         }
-    };    
+    };
+    // Add fish to cart here
+    const handleAddCart = async(id) => {
+        const response = await addFishToCart(userInfo.ma_nguoi_dung, id);
+        if (response.success) {
+            alert(response.message);
+        } else {
+            if (response.message === "Cá đã tồn tại trong giỏ hàng") {
+                alert("Cá đã tồn tại trong giỏ hàng");
+            } else {
+                alert("Thêm cá vào giỏ hàng thất bại");
+            }
+        }
+    };
     // Return here
     return (
         <TouchableOpacity 
@@ -49,7 +63,7 @@ export default function FishView({ navigation, item }) {
                     <Image
                         source={{ uri: `data:image/jpeg;base64,${item.HinhAnh1}` }}
                         style={styles.fishInCategoryFlatlistImage}
-                    />                    
+                    />
                     <Text style={styles.fishInCategoryFlatlistName} numberOfLines={2}>{item.TenMatHang}</Text>
                     <View style={styles.fishInCategoryFlatlistBuyFeature}>
                         <Text style={styles.fishInCategoryFlatlistPrice}>{parseInt(item.Dongia)}</Text>
@@ -67,7 +81,9 @@ export default function FishView({ navigation, item }) {
                             >
                                 <MaterialIcons name="favorite" size={25} />
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => {handleAddCart(item.MaMatHang);}}
+                            >
                                 <FontAwesome name="cart-plus" size={25} />
                             </TouchableOpacity>
                         </View>                        

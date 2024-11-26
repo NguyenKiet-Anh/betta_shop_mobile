@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 // Import screens here
 import SignIn from "../screens/SignInScreen";
 import SignUp from "../screens/SignUpScreen";
@@ -20,7 +20,6 @@ import AboutUs from "../screens/AboutUsScreen";
 import StoreLocation from "../screens/LocationScreen";
 // Import Icon
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -29,20 +28,29 @@ import CategoryScreen from "../screens/CategoryScreen";
 // Import useAuth
 import { useAuth } from "../context/authContext";
 // Import api routes
-import { deleteWishList } from "../routes/WishListRoutes/WishListRoutes";
+import { addFishToWishList, deleteWishList } from "../routes/WishListRoutes/WishListRoutes";
 // Function main
 export default function StackNavigator({ navigation }) {
     // Variables for userId
     const { userInfo } = useAuth();
+    // Function add wishlist
+    const addWishList = async() => {
+        const response = await addFishToWishList();        
+    };
     // Function declared here
-    const handleDeleteWishList = async(id, navigation) => {
+    const handleDeleteWishList = async({ id, navigation}) => {
         const response = await deleteWishList(id);
         if (response.success) {
-            // Refresh wishlist page here
             alert(response.message)
+            // Refresh wishlist page here
+            navigation.navigate("Wishlist", { refreshWishlist: true })
         } else {
             alert(response.message);
         }
+    };
+    // Fucntion add cart
+    const handleDeleteCart = async() => {
+        
     };
     // Create StackNavigator & BottomNavigator here
     const RootStack = createStackNavigator();
@@ -85,7 +93,7 @@ export default function StackNavigator({ navigation }) {
         );
     };
     // Tab Navigator here
-    function HomeTabs() {
+    function HomeTabs({ navigation}) {
         return (
             <Tab.Navigator>
                 {/* Tab for Home */}
@@ -113,7 +121,14 @@ export default function StackNavigator({ navigation }) {
                     name="Cart"
                     component={Cart}
                     options={{
-                        headerTitle: "Cart",
+                        headerRight: () => (
+                            <TouchableOpacity
+                                onPress={() => {handleDeleteWishList(userInfo.ma_nguoi_dung, navigation);}}
+                                style={{marginRight: 15}}
+                            >
+                                <Octicons name="trash" size={25}></Octicons>
+                            </TouchableOpacity>                            
+                        ),                
                         tabBarLabel: ({ focused }) => 
                             focused ? (
                                 <Text style={styles.tabStyleFocused}>Cart</Text>

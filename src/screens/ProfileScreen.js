@@ -1,9 +1,28 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 // Import icon here
 import Feather from "react-native-vector-icons/Feather";
-
+// Import Hook
+import { useEffect, useState } from "react";
+// Import context
+import { useAuth } from "../context/authContext";
+// Import api routes
+import { getUserInfo } from "../routes/ProfileRoutes/ProfileRoutes";
+// Main function
 export default function Profile({ navigation }) {
+    // Get userId
+    const { userInfo } = useAuth()
+    const [userData, setUserData] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
     // Declare function here
+    useEffect(() => {
+        const fetchData = async(id) => {
+            const data = await getUserInfo(id);
+            console.log(data);
+            setUserData(data);
+            setIsLoading(false);
+        };
+        fetchData(userInfo.ma_nguoi_dung);
+    }, []);
     // Upload avatar
     const handleUploadAvatar = () => {
         console.log("Upload avatar");
@@ -18,56 +37,64 @@ export default function Profile({ navigation }) {
     };
     // Return render here
     return (
-        <View style={styles.container}>
-            {/* Section for Avatar */}
-            <TouchableOpacity 
-                style={styles.avatarSection}
-                onPress={() => {handleUploadAvatar();}}
-            >
-                <Image
-                    source={require("../assets/images/testImage/avatar1.jpeg")}
-                    style={styles.imageStyle}
-                ></Image>                    
-            </TouchableOpacity>                
-            {/* Section for user's name */}
-            <View style={styles.nameSection}>
-                <Text style={styles.nameText}>Nguyễn Anh Kiệt</Text>
-                <TouchableOpacity>
-                    <Feather name="edit-3" size={25}></Feather>
-                </TouchableOpacity>
-            </View>
-            {/* Section for personal information */}
-            <ScrollView style={styles.informationSection}>
-                <View>
-                    <Text style={styles.titleText}>Thông tin cá nhân</Text>
-                    <Text style={styles.contentText}>Số điện thoại</Text>
-                    <Text style={styles.infoText}>String</Text>
-                    <Text style={styles.contentText}>Địa chỉ</Text>
-                    <Text style={styles.infoText}>String</Text>
+        <>
+        {
+            isLoading ? (
+                <Text>Loading ...</Text>
+            ) : (
+                <View style={styles.container}>
+                    {/* Section for Avatar */}
+                    <TouchableOpacity 
+                        style={styles.avatarSection}
+                        onPress={() => {handleUploadAvatar();}}
+                    >
+                        <Image
+                            source={require("../assets/images/testImage/avatar1.jpeg")}
+                            style={styles.imageStyle}
+                        ></Image>                    
+                    </TouchableOpacity>                
+                    {/* Section for user's name */}
+                    <View style={styles.nameSection}>
+                        <Text style={styles.nameText}>Nguyễn Anh Kiệt</Text>
+                        <TouchableOpacity>
+                            <Feather name="edit-3" size={25}></Feather>
+                        </TouchableOpacity>
+                    </View>
+                    {/* Section for personal information */}
+                    <ScrollView style={styles.informationSection}>
+                        <View>
+                            <Text style={styles.titleText}>Thông tin cá nhân</Text>
+                            <Text style={styles.contentText}>Số điện thoại</Text>
+                            <Text style={styles.infoText}>{userData.khach_hang_info.SoDienThoai}</Text>
+                            <Text style={styles.contentText}>Địa chỉ</Text>
+                            <Text style={styles.infoText}>{userData.khach_hang_diachi.DiaChi}</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.titleText}>Thông tin tài khoản </Text>
+                            <Text style={[styles.contentText, {fontStyle: 'italic', textAlign: 'center'}]}>Coming soon ... </Text>
+                        </View>                
+                    </ScrollView>
+                    <View style={styles.buttonSection}>
+                        <TouchableOpacity
+                            style={[styles.button, {backgroundColor: '#b141aa', width: 150}]}
+                            onPress={() => {handleChangePass();}}
+                        >
+                            <Text style={styles.buttonText}>Change password</Text>                        
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.button, {backgroundColor: '#ff5863', width: 100}]}
+                            onPress={() => {handleLogOut();}}
+                        >
+                            <Text style={styles.buttonText}>Logout</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <View>
-                    <Text style={styles.titleText}>Thông tin mua hàng</Text>
-                    <Text style={[styles.contentText, {fontStyle: 'italic', textAlign: 'center'}]}>Coming soon ... </Text>
-                </View>                
-            </ScrollView>
-            <View style={styles.buttonSection}>
-                <TouchableOpacity
-                    style={[styles.button, {backgroundColor: '#b141aa', width: 150}]}
-                    onPress={() => {handleChangePass();}}
-                >
-                    <Text style={styles.buttonText}>Change password</Text>                        
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.button, {backgroundColor: '#ff5863', width: 100}]}
-                    onPress={() => {handleLogOut();}}
-                >
-                    <Text style={styles.buttonText}>Logout</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+            )
+        }
+        </>
     );
 };
-
+// Create styles
 const styles = StyleSheet.create({
     // Style for container
     container: {

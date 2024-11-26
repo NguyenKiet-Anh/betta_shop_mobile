@@ -3,19 +3,33 @@ import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, SafeAreaView
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 // Import Hook
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useRoute } from '@react-navigation/native';
 import { useEffect, useState } from "react";
 // Import context
 import { useAuth } from "../context/authContext";
 // Import api routes
 import { getWishList, removeFishFromWishList } from "../routes/WishListRoutes/WishListRoutes";
+import { addFishToCart } from "../routes/CartRoutes/CartRoutes";
 // Main function
-export default function WishList({ navigation }) {
+export default function WishList({ navigation, route }) {
     // Variables here
     const { userInfo } = useAuth();   
     const [fishData, setFishData] = useState([]); // Store data fetched from server
     const [isLoading, setIsLoading] = useState(true);
-    const isFocused = useIsFocused(); // For re-run useEffect
+    const isFocusedWishList = useIsFocused(); // For re-run useEffect    
+    // Refresh this screen if 'delete all' has been operated successfully    
+    useEffect(() => {
+        // Trigger a refresh when the Wishlist screen is focused
+        const unsubscribe = navigation.addListener('focus', () => {
+            if (route.params?.refreshWishlist) {
+                // Call the function to refresh the wishlist
+                console.log('Wishlist refreshed');
+                // Make an API call or refresh the state here
+            }
+        });
+
+        return unsubscribe; // Clean up the listener
+    }, [navigation, route.params]);
     // useEffect for getting wishlsit for the first time accessing wishlist screen
     const refreshWishList = async () => {
         const wishListData = await getWishList(userInfo.ma_nguoi_dung);
@@ -23,11 +37,12 @@ export default function WishList({ navigation }) {
         setIsLoading(false);
     };    
     useEffect(() => {        
-        if (isFocused) {
+        if (isFocusedWishList) {
             refreshWishList();
         }        
-    }, [isFocused]);
+    }, [isFocusedWishList]);
     // Functions here
+    // Remove fish from wishlist
     const handleRemoveFish = async(id) => {
         const response = await removeFishFromWishList(userInfo.ma_nguoi_dung, id);
         if (response.success) {
@@ -35,6 +50,19 @@ export default function WishList({ navigation }) {
             alert(response.message);
         } else {
             alert(response.message);
+        }
+    };
+    // Add fish to cart
+    const handleAddFishToCart = async(id) => {
+        const response = await addFishToCart(userInfo.ma_nguoi_dung, id);
+        if (response.success) {
+            alert(response.message);
+        } else {
+            if (response.message === "Cá đã tồn tại trong giỏ hàng") {
+                alert("Cá đã tồn tại trong giỏ hàng");
+            } else {
+                alert("Thêm cá vào giỏ hàng thất bại");
+            }
         }
     };
     // Card rendered here
@@ -91,7 +119,10 @@ export default function WishList({ navigation }) {
                     >
                         <Feather name="trash" size={20}></Feather>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity 
+                        onPress={() => {handleAddFishToCart(item.MaMatHang);}}
+                        style={styles.button}
+                    >
                         <Feather name="shopping-cart" size={20}></Feather>
                     </TouchableOpacity>
                 </View>                

@@ -169,7 +169,7 @@ export default function Home({ navigation }) {
         </>
     );
 };
-
+// Creating styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
