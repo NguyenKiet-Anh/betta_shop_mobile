@@ -54,12 +54,12 @@ export default function Detail({ route, navigation }) {
     const handleAddFishToCart = async(id) => {
         const response = await addFishToCart(userInfo.ma_nguoi_dung, id);
         if (response.success) {
-            alert(response.message);
+            alert("Add fish to cart successfully!");
         } else {
             if (response.message === "Cá đã tồn tại trong giỏ hàng") {
-                alert("Cá đã tồn tại trong giỏ hàng");
+                alert("Fish already exists in cart!");
             } else {
-                alert("Thêm cá vào giỏ hàng thất bại");
+                alert("Add fish to cart failed!");
             }
         }
     };

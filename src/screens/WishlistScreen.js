@@ -47,21 +47,21 @@ export default function WishList({ navigation, route }) {
         const response = await removeFishFromWishList(userInfo.ma_nguoi_dung, id);
         if (response.success) {
             setFishData(fishData.filter(item => item.MaMatHang !== id));
-            alert(response.message);
+            alert("Remove fish successfully!");
         } else {
-            alert(response.message);
+            alert("Remove fish failed!");
         }
     };
     // Add fish to cart
     const handleAddFishToCart = async(id) => {
         const response = await addFishToCart(userInfo.ma_nguoi_dung, id);
         if (response.success) {
-            alert(response.message);
+            alert("Add fish to cart successfully!");
         } else {
             if (response.message === "Cá đã tồn tại trong giỏ hàng") {
-                alert("Cá đã tồn tại trong giỏ hàng");
+                alert("Fish already exists in cart!");
             } else {
-                alert("Thêm cá vào giỏ hàng thất bại");
+                alert("Add fish to cart failed!");
             }
         }
     };

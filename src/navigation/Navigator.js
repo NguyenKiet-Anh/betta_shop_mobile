@@ -8,14 +8,16 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 // Import screens here
 import SignIn from "../screens/SignInScreen";
 import SignUp from "../screens/SignUpScreen";
+import Home from "../screens/HomeScreen";
+import CategoryScreen from "../screens/CategoryScreen";
+import AllPromotion from "../screens/AllPromotionsScreen";
+import Detail from "../screens/DetailScreen";
+import Wishlist from "../screens/WishlistScreen";
 import Cart from "../screens/CartScreen";
 import Notification from "../screens/NotificationScreen";
-import Home from "../screens/HomeScreen";
-import Wishlist from "../screens/WishlistScreen";
-import Detail from "../screens/DetailScreen";
-import Profile from "../screens/ProfileScreen";
 import Review from "../screens/ReviewScreen";
-import AllPromotion from "../screens/AllPromotionsScreen";
+import Profile from "../screens/ProfileScreen";
+import EditProfile from "../screens/ProfileEditScreen";
 import AboutUs from "../screens/AboutUsScreen";
 import StoreLocation from "../screens/LocationScreen";
 // Import Icon
@@ -24,11 +26,11 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Octicons from "react-native-vector-icons/Octicons";
-import CategoryScreen from "../screens/CategoryScreen";
 // Import useAuth
 import { useAuth } from "../context/authContext";
 // Import api routes
 import { addFishToWishList, deleteWishList } from "../routes/WishListRoutes/WishListRoutes";
+import ChangePassword from "../screens/ProfileChangePasswordScreen";
 // Function main
 export default function StackNavigator({ navigation }) {
     // Variables for userId
@@ -260,11 +262,20 @@ export default function StackNavigator({ navigation }) {
                         
                     })}
                 ></RootStack.Screen>
+                {/* Route for Profile Edit */}
+                <RootStack.Screen
+                    name="EditProfile"
+                    component={EditProfile}
+                ></RootStack.Screen>
+                {/* Route for Changing password */}
+                <RootStack.Screen
+                    name="ChangePassword"
+                    component={ChangePassword}
+                ></RootStack.Screen>
             </RootStack.Navigator>
         </NavigationContainer>
     );
 };
-
 const styles = StyleSheet.create({
     tabStyle: {
         fontSize: 12, 

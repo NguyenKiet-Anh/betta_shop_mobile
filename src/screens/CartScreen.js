@@ -28,7 +28,7 @@ export default function Cart({ navigation }) {
     useEffect(() => {        
         if (isFocusedCart) {
             refreshCart();
-        }        
+        };
     }, [isFocusedCart]);
 
     // Function for updating cart
@@ -41,9 +41,9 @@ export default function Cart({ navigation }) {
         const response = await removeFishFromCart(userInfo.ma_nguoi_dung, id);
         if (response.success) {
             setFishData(fishData.filter(item => item.MaMatHang !== id));
-            alert(response.message);
+            alert("Remove fish successfully!");
         } else {
-            alert(response.message);
+            alert("Remove fish failed!");
         }
     };
 

@@ -1,38 +1,46 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, TextInput } from "react-native";
+// Import component
+import { TextField } from "../components/Profile/TextField";
 // Import icon here
 import Feather from "react-native-vector-icons/Feather";
+import AntDesign from "react-native-vector-icons/AntDesign";
 // Import Hook
 import { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 // Import context
 import { useAuth } from "../context/authContext";
 // Import api routes
 import { getUserInfo } from "../routes/ProfileRoutes/ProfileRoutes";
 // Main function
 export default function Profile({ navigation }) {
-    // Get userId
-    const { userInfo } = useAuth()
+    // Variables here
+    const { userInfo, logout } = useAuth(); // Get userId
     const [userData, setUserData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [showPassword, setShowPassword] = useState(true); // Control showing password
+    const isFocusedProfile = useIsFocused();
     // Declare function here
+    const fetchData = async(id) => {
+        const data = await getUserInfo(id);
+        setUserData(data);
+        setIsLoading(false);
+    };
     useEffect(() => {
-        const fetchData = async(id) => {
-            const data = await getUserInfo(id);
-            console.log(data);
-            setUserData(data);
-            setIsLoading(false);
-        };
-        fetchData(userInfo.ma_nguoi_dung);
-    }, []);
+        if (isFocusedProfile) {
+            fetchData(userInfo.ma_nguoi_dung);
+        }          
+    }, [isFocusedProfile]);
     // Upload avatar
     const handleUploadAvatar = () => {
         console.log("Upload avatar");
     };
     // Goto change password
     const handleChangePass = () => {
-        console.log("Change password");
+        navigation.navigate("ChangePassword");
     };
     // Logout
     const handleLogOut = () => {
+        logout()
         navigation.navigate("Sign-In");
     };
     // Return render here
@@ -56,22 +64,63 @@ export default function Profile({ navigation }) {
                     {/* Section for user's name */}
                     <View style={styles.nameSection}>
                         <Text style={styles.nameText}>Nguyễn Anh Kiệt</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {navigation.navigate("EditProfile", {
+                                userId: userInfo.ma_nguoi_dung
+                            });}}
+                        >
                             <Feather name="edit-3" size={25}></Feather>
                         </TouchableOpacity>
                     </View>
                     {/* Section for personal information */}
                     <ScrollView style={styles.informationSection}>
-                        <View>
-                            <Text style={styles.titleText}>Thông tin cá nhân</Text>
-                            <Text style={styles.contentText}>Số điện thoại</Text>
-                            <Text style={styles.infoText}>{userData.khach_hang_info.SoDienThoai}</Text>
-                            <Text style={styles.contentText}>Địa chỉ</Text>
-                            <Text style={styles.infoText}>{userData.khach_hang_diachi.DiaChi}</Text>
+                        <View>                            
+                            <Text style={styles.titleText}>Personal Information</Text>
+                            {/* For phone number */}
+                            <TextField title={"Phone number"} content={userData.khach_hang_info.SoDienThoai}></TextField>
+                            {/* For email */}
+                            <TextField title={"Email"} content={userData.khach_hang_info.Email}></TextField>
+                            {/* For district name */}
+                            <TextField title={"District name"} content={userData.khach_hang_diachi.quan_info.TenQuan}></TextField>
+                            {/* For address */}
+                            <TextField title={"Address"} content={userData.khach_hang_diachi.DiaChi}></TextField>
                         </View>
                         <View>
-                            <Text style={styles.titleText}>Thông tin tài khoản </Text>
-                            <Text style={[styles.contentText, {fontStyle: 'italic', textAlign: 'center'}]}>Coming soon ... </Text>
+                            <Text style={styles.titleText}>Account Information</Text>
+                            {/* For account name */}
+                            <TextField title={"Account name"} content={userData.tai_khoan_info.TenTaiKhoan}></TextField>
+                            {/* For password */}
+                            <Text style={styles.contentText}>Password</Text>                            
+                            <View style={styles.passwordSection}>
+                                <TextInput                    
+                                    value={userData.tai_khoan_info.MatKhau}
+                                    secureTextEntry={showPassword}                           
+                                    editable={false}
+                                    style={styles.infoText}
+                                ></TextInput>
+                                <TouchableOpacity
+                                    onPress={() => {setShowPassword(preValue => !preValue);}}
+                                >
+                                    {
+                                        showPassword === true ? (
+                                            <Feather name="eye" style={styles.passwordEditIcon}></Feather>
+                                        ) : (
+                                            <Feather name="eye-off" style={styles.passwordEditIcon}></Feather>
+                                        )
+                                    }                                    
+                                </TouchableOpacity>
+                            </View>
+                            {/* For confirmation status */}
+                            <View style={styles.activatedSection}>
+                                <Text style={styles.contentText}>Corfirmation status</Text>
+                                {
+                                    userData.tai_khoan_info.isActivated === true ? (
+                                        <AntDesign name="check" style={[styles.iconStyle, {color: 'green'}]}></AntDesign>
+                                    ) : (
+                                        <AntDesign name="close" style={[styles.iconStyle, {color: 'red'}]}></AntDesign>
+                                    )
+                                }
+                            </View>                            
                         </View>                
                     </ScrollView>
                     <View style={styles.buttonSection}>
@@ -131,11 +180,12 @@ const styles = StyleSheet.create({
     },
     titleText: {
         marginVertical: 10,
-        fontSize: 19,
-        fontWeight: '500'
+        fontSize: 20,
+        fontWeight: '700'
     },
     contentText: {
-        fontSize: 15,
+        fontSize: 17,
+        fontWeight: '450',
         fontStyle: 'italic',
         marginVertical: 10
     },
@@ -165,5 +215,26 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 16,
         color: 'white'
+    },
+    // Password section
+    passwordSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    passwordEditIcon: {
+        fontSize: 25,
+        marginRight: '65%'
+    },
+    // Activated Section
+    activatedSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginRight: '50%'
+    },
+    // Icon size
+    iconStyle: {
+        fontSize: 25
     }
 });
