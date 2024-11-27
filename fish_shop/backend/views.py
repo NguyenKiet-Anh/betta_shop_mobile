@@ -524,40 +524,54 @@ def get_user(request, ma_khach_hang):
 # Update profile
 @api_view(['PUT'])
 def update_user(request):
-     user_id = request.data.get('user_id')
-     full_name = request.data.get('full_name')
-     phone_number = request.data.get('phone_number')
-     avatar = request.data.get('avatar')
-     district_code = request.data.get('district_code')
-     address = request.data.get('address')
-     # Update information
-     update_user = KhachHang.objects.get(MaKhachHang=user_id)
+     try:
+          user_id = request.data.get('user_id')
+          full_name = request.data.get('full_name')
+          phone_number = request.data.get('phone_number')
+          district_code = request.data.get('district_code')
+          address = request.data.get('address')
+          # Update information
+          update_user = KhachHang.objects.get(MaKhachHang=user_id)
 
-     if full_name != '' and full_name != update_user.TenKhachHang:
-          update_user.TenKhachHang = full_name
+          if full_name != '' and full_name != update_user.TenKhachHang:
+               update_user.TenKhachHang = full_name
 
-     if phone_number != '' and phone_number != update_user.SoDienThoai:
-          update_user.SoDienThoai = phone_number
+          if phone_number != '' and phone_number != update_user.SoDienThoai:
+               update_user.SoDienThoai = phone_number
 
-     # Update avatar image
-          # ???
+          # Update address
+          update_user_address = KhachHangDiaChi.objects.get(MaKhachHang=user_id)
 
-     # Update address
-     update_user_address = KhachHangDiaChi.objects.get(MaKhachHang=user_id)
+          if district_code != '' and district_code != update_user_address.MaQuan:
+               update_user_address.MaQuan = district_code
 
-     if district_code != '' and district_code != update_user_address.MaQuan:
-          update_user_address.MaQuan = district_code
+          if address != '' and address != update_user_address.DiaChi:
+               update_user_address.DiaChi = address
 
-     if address != '' and address != update_user_address.DiaChi:
-          update_user_address.DiaChi = address
+          update_user.save()
 
-     update_user.save()
+          return Response({'success': True})
+     except:
+          return Response({'success': False})
 
-     return Response({'success': True})
-
-@api_view(["PUT"])
-def change_password(request, ma_khach_hang):
+@api_view(['PUT'])
+def update_avatar(request):
      pass
+
+@api_view(['PUT'])
+def change_password(request, ma_khach_hang):
+     try:
+          new_password = request.data.get('new_password')
+          # Get TaiKhoan from database
+          taikhoan = TaiKhoan.objects.get(MaTaiKhoan=ma_khach_hang)
+          # Update password
+          taikhoan.MatKhau = new_password
+          taikhoan.save()
+
+          return Response({'success': True})
+     except:
+          return Response({'success': False})
+     
 # Checking out cart
 
 

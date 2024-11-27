@@ -55,7 +55,14 @@ class NGUOIDUNG_Serializer(ModelSerializer):
         fields = '__all__'
 
 # # Serializer 9
+class QUAN_Serializer(ModelSerializer):
+    class Meta:
+        model = Quan
+        fields = '__all__'
+
+# # Serializer 10
 class NGUOIDUNG_DIACHI_Serializer(ModelSerializer):
+    quan_info = QUAN_Serializer(source='MaQuan', read_only=True)
     class Meta:
         model = KhachHangDiaChi
         fields = '__all__'
