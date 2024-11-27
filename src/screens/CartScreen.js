@@ -10,7 +10,7 @@ import { useAuth } from "../context/authContext";
 // Import api routes
 import { getCartById, removeFishFromCart } from "../routes/CartRoutes/CartRoutes";
 // Main function
-export default function Cart({ navigation }) {
+export default function Cart({ navigation, route }) {
     // Variables here    
     const { userInfo } = useAuth();
     const [fishData, setFishData] = useState([]); // Store fish data fetched from server
@@ -25,12 +25,20 @@ export default function Cart({ navigation }) {
         setFishData(cartData);
         setIsLoading(false);
     }; 
-    useEffect(() => {        
-        if (isFocusedCart) {
-            refreshCart();
-        };
-    }, [isFocusedCart]);
-
+    // useEffect(() => {        
+    //     if (isFocusedCart) {
+    //         refreshCart();
+    //     };
+    // }, [isFocusedCart]);
+    useEffect(() => {
+        if (isFocusedCart || route.params?.refreshCart) {
+            refreshCart(); // Fetch fresh wishlist data
+            if (route.params?.refreshCart) {
+                // Reset refreshWishlist param after the data is fetched
+                navigation.setParams({ refreshCart: false });
+            }
+        }
+    }, [isFocusedCart, route.params?.refreshCart]);
     // Function for updating cart
     const handleUpdateCart = async() => {
 

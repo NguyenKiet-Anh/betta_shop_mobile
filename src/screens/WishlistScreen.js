@@ -12,35 +12,32 @@ import { getWishList, removeFishFromWishList } from "../routes/WishListRoutes/Wi
 import { addFishToCart } from "../routes/CartRoutes/CartRoutes";
 // Main function
 export default function WishList({ navigation, route }) {
+    
     // Variables here
     const { userInfo } = useAuth();   
     const [fishData, setFishData] = useState([]); // Store data fetched from server
     const [isLoading, setIsLoading] = useState(true);
     const isFocusedWishList = useIsFocused(); // For re-run useEffect    
-    // Refresh this screen if 'delete all' has been operated successfully    
-    useEffect(() => {
-        // Trigger a refresh when the Wishlist screen is focused
-        const unsubscribe = navigation.addListener('focus', () => {
-            if (route.params?.refreshWishlist) {
-                // Call the function to refresh the wishlist
-                console.log('Wishlist refreshed');
-                // Make an API call or refresh the state here
-            }
-        });
-
-        return unsubscribe; // Clean up the listener
-    }, [navigation, route.params]);
     // useEffect for getting wishlsit for the first time accessing wishlist screen
     const refreshWishList = async () => {
         const wishListData = await getWishList(userInfo.ma_nguoi_dung);
         setFishData(wishListData);
         setIsLoading(false);
     };    
-    useEffect(() => {        
-        if (isFocusedWishList) {
-            refreshWishList();
-        }        
-    }, [isFocusedWishList]);
+    // useEffect(() => {        
+    //     if (isFocusedWishList) {
+    //         refreshWishList();
+    //     }        
+    // }, [isFocusedWishList]);
+    useEffect(() => {
+        if (isFocusedWishList || route.params?.refreshWishlist) {
+            refreshWishList(); // Fetch fresh wishlist data
+            if (route.params?.refreshWishlist) {
+                // Reset refreshWishlist param after the data is fetched
+                navigation.setParams({ refreshWishlist: false });
+            }
+        }
+    }, [isFocusedWishList, route.params?.refreshWishlist]);
     // Functions here
     // Remove fish from wishlist
     const handleRemoveFish = async(id) => {

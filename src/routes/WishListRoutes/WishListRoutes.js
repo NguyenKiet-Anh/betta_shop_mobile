@@ -1,4 +1,4 @@
-const ipAddress = '192.168.153.102'
+const ipAddress = '192.168.232.102'
 // Get wishlist by id
 export const getWishList = async(id) => {
     try {
@@ -81,7 +81,7 @@ export const deleteWishList = async(userId) => {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network wrking failed');
+                throw new Error('Network working failed');
             };
             return response.json();
         })

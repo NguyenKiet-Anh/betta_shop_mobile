@@ -8,10 +8,15 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+// Import context
+import { useAuth } from "../context/authContext";
 // Import api routes
 import { getAllFishesPromotion } from "../routes/HomeAndCategoriesScreen/HomeAndCategoriesRoutes";
+import { addFishToCart } from "../routes/CartRoutes/CartRoutes";
+import { addFishToWishList } from "../routes/WishListRoutes/WishListRoutes";
 // Main function here
 export default function AllPromotion({ navigation }) {
+    const { userInfo } = useAuth()
     // Declare variables here
     const [countFish, setCountFish] = useState(0); // Used for count amount of fish in this list
     const [data, setData] = useState([]); // Store fishes for showing
@@ -44,6 +49,28 @@ export default function AllPromotion({ navigation }) {
             setSearchResults(data);
           }
     }, [searchTerm]);
+    // Add fish to wishlist
+    const handleAddFishToWishlist = async(id) => {
+        const response = await addFishToWishList(userInfo.ma_nguoi_dung, id);
+        if (response.success) {
+            alert("Add fish to wishlist successfully!");
+        } else {
+            alert("Add fish to wishlist failed! Fish already exists in wishlist!");
+        }
+    };
+    // Add fish to cart
+    const handleAddFishToCart = async(id) => {
+        const response = await addFishToCart(userInfo.ma_nguoi_dung, id);
+        if (response.success) {
+            alert("Add fish to cart successfully!");
+        } else {
+            if (response.message === "Cá đã tồn tại trong giỏ hàng") {
+                alert("Fish already exists in cart!");
+            } else {
+                alert("Add fish to cart failed!");
+            }
+        }
+    };
         // Variable for showing filtered fish
     const items = searchTerm ? searchResults : data;
     // Return render here
@@ -70,10 +97,14 @@ export default function AllPromotion({ navigation }) {
                                         <Text style={styles.fishInCategoryFlatlistNewPrice}>{parseInt(item.GiaKhuyenMai)}</Text>
                                     </View>
                                 <View style={styles.buttonSection}>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {handleAddFishToWishlist(item.MaMatHang);}}
+                                    >
                                         <MaterialIcons name="favorite" size={25}></MaterialIcons>
                                     </TouchableOpacity>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {handleAddFishToCart(item.MaMatHang);}}
+                                    >
                                         <FontAwesome name="cart-plus" size={25}></FontAwesome>
                                     </TouchableOpacity>
                                 </View>                        

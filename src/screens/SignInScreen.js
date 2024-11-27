@@ -7,7 +7,7 @@ import { SubmitButton } from "../components/SubmitButton";
 // import useAuth
 import { useAuth } from "../context/authContext";
 export default function SignIn({ navigation }) {
-    const ipAddress = '192.168.153.102';
+    const ipAddress = '192.168.232.102';
     const { login } = useAuth();
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -28,19 +28,19 @@ export default function SignIn({ navigation }) {
             if (response.ok) {
                 const data = await response.json();
                 if (data.success) {
-                    alert('Đăng nhập thành công!');
+                    alert('Sign In successfully!');
                     login({
                         ma_nguoi_dung: data.ma_tai_khoan,
                         isAdmin: data.isAdmin,
                     });
                     navigation.navigate("HomeTabs");
-                } else if (data.message === 'Tài khoản chưa được xác nhận!') {
-                    alert('Đăng nhập thất bại! Tài khoản chưa được xác nhận! Kiểm tra email để xác nhận!');
+                } else if (data.message === 'Your account hasnt been verified yet!') {
+                    alert('Sign in failed! Your account hasnt been verified yet! Check your email to verfiry your account!');
                 } else {
-                    alert('Đăng nhập thất bại!');
+                    alert('Sign In failed!');
                 }
             } else {
-                alert('Đăng nhập thất bại!');
+                alert('Sign Ii failed!');
             }
         } catch (error) {
             console.error('Error:', error);

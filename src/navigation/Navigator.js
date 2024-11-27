@@ -30,29 +30,42 @@ import Octicons from "react-native-vector-icons/Octicons";
 import { useAuth } from "../context/authContext";
 // Import api routes
 import { addFishToWishList, deleteWishList } from "../routes/WishListRoutes/WishListRoutes";
+import { deleteFishFromCart } from "../routes/CartRoutes/CartRoutes";
 import ChangePassword from "../screens/ProfileChangePasswordScreen";
 // Function main
 export default function StackNavigator({ navigation }) {
     // Variables for userId
     const { userInfo } = useAuth();
     // Function add wishlist
-    const addWishList = async() => {
-        const response = await addFishToWishList();        
+    const handleAddFishToWishList = async(id) => {
+        const response = await addFishToWishList(userInfo.ma_nguoi_dung, id);
+        if (response.success) {
+            alert("Add fish to wishlist successfully!");
+        } else {
+            alert("Add fish to wishlist failed! Fish already exists in wishlist!");
+        }
     };
     // Function declared here
-    const handleDeleteWishList = async({ id, navigation}) => {
-        const response = await deleteWishList(id);
+    const handleDeleteWishList = async(navigation) => {
+        const response = await deleteWishList(userInfo.ma_nguoi_dung);
         if (response.success) {
-            alert(response.message)
+            alert("Delete all fishes from wishlist successfully!")
             // Refresh wishlist page here
             navigation.navigate("Wishlist", { refreshWishlist: true })
         } else {
-            alert(response.message);
+            alert("Delete all fishes from wishlist failed!");
         }
     };
     // Fucntion add cart
-    const handleDeleteCart = async() => {
-        
+    const handleDeleteCart = async(navigation) => {
+        const response = await deleteFishFromCart(userInfo.ma_nguoi_dung);
+        if (response.success) {
+            alert("Delete all fishes from cart successfully!")
+            // Refresh wishlist page here
+            navigation.navigate("Cart", { refreshCart: true })
+        } else {
+            alert("Delete all fishes from cart failed!");
+        }
     };
     // Create StackNavigator & BottomNavigator here
     const RootStack = createStackNavigator();
@@ -125,7 +138,7 @@ export default function StackNavigator({ navigation }) {
                     options={{
                         headerRight: () => (
                             <TouchableOpacity
-                                onPress={() => {handleDeleteWishList(userInfo.ma_nguoi_dung, navigation);}}
+                                onPress={() => {handleDeleteCart(navigation);}}
                                 style={{marginRight: 15}}
                             >
                                 <Octicons name="trash" size={25}></Octicons>
@@ -152,7 +165,7 @@ export default function StackNavigator({ navigation }) {
                     options={{       
                         headerRight: () => (
                             <TouchableOpacity
-                                onPress={() => {handleDeleteWishList(userInfo.ma_nguoi_dung, navigation);}}
+                                onPress={() => {handleDeleteWishList(navigation);}}
                                 style={{marginRight: 15}}
                             >
                                 <Octicons name="trash" size={25}></Octicons>
@@ -246,7 +259,7 @@ export default function StackNavigator({ navigation }) {
                     component={Detail}
                     options={({ route }) => ({
                         headerRight: () => (
-                            <TouchableOpacity onPress={() => {console.log(route.params.itemId);}}>
+                            <TouchableOpacity onPress={() => {handleAddFishToWishList(route.params.itemId);}}>
                                 <View style={{ marginRight: 15 }}>
                                     <MaterialIcons name="favorite-outline" size={25} />
                                 </View>

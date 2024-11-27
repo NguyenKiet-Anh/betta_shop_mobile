@@ -28,9 +28,9 @@ export default function FishView({ navigation, item }) {
     const handleAddWishList =  async(id) => {
         const response = await addFishToWishList(userInfo.ma_nguoi_dung, id);
         if (response.success) {
-            alert(response.message);
+            alert("Add fish to wishlist successfully!");
         } else {
-            alert(response.message);
+            alert("Add fish to wishlist failed! Fish already exists in wishlist");
         }
     };
     // Add fish to cart here

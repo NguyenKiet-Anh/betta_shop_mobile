@@ -14,6 +14,7 @@ import { useAuth } from "../context/authContext";
 // Import api routes
 import { getAllFishesAll, getAllCategories } from "../routes/HomeAndCategoriesScreen/HomeAndCategoriesRoutes";
 import { addFishToCart } from "../routes/CartRoutes/CartRoutes";
+import { addFishToWishList } from "../routes/WishListRoutes/WishListRoutes";
 // Main Function here
 export default function Category({ route, navigation }) {
     const { userInfo } = useAuth();
@@ -103,16 +104,25 @@ export default function Category({ route, navigation }) {
         };
         setSelectedCategory(category);    
     };    
+    // Add fish to wishlist
+    const handleAddFishToWishlist = async(id) => {
+        const response = await addFishToWishList(userInfo.ma_nguoi_dung, id);
+        if (response.success) {
+            alert("Add fish to wishlist successfully!");
+        } else {
+            alert("Add fish to wishlist failed! Fish already exists in wishlist!");
+        }
+    };
     // Add fish to cart
     const handleAddFishToCart = async(id) => {
         const response = await addFishToCart(userInfo.ma_nguoi_dung, id);
         if (response.success) {
-            alert(response.message);
+            alert("Add fish to cart successfully!");
         } else {
             if (response.message === "Cá đã tồn tại trong giỏ hàng") {
-                alert("Cá đã tồn tại trong giỏ hàng");
+                alert("Fish already exists in cart!");
             } else {
-                alert("Thêm cá vào giỏ hàng thất bại");
+                alert("Add fish to cart failed!");
             }
         }
     };
@@ -164,7 +174,9 @@ export default function Category({ route, navigation }) {
                                     )
                                 }                                                           
                                 <View style={styles.buttonSection}>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => {handleAddFishToWishlist(item.MaMatHang);}}
+                                    >
                                         <MaterialIcons name="favorite" size={25}></MaterialIcons>
                                     </TouchableOpacity>
                                     <TouchableOpacity

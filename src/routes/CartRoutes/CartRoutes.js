@@ -1,4 +1,4 @@
-const ipAddress = '192.168.153.102'
+const ipAddress = '192.168.232.102'
 // For getting Cart - GET method
 export const getCartById = async(id) => {
     try {
@@ -96,9 +96,11 @@ export const removeFishFromCart = async(userId, fishId) => {
 };
 
 // Deleting all items in cart
-export const deleteFishFromCart = async() => {
+export const deleteFishFromCart = async(userId) => {
     try {
-        return await fetch(`http://${ipAddress}:8000/deleteCart/${userID}`)
+        return await fetch(`http://${ipAddress}:8000/deleteCart/${userId}/`, {
+            method: 'DELETE'
+        })
         .then(response => {
             if (!response.ok) {
                 throw new Error("Network working failed");
