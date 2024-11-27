@@ -472,7 +472,6 @@ def remove_cart(request, ma_khach_hang, ma_ca):
           giohang = GioHang.objects.filter(MaKhachHang=ma_khach_hang).first()
           # Get cart detail
           chitiet = ChiTietGioHang.objects.filter(MaGioHang=giohang, MaMatHang=ma_ca)
-          print(chitiet)
           chitiet.delete()
           return Response({'success': True, 'message': 'Xóa thành công cá khỏi giỏ hàng!'})
      except Exception as e:
@@ -499,7 +498,6 @@ def get_user(request, ma_khach_hang):
      # Serializing data     
      serializers = NGUOIDUNG_Serializer(user)
      data = serializers.data
-     print(data["HinhAnh"])
      # Encode avatar before sending
      if data["HinhAnh"]:
           with open (data["HinhAnh"], 'rb') as file:
@@ -549,7 +547,7 @@ def update_user(request, ma_khach_hang):
                update_user_address.MaQuan.MaQuan = district_code
                # Update address
           if address != update_user_address.DiaChi:
-               update_user_address.DiaChi.DiaChi = address
+               update_user_address.DiaChi = address
           update_user_address.save()
           # Update account
           update_account = TaiKhoan.objects.get(MaTaiKhoan=ma_khach_hang)
