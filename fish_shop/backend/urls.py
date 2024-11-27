@@ -26,6 +26,8 @@ urlpatterns = [
     path('getUser/<int:ma_khach_hang>/', get_user, name='get_user_info'),
     path('updateUser/<int:ma_khach_hang>/', update_user, name='update_user_info'),
     path('changePassword/<int:ma_khach_hang>/', change_password, name='change_password'), #ma_khach_hang here refered to ma_tai_khoan
+    # For district
+    path('getAllDistricts/', get_all_districts, name='get_all_districts'),
 ]
 
 # ----- OLD VERSION -----

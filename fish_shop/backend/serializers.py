@@ -66,36 +66,9 @@ class NGUOIDUNG_DIACHI_Serializer(ModelSerializer):
     class Meta:
         model = KhachHangDiaChi
         fields = '__all__'
-        
-# ----- OLD VERSION -----
-# from rest_framework.serializers import ModelSerializer
-# from rest_framework import serializers
-# from .models import LOAICA, CA_BETTA, NGUOIDUNG, TAIKHOAN, GIOHANG, HOADON, CTHD_CA, CTHD_THUCAN, BCDS, GIOHANG_CA, THUCAN, YEUTHICH, YEUTHICH_DANHMUC_CA, YEUTHICH_DANHMUC_THUCAN, GIOHANG_THUCAN
 
-
-
-
-
-
-
-# # Serializer 4
-# class TAIKHOAN_Serializer(ModelSerializer):
-#     class Meta:
-#         model = TAIKHOAN
-#         fields = '__all__'
-
-
-
-# # Serializer 6
-# class HOADON_Serializer(ModelSerializer):
-#     class Meta:
-#         model = HOADON
-#         fields = '__all__'
-
-
-
-# # Serializer 7.1
-# class CTHD_CA_Serializer(ModelSerializer):
-#     class Meta:
-#         model = CTHD_THUCAN
-#         fields = '__all__'
+# # Serializer 11
+class QUAN_Serializer(ModelSerializer):
+    class Meta:
+        model = Quan
+        fields = '__all__'
