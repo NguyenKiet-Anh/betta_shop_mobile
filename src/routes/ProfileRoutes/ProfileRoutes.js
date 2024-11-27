@@ -1,4 +1,4 @@
-const ipAddress = '192.168.232.102';
+const ipAddress = '192.168.153.102';
 // For getting user's data
 export const getUserInfo = async(userId) => {
     try {
@@ -18,9 +18,9 @@ export const getUserInfo = async(userId) => {
 };
 // For editing information
 export const updateUserInfo = async(userId, item) => {
-    try {
+    try {        
         return await fetch(`http://${ipAddress}:8000/updateUser/${userId}/`,{
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -29,6 +29,7 @@ export const updateUserInfo = async(userId, item) => {
                 'phone_number': item.phoneNumber,
                 'district_code': item.districtCode,
                 'address': item.address,
+                'accountName': item.accountName
             })
         })
         .then(response => {
@@ -69,3 +70,21 @@ export const changePassword = async(userId, newPassword) => {
         console.error("Error changing account password: ", error);
     }
 };
+
+// Get all districts
+export const getAllDistricts = async() => {
+    try {
+        return await fetch(`http://${ipAddress}:8000/getAllDistricts/`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network working failed");
+            };
+            return response.json();
+        })
+        .then(data => {
+            return data;
+        })
+    } catch(error) {
+        console.error("Error fetching data: ", error);
+    }
+}

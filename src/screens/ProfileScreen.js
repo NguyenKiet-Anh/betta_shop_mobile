@@ -30,10 +30,6 @@ export default function Profile({ navigation }) {
             fetchData(userInfo.ma_nguoi_dung);
         }          
     }, [isFocusedProfile]);
-    // Upload avatar
-    const handleUploadAvatar = () => {
-        console.log("Upload avatar");
-    };
     // Goto change password
     const handleChangePass = () => {
         navigation.navigate("ChangePassword");
@@ -57,13 +53,13 @@ export default function Profile({ navigation }) {
                         onPress={() => {handleUploadAvatar();}}
                     >
                         <Image
-                            source={require("../assets/images/testImage/avatar1.jpeg")}
+                            source={{ uri: `data:image/jpeg;base64,${userData.khach_hang_info.HinhAnh}` }}
                             style={styles.imageStyle}
                         ></Image>                    
                     </TouchableOpacity>                
                     {/* Section for user's name */}
                     <View style={styles.nameSection}>
-                        <Text style={styles.nameText}>Nguyễn Anh Kiệt</Text>
+                        <Text style={styles.nameText}>{userData.khach_hang_info.TenKhachHang}</Text>
                         <TouchableOpacity
                             onPress={() => {navigation.navigate("EditProfile", {
                                 userId: userInfo.ma_nguoi_dung
