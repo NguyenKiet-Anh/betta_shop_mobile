@@ -7,6 +7,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 // Import Hook
 import { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
+import { launchImageLibrary, launchCamera } from "react-native-image-picker";
 // Import context
 import { useAuth } from "../context/authContext";
 // Import api routes
@@ -30,6 +31,33 @@ export default function Profile({ navigation }) {
             fetchData(userInfo.ma_nguoi_dung);
         }          
     }, [isFocusedProfile]);
+    // Upload avatar upload
+    const handleUploadAvatar = async() => {
+        const options = {
+            mediaType: 'photo', // Just chose images
+            includeBase64: true, // Include image in base64 type
+            quality: 0.5 // Image's quality: 0 - 1
+        };
+
+        // Open images library
+        launchImageLibrary(options, (response) => {
+        if (response.didCancel) {
+            console.log('User cancelled image picker');
+        } else if (response.errorCode) {
+            console.log('ImagePicker Error: ', response.errorCode);
+        } else {
+            // Get image in both base64 and uri
+            const avatarUri = response.assets[0].uri;                        
+            setUserData(prevData => ({
+                ...prevData,
+                khach_hang_info: {
+                    ...prevData.khach_hang_info,
+                    HinhAnh: avatarUri 
+                }
+            }));
+        }
+    });
+    };
     // Goto change password
     const handleChangePass = () => {
         navigation.navigate("ChangePassword");
@@ -53,9 +81,13 @@ export default function Profile({ navigation }) {
                         onPress={() => {handleUploadAvatar();}}
                     >
                         <Image
-                            source={{ uri: `data:image/jpeg;base64,${userData.khach_hang_info.HinhAnh}` }}
+                            source={{ 
+                                uri: userData.khach_hang_info.HinhAnh 
+                                    ? `data:image/jpeg;base64,${userData.khach_hang_info.HinhAnh}`
+                                    : 'default_avatar_url'
+                            }}
                             style={styles.imageStyle}
-                        ></Image>                    
+                        ></Image>
                     </TouchableOpacity>                
                     {/* Section for user's name */}
                     <View style={styles.nameSection}>
