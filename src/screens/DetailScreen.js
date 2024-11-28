@@ -58,6 +58,8 @@ export default function Detail({ route, navigation }) {
         } else {
             if (response.message === "Cá đã tồn tại trong giỏ hàng") {
                 alert("Fish already exists in cart!");
+            } else if (response.message === "Cá đã hết hàng") {
+                alert("Fish out of stock");
             } else {
                 alert("Add fish to cart failed!");
             }
