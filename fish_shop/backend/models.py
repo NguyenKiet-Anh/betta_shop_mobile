@@ -2,7 +2,9 @@ import os
 from django.db import models
 from django.urls import reverse
 import operator
+
 # Create your models here.
+
 
 # Table 1
 class Quan(models.Model):
@@ -11,7 +13,8 @@ class Quan(models.Model):
     TenThanhPho = models.CharField(max_length=100)
 
     class Meta:
-        db_table = 'QUAN'
+        db_table = "QUAN"
+
 
 # Table 2
 class LoaiDaiLy(models.Model):
@@ -20,7 +23,8 @@ class LoaiDaiLy(models.Model):
     SoTienNoToiDa = models.DecimalField(max_digits=12, decimal_places=4, default=0)
 
     class Meta:
-        db_table = 'LOAIDAILY'
+        db_table = "LOAIDAILY"
+
 
 # Table 3
 class DaiLy(models.Model):
@@ -33,7 +37,8 @@ class DaiLy(models.Model):
     HinhAnh = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
-        db_table = 'DAILY'
+        db_table = "DAILY"
+
 
 # Table 4
 class LoaiMatHang(models.Model):
@@ -41,14 +46,16 @@ class LoaiMatHang(models.Model):
     TenLoaiMatHang = models.CharField(max_length=100, unique=True)
 
     class Meta:
-        db_table = 'LOAIMATHANG'
+        db_table = "LOAIMATHANG"
+
 
 # Table 5
 class MatHang(models.Model):
     # Class for gender choices
     class Gioitinh(models.TextChoices):
-        Duc = ('M', 'đực')
-        Cai = ('F', 'cái')
+        Duc = ("M", "đực")
+        Cai = ("F", "cái")
+
     MaMatHang = models.SmallAutoField(primary_key=True)
     TenMatHang = models.CharField(max_length=100, unique=True)
     SoLuongTon = models.IntegerField(default=0)
@@ -56,7 +63,9 @@ class MatHang(models.Model):
     KhuyenMai = models.BooleanField(default=False)
     GiaKhuyenMai = models.DecimalField(max_digits=12, decimal_places=4, default=0)
     TenDVT = models.CharField(max_length=50)
-    Gioitinh = models.CharField(max_length=1, choices=Gioitinh.choices, default=Gioitinh.Duc)
+    Gioitinh = models.CharField(
+        max_length=1, choices=Gioitinh.choices, default=Gioitinh.Duc
+    )
     HinhAnh1 = models.CharField(max_length=200, blank=True, null=True)
     HinhAnh2 = models.CharField(max_length=200, blank=True, null=True)
     HinhAnh3 = models.CharField(max_length=200, blank=True, null=True)
@@ -65,22 +74,24 @@ class MatHang(models.Model):
     MaLoaiMatHang = models.ForeignKey(LoaiMatHang, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'MATHANG'
+        db_table = "MATHANG"
+
 
 # Table 6
 class TaiKhoan(models.Model):
     MaTaiKhoan = models.SmallAutoField(primary_key=True)
     isAdmin = models.BooleanField(default=False)
-    isCustomer = models.BooleanField(default=True)
+    isCustomer = models.BooleanField(default=False)
     TenTaiKhoan = models.CharField(max_length=100, unique=True)
     MatKhau = models.CharField(max_length=200)
     isActivated = models.BooleanField(default=False)
-    
+
     # status = models.BooleanField(default=False)
     verification_token = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
-        db_table = 'TAIKHOAN'
+        db_table = "TAIKHOAN"
+
 
 # Table 7
 class KhachHang(models.Model):
@@ -89,8 +100,10 @@ class KhachHang(models.Model):
     SoDienThoai = models.CharField(max_length=20, unique=True)
     Email = models.TextField(blank=True, null=True)
     HinhAnh = models.CharField(max_length=200, blank=True, null=True)
+
     class Meta:
-        db_table = 'KHACHHANG'
+        db_table = "KHACHHANG"
+
 
 # Table 8
 class TaiKhoanKhachHang(models.Model):
@@ -98,8 +111,9 @@ class TaiKhoanKhachHang(models.Model):
     MaTaiKhoan = models.ForeignKey(TaiKhoan, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'TAIKHOAN_KHACHHANG'
-        unique_together = ('MaKhachHang', 'MaTaiKhoan')  # Composite Primary Key
+        db_table = "TAIKHOAN_KHACHHANG"
+        unique_together = ("MaKhachHang", "MaTaiKhoan")  # Composite Primary Key
+
 
 # Table 9
 class KhachHangDiaChi(models.Model):
@@ -108,8 +122,9 @@ class KhachHangDiaChi(models.Model):
     DiaChi = models.CharField(max_length=200)
 
     class Meta:
-        db_table = 'KHACHHANG_DIACHI'
-        unique_together = ('MaKhachHang', 'MaQuan')
+        db_table = "KHACHHANG_DIACHI"
+        unique_together = ("MaKhachHang", "MaQuan")
+
 
 # Table 10
 class PhieuXuatHang(models.Model):
@@ -120,7 +135,8 @@ class PhieuXuatHang(models.Model):
     MaKhachHang = models.ForeignKey(KhachHang, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'PHIEUXUATHANG'
+        db_table = "PHIEUXUATHANG"
+
 
 # Table 11
 class ChiTietPhieuXuatHang(models.Model):
@@ -130,7 +146,8 @@ class ChiTietPhieuXuatHang(models.Model):
     SoLuongXuat = models.IntegerField(default=0)
 
     class Meta:
-        db_table = 'CHITIET_PXH'
+        db_table = "CHITIET_PXH"
+
 
 # Table 12
 class YeuThich(models.Model):
@@ -138,8 +155,9 @@ class YeuThich(models.Model):
     MaMatHang = models.ForeignKey(MatHang, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'YEUTHICH'
-        unique_together = ('MaKhachHang', 'MaMatHang')
+        db_table = "YEUTHICH"
+        unique_together = ("MaKhachHang", "MaMatHang")
+
 
 # Table 13
 class GioHang(models.Model):
@@ -148,28 +166,34 @@ class GioHang(models.Model):
     TongTien = models.DecimalField(max_digits=12, decimal_places=4, default=0.0000)
 
     class Meta:
-        db_table = 'GIOHANG'
+        db_table = "GIOHANG"
+
 
 # Table 14
 class ChiTietGioHang(models.Model):
-    MaGioHang = models.ForeignKey('GioHang', on_delete=models.CASCADE)
-    MaMatHang = models.ForeignKey('MatHang', on_delete=models.CASCADE)
+    MaGioHang = models.ForeignKey("GioHang", on_delete=models.CASCADE)
+    MaMatHang = models.ForeignKey("MatHang", on_delete=models.CASCADE)
     SoLuong = models.IntegerField(default=0)
     ThanhTien = models.DecimalField(max_digits=12, decimal_places=4, default=0.0000)
     TinhTrang = models.BooleanField(default=False)
 
     class Meta:
-        db_table = 'CHITIET_GIOHANG'
-        unique_together = ('MaGioHang', 'MaMatHang')
+        db_table = "CHITIET_GIOHANG"
+        unique_together = ("MaGioHang", "MaMatHang")
+
 
 # Table 15
 class DanhGia(models.Model):
-    MaKhachHang = models.ForeignKey('KhachHang', on_delete=models.CASCADE)
-    MaMatHang = models.ForeignKey('MatHang', on_delete=models.CASCADE)
+    MaKhachHang = models.ForeignKey("KhachHang", on_delete=models.CASCADE)
+    MaMatHang = models.ForeignKey("MatHang", on_delete=models.CASCADE)
+    ThoiDiem = models.DateTimeField(auto_now_add=True)
+    BinhLuan = models.CharField(max_length=500, blank=True, null=True)
+    Sao = models.SmallIntegerField(null=True)
 
     class Meta:
-        db_table = 'DANHGIA'
-        unique_together = ('MaKhachHang', 'MaMatHang')
+        db_table = "DANHGIA"
+        unique_together = ("MaKhachHang", "MaMatHang", "ThoiDiem")
+
 
 # Table 16
 class PhuongThucGiaoDich(models.Model):
@@ -177,24 +201,26 @@ class PhuongThucGiaoDich(models.Model):
     TenPhuongThuc = models.CharField(max_length=100, unique=True)
 
     class Meta:
-        db_table = 'PHUONGTHUC_GIAODICH'
+        db_table = "PHUONGTHUC_GIAODICH"
+
 
 # Table 17
 class KhachHangPhuongThuc(models.Model):
-    MaKhachHang = models.ForeignKey('KhachHang', on_delete=models.CASCADE)
-    MaPhuongThuc = models.ForeignKey('PhuongThucGiaoDich', on_delete=models.CASCADE)
+    MaKhachHang = models.ForeignKey("KhachHang", on_delete=models.CASCADE)
+    MaPhuongThuc = models.ForeignKey("PhuongThucGiaoDich", on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'KHACHHANG_PHUONGTHUC'
-        unique_together = ('MaKhachHang', 'MaPhuongThuc')
+        db_table = "KHACHHANG_PHUONGTHUC"
+        unique_together = ("MaKhachHang", "MaPhuongThuc")
+
 
 # Table 18
 class LichSuThanhToan(models.Model):
-    MaGioHang = models.ForeignKey('GioHang', on_delete=models.CASCADE)
-    MaKhachHang = models.ForeignKey('KhachHang', on_delete=models.CASCADE)
-    MaPhuongThuc = models.ForeignKey('PhuongThucGiaoDich', on_delete=models.CASCADE)
+    MaGioHang = models.ForeignKey("GioHang", on_delete=models.CASCADE)
+    MaKhachHang = models.ForeignKey("KhachHang", on_delete=models.CASCADE)
+    MaPhuongThuc = models.ForeignKey("PhuongThucGiaoDich", on_delete=models.CASCADE)
     ThoiDiem = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'LICHSU_THANHTOAN'
-        unique_together = ('MaGioHang', 'MaKhachHang', 'MaPhuongThuc', 'ThoiDiem')
+        db_table = "LICHSU_THANHTOAN"
+        unique_together = ("MaGioHang", "MaKhachHang", "MaPhuongThuc", "ThoiDiem")
