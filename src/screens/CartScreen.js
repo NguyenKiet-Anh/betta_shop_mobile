@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, SafeAreaView, Modal } from "react-native";
 // Import Hook
 import { useState, useEffect } from "react";
 import { useIsFocused } from '@react-navigation/native';
@@ -17,6 +17,9 @@ export default function Cart({ navigation, route }) {
     const [amount, setAmount] = useState(0); //
     const [totalPrice, setTotalPrice] = useState(0);
     const [isLoading, setIsLoading] = useState(true); // For controlling render event
+    const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false); // Payment Modal
+    const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false); // Confirmation Modal
+    const [isProcessing, setIsProcessing] = useState(false); // Payment processing
     const isFocusedCart = useIsFocused(); // For re-run useEffect
     // Functions here
     // useEffect for getting wishlsit for the first time accessing wishlist screen
@@ -25,11 +28,6 @@ export default function Cart({ navigation, route }) {
         setFishData(cartData);
         setIsLoading(false);
     }; 
-    // useEffect(() => {        
-    //     if (isFocusedCart) {
-    //         refreshCart();
-    //     };
-    // }, [isFocusedCart]);
     useEffect(() => {
         if (isFocusedCart || route.params?.refreshCart) {
             refreshCart(); // Fetch fresh wishlist data
@@ -41,11 +39,10 @@ export default function Cart({ navigation, route }) {
     }, [isFocusedCart, route.params?.refreshCart]);
     // Function for updating cart
     const handleUpdateCart = async() => {
-
     };
     // Function for removing all cart list
     // Function for removing item from cart list
-    const hanldeRemoveFish = async(id) => {
+    const handleRemoveFish = async(id) => {
         const response = await removeFishFromCart(userInfo.ma_nguoi_dung, id);
         if (response.success) {
             setFishData(fishData.filter(item => item.MaMatHang !== id));
@@ -54,7 +51,25 @@ export default function Cart({ navigation, route }) {
             alert("Remove fish failed!");
         }
     };
-
+    // Function for handling payment
+    const handlePayment = async () => {
+        setIsProcessing(true);
+        // Call Momo payment API
+        const paymentResponse = await makePayment(userInfo.ma_nguoi_dung, totalPrice);
+        if (paymentResponse.success) {
+            // Reset cart after successful payment
+            alert("Payment successful!");
+            setFishData([]); // REset cart
+        } else {
+            alert("Payment failed!");
+        }
+        setIsProcessing(false);
+        setIsPaymentModalVisible(false);
+    };
+    // Function for handling payment confirmation
+    const handleConfirmation = () => {
+        setIsConfirmationModalVisible(true);
+    };
     // Return View for each fish in cart
     const itemView = ({ item }) => {
         return (
@@ -113,7 +128,7 @@ export default function Cart({ navigation, route }) {
                 </View>
                 <View style={styles.actionButton}>                        
                     <TouchableOpacity 
-                        onPress={() => {hanldeRemoveFish(item.MaMatHang);}}
+                        onPress={() => {handleRemoveFish(item.MaMatHang);}}
                         style={styles.removeButton}
                     >
                         <Feather name="trash" size={23}></Feather>
@@ -137,7 +152,6 @@ export default function Cart({ navigation, route }) {
             </TouchableOpacity>
         );
     };
-
     // Return render here
     return (
         <SafeAreaView style={styles.container}>
@@ -167,6 +181,45 @@ export default function Cart({ navigation, route }) {
                         </View>                    
                 </TouchableOpacity>
             </View>
+             {/* Payment Modal */}
+             <Modal
+                visible={isPaymentModalVisible}
+                animationType="slide"
+                transparent={true}
+                onRequestClose={() => setIsPaymentModalVisible(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>Choose Payment Method</Text>
+                        <TouchableOpacity onPress={handleConfirmation}>
+                            <Text style={styles.modalButton}>Momo Payment</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => setIsPaymentModalVisible(false)}>
+                            <Text style={styles.modalButton}>Cancel</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
+            {/* Confirm Modal */}
+            <Modal
+                visible={isConfirmationModalVisible}
+                animationType="fade"
+                transparent={true}
+                onRequestClose={() => setIsConfirmationModalVisible(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>Are you sure you want to pay?</Text>
+                        <TouchableOpacity onPress={handlePayment} style={styles.modalButton}>
+                            <Text>Yes</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => setIsConfirmationModalVisible(false)} style={styles.modalButton}>
+                            <Text>No</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 };
