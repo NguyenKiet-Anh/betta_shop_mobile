@@ -158,4 +158,3 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'edwarddao20@gmail.com'
 EMAIL_HOST_PASSWORD = 'hgbn xlyy yubz tbbt'
 DEFAULT_FROM_EMAIL = 'shopbanca@gmail.com'
-

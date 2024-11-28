@@ -528,6 +528,129 @@ def delete_cart(request, ma_khach_hang):
      except:
           return Response({'success': False, 'message': 'Xóa tất cả cá khỏi giỏ hàng thất bại!'})
 
+
+
+
+# API for create payment link
+@api_view(['POST'])
+def create_payment_link(request):
+     try:
+          # Data for create payment link
+          import json
+          import uuid
+          import requests
+          import hmac
+          import hashlib
+          # parameters send to MoMo get get payUrl
+          endpoint = "https://test-payment.momo.vn/v2/gateway/api/create"
+          accessKey = "F8BBA842ECF85"
+          secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
+          orderInfo = "pay with MoMo"
+          partnerCode = "MOMO"
+          redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b"
+          ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b"
+          amount = "50000"
+          orderId = str(uuid.uuid4())
+          requestId = str(uuid.uuid4())
+          extraData = ""  # pass empty value or Encode base64 JsonString
+          partnerName = "MoMo Payment"
+          requestType = "payWithMethod"
+          storeId = "Test Store"
+          orderGroupId = ""
+          autoCapture = True
+          lang = "vi"
+          orderGroupId = ""
+          # before sign HMAC SHA256 with format: accessKey=$accessKey&amount=$amount&extraData=$extraData&ipnUrl=$ipnUrl
+          # &orderId=$orderId&orderInfo=$orderInfo&partnerCode=$partnerCode&redirectUrl=$redirectUrl&requestId=$requestId
+          # &requestType=$requestType
+          rawSignature = "accessKey=" + accessKey + "&amount=" + amount + "&extraData=" + extraData + "&ipnUrl=" + ipnUrl + "&orderId=" + orderId \
+                         + "&orderInfo=" + orderInfo + "&partnerCode=" + partnerCode + "&redirectUrl=" + redirectUrl\
+                         + "&requestId=" + requestId + "&requestType=" + requestType
+          # puts raw signature
+          print("--------------------RAW SIGNATURE----------------")
+          print(rawSignature)
+          # signature
+          h = hmac.new(bytes(secretKey, 'ascii'), bytes(rawSignature, 'ascii'), hashlib.sha256)
+          signature = h.hexdigest()
+          print("--------------------SIGNATURE----------------")
+          print(signature)
+          # json object send to MoMo endpoint
+          data = {
+               'partnerCode': partnerCode,
+               'orderId': orderId,
+               'partnerName': partnerName,
+               'storeId': storeId,
+               'ipnUrl': ipnUrl,
+               'amount': amount,
+               'lang': lang,
+               'requestType': requestType,
+               'redirectUrl': redirectUrl,
+               'autoCapture': autoCapture,
+               'orderInfo': orderInfo,
+               'requestId': requestId,
+               'extraData': extraData,
+               'signature': signature,
+               'orderGroupId': orderGroupId
+          }
+          # Convert to JSON file
+          data = json.dumps(data)
+          # Send link create to MOMO
+          response = requests.post(endpoint, data=data, headers={'Content-Type': 'application/json', 'Content-Length': str(len(data))})
+          # Check response from MOMO
+          if response.status_code == 200:
+               result = response.json()               
+               if result['resultCode'] == 0:
+                    # Trả về link thanh toán nếu thành công
+                    return Response({'success': True, 'result': result, 'message': result["message"]})
+               else:
+                    return Response({'success': False, 'error': result["message"]})
+          else:
+               return Response({'success': False, 'error': 'Request failed', 'details': response.text})
+     except Exception as e:
+          return Response({'success': False, 'error': str(e)})
+
+# # API for get notification from MOMO
+@api_view(['POST'])
+def transaction_status(request):
+    try:
+          import hmac
+          import hashlib
+          import requests
+
+          # order_id = request.data.get('orderId')
+          order_id = 'a643c513-0f8b-4f45-93a9-a710a3f8abb6'
+
+          partner_code = "MOMO"
+          access_key = "F8BBA842ECF85"
+          secret_key = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
+          request_id = order_id
+          
+          raw_signature = f"accessKey={access_key}&orderId={order_id}&partnerCode={partner_code}&requestId={request_id}"
+          
+          h = hmac.new(bytes(secret_key, 'ascii'), bytes(raw_signature, 'ascii'), hashlib.sha256)
+          signature = h.hexdigest()        
+
+          data = {
+               'partnerCode': partner_code,
+               'requestId': request_id,
+               'orderId': order_id,
+               'signature': signature,
+               'lang': 'vi'  # Ngôn ngữ mặc định
+          }
+          endpoint = "https://test-payment.momo.vn/v2/gateway/api/query"
+
+          response = requests.post(endpoint, json=data, headers={'Content-Type': 'application/json'})
+
+          if response.status_code == 200:
+               result = response.json()
+               return Response({'success': True, 'result': result, 'message': result.get("message", "Success")})
+          else:
+               return Response({'success': False, 'error': 'Request failed', 'details': response.text})
+    
+    except Exception as e:
+          return Response({'success': False, 'error': str(e)})
+
+
 # Get profile information
 @api_view(['GET'])
 def get_user(request, ma_khach_hang):     
