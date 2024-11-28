@@ -27,11 +27,7 @@ export const addFishToCart = async(userId, fishId) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'userId': userId,
-                'fishId': fishId
-            })
+            }
         })
         .then(response => {
             if (!response.ok) {
@@ -52,9 +48,17 @@ export const addFishToCart = async(userId, fishId) => {
 
 
 // For changing amount of product - PUT method
-export const changeAmount = async(userId, action, amount) => {
+export const changeAmount = async(userId, action, fishId) => {
     try {
-        return await fetch(`http://${ipAddress}:8000/updateCart/${userId}/${action}/${amount}`)
+        return await fetch(`http://${ipAddress}:8000/updateCart/${userId}/${fishId}/`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "action": action
+            })
+        })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network working failed');

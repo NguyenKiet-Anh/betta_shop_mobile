@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, SafeAreaView, Modal } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, SafeAreaView } from "react-native";
 // Import Hook
 import { useState, useEffect } from "react";
 import { useIsFocused } from '@react-navigation/native';
@@ -8,7 +8,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 // Import context
 import { useAuth } from "../context/authContext";
 // Import api routes
-import { getCartById, removeFishFromCart } from "../routes/CartRoutes/CartRoutes";
+import { changeAmount, getCartById, removeFishFromCart } from "../routes/CartRoutes/CartRoutes";
 // Main function
 export default function Cart({ navigation, route }) {
     // Variables here    
@@ -17,17 +17,22 @@ export default function Cart({ navigation, route }) {
     const [amount, setAmount] = useState(0); //
     const [totalPrice, setTotalPrice] = useState(0);
     const [isLoading, setIsLoading] = useState(true); // For controlling render event
-    const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false); // Payment Modal
-    const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false); // Confirmation Modal
-    const [isProcessing, setIsProcessing] = useState(false); // Payment processing
     const isFocusedCart = useIsFocused(); // For re-run useEffect
     // Functions here
     // useEffect for getting wishlsit for the first time accessing wishlist screen
     const refreshCart = async () => {
         const cartData = await getCartById(userInfo.ma_nguoi_dung);
         setFishData(cartData);
-        setIsLoading(false);
-    }; 
+        setIsLoading(false);// Calculate total price
+        const calculateTotalPrice = () => {
+            let total = 0;
+            cartData.forEach(item => {   
+                total += parseInt(item.ca_info.GiaKhuyenMai) !== parseInt(0) ? parseInt(item.ca_info.GiaKhuyenMai) : parseInt(item.ca_info.Dongia);
+            });
+            setTotalPrice(total);
+        };
+        calculateTotalPrice();
+    };     
     useEffect(() => {
         if (isFocusedCart || route.params?.refreshCart) {
             refreshCart(); // Fetch fresh wishlist data
@@ -38,38 +43,66 @@ export default function Cart({ navigation, route }) {
         }
     }, [isFocusedCart, route.params?.refreshCart]);
     // Function for updating cart
-    const handleUpdateCart = async() => {
+    const handleUpdateCart = async(action, fishId, currentAmount, amountInStock) => {        
+        let condition = true;
+        if (action === "Increase") {
+            if (amountInStock <= 0) {
+                condition = false;
+                alert("Can not add more fish! This amount the highest you can buy");
+            }
+        } else if (action === "Reduce") {
+            if (currentAmount == 1) {
+                condition = false;
+                handleRemoveFish(fishId);
+            }
+        }
+        if (condition) {
+            const response = await changeAmount(userInfo.ma_nguoi_dung, action, fishId);
+            if (response.success) {
+                if (action === "Increase") {                    
+                    fishData.forEach(item => {
+                        if (item.ca_info.MaMatHang === fishId) {
+                            item.ca_info.SoLuong += 1;
+                        };
+                    });
+                    alert("Add one fish successfully!");
+                } else {
+                    fishData.forEach(item => {
+                        if (item.ca_info.MaMatHang === fishId) {
+                            item.ca_info.SoLuong -= 1;
+                        };
+                    });
+                    alert("Remove one fish successfully!");
+                }
+                refreshCart();
+            } else {
+                if (action === "Increase") {
+                    alert("Add one fish faield!");
+                } else {
+                    alert("Remove one fish failed!");
+                };
+            };
+        }
     };
     // Function for removing all cart list
     // Function for removing item from cart list
     const handleRemoveFish = async(id) => {
         const response = await removeFishFromCart(userInfo.ma_nguoi_dung, id);
         if (response.success) {
+            let total = totalPrice;
+            fishData.forEach(item => {
+                if (item.ca_info.MaMatHang === id) {
+                    total -= parseInt(item.ca_info.GiaKhuyenMai) !== parseInt(0) ? parseInt(item.ca_info.GiaKhuyenMai) : parseInt(item.ca_info.Dongia);
+                };
+            });
+            setTotalPrice(total);
             setFishData(fishData.filter(item => item.MaMatHang !== id));
             alert("Remove fish successfully!");
         } else {
             alert("Remove fish failed!");
         }
     };
-    // Function for handling payment
-    const handlePayment = async () => {
-        setIsProcessing(true);
-        // Call Momo payment API
-        const paymentResponse = await makePayment(userInfo.ma_nguoi_dung, totalPrice);
-        if (paymentResponse.success) {
-            // Reset cart after successful payment
-            alert("Payment successful!");
-            setFishData([]); // REset cart
-        } else {
-            alert("Payment failed!");
-        }
-        setIsProcessing(false);
-        setIsPaymentModalVisible(false);
-    };
-    // Function for handling payment confirmation
-    const handleConfirmation = () => {
-        setIsConfirmationModalVisible(true);
-    };
+
     // Return View for each fish in cart
     const itemView = ({ item }) => {
         return (
@@ -135,14 +168,14 @@ export default function Cart({ navigation, route }) {
                     </TouchableOpacity>
                     <View style={styles.actionButtonSection}>
                         <TouchableOpacity 
-                            onPress={() => {handleUpdateCart(item.MaMatHang);}}
+                            onPress={() => {handleUpdateCart("Reduce", item.ca_info.MaMatHang, item.SoLuong, item.ca_info.SoLuongTon);}}
                             style={styles.button}
                         >
                             <Feather name="minus" size={23}></Feather>
                         </TouchableOpacity>
-                        <Text style={styles.amountStyle}>{amount}</Text>
+                        <Text style={styles.amountStyle}>{item.SoLuong}</Text>
                         <TouchableOpacity 
-                            onPress={() => {handleUpdateCart(item.MaMatHang);}}
+                            onPress={() => {handleUpdateCart("Increase", item.ca_info.MaMatHang, item.SoLuong, item.ca_info.SoLuongTon);}}
                             style={styles.button}
                         >
                             <Feather name="plus" size={23} style={{fontWeight: 'bold'}}></Feather>
@@ -152,6 +185,7 @@ export default function Cart({ navigation, route }) {
             </TouchableOpacity>
         );
     };
+
     // Return render here
     return (
         <SafeAreaView style={styles.container}>
@@ -168,7 +202,7 @@ export default function Cart({ navigation, route }) {
                     <Text style={{fontSize: 16,fontWeight: '200'}}>Amount Price</Text>
                     <View style={styles.priceSection}>
                         <Feather name="dollar-sign" size={15}></Feather>
-                        <Text style={{fontSize: 25, fontWeight: '500'}}>{totalPrice}</Text>
+                        <Text style={{fontSize: 25, fontWeight: '500'}}>{parseInt(totalPrice)}</Text>
                     </View>
                 </View>
                 
@@ -181,45 +215,6 @@ export default function Cart({ navigation, route }) {
                         </View>                    
                 </TouchableOpacity>
             </View>
-             {/* Payment Modal */}
-             <Modal
-                visible={isPaymentModalVisible}
-                animationType="slide"
-                transparent={true}
-                onRequestClose={() => setIsPaymentModalVisible(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Choose Payment Method</Text>
-                        <TouchableOpacity onPress={handleConfirmation}>
-                            <Text style={styles.modalButton}>Momo Payment</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setIsPaymentModalVisible(false)}>
-                            <Text style={styles.modalButton}>Cancel</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
-
-            {/* Confirm Modal */}
-            <Modal
-                visible={isConfirmationModalVisible}
-                animationType="fade"
-                transparent={true}
-                onRequestClose={() => setIsConfirmationModalVisible(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Are you sure you want to pay?</Text>
-                        <TouchableOpacity onPress={handlePayment} style={styles.modalButton}>
-                            <Text>Yes</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setIsConfirmationModalVisible(false)} style={styles.modalButton}>
-                            <Text>No</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
         </SafeAreaView>
     );
 };
