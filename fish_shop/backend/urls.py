@@ -19,7 +19,7 @@ urlpatterns = [
     # For cart
     path('getCart/<int:ma_khach_hang>/', get_cart, name='get_cart'),
     path('addCart/<int:ma_khach_hang>/<int:ma_ca>/', add_cart, name='add_cart'),
-    path('updateCart/<int:ma_khach_hang>/<int:action_option>/<int:amount>/', update_cart, name='update_cart'),
+    path('updateCart/<int:ma_khach_hang>/<int:ma_ca>/', update_cart, name='update_cart'),
     path('removeCart/<int:ma_khach_hang>/<int:ma_ca>/', remove_cart, name='remove_cart'),
     path('deleteCart/<int:ma_khach_hang>/', delete_cart, name='delete_cart'),
     # For user

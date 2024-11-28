@@ -425,16 +425,18 @@ def get_cart(request, ma_khach_hang):
 def add_cart(request, ma_khach_hang, ma_ca):
      try:
           # Get fish from database
-          fish = MatHang.objects.filter(MaMatHang=ma_ca).first()     
+          fish = MatHang.objects.filter(MaMatHang=ma_ca).first()
           # Get cart
           giohang = GioHang.objects.filter(MaKhachHang=ma_khach_hang).first()
           # Add item to cart
           check_fish = ChiTietGioHang.objects.filter(MaGioHang=giohang, MaMatHang=fish).first()
-          if check_fish:
-               
+          if check_fish:          
                # Return message that annouces to client the problem in process
                return Response({'success': False, 'message': 'Cá đã tồn tại trong giỏ hàng'})
-          else:               
+          else:  
+               # Update TongTien
+               giohang.TongTien += fish.Dongia
+               giohang.save();
                # Add fish to ChiTietGioHang table
                # If khuyenmai = false
                if fish.KhuyenMai == False:
@@ -453,6 +455,12 @@ def add_cart(request, ma_khach_hang, ma_ca):
                          ThanhTien = fish.GiaKhuyenMai,
                          TinhTrang = False
                     )
+               # Reduce SoLuongTon
+               if fish.SoLuongTon >= 1:
+                    fish.SoLuongTon -= 1
+                    fish.save()
+               else:
+                    return Response({'success': False, 'message': 'Cá đã hết hàng'})
                # Return message anoucing successful process
           return Response({'success': True, 'message': 'Thêm cá vào giỏ hàng thành công'})
      except Exception as e:
@@ -461,17 +469,47 @@ def add_cart(request, ma_khach_hang, ma_ca):
 
 # Update cart
 @api_view(['PUT'])
-def update_cart(request):
-     pass
+def update_cart(request, ma_khach_hang, ma_ca):
+     try:
+          action = request.data.get('action')
+          # Get fish
+          fish = MatHang.objects.get(MaMatHang=ma_ca)
+          # Get khachang
+          khachhang = TaiKhoanKhachHang.objects.get(MaTaiKhoan=ma_khach_hang)
+          # Get giohang
+          giohang = GioHang.objects.filter(MaKhachHang=khachhang.MaKhachHang.MaKhachHang).first()
+          # Get giohang_chitiet
+          chitiet = ChiTietGioHang.objects.filter(MaGioHang=giohang.MaGioHang, MaMatHang=ma_ca).first()
+          # Update giohang_chitiet
+          if (action == "Increase"):
+               chitiet.SoLuong += 1
+               fish.SoLuongTon -= 1
+          elif (action == "Reduce"):               
+               chitiet.SoLuong -= 1
+               fish.SoLuongTon += 1
+          fish.save()
+          chitiet.save()
+          return Response({"success": True})
+     except Exception as e:
+          print(e)
+          return Response({"success": False})
 
 # Delete cart
 @api_view(['DELETE'])
 def remove_cart(request, ma_khach_hang, ma_ca):
      try:
           # Get cart
-          giohang = GioHang.objects.filter(MaKhachHang=ma_khach_hang).first()
+          giohang = GioHang.objects.filter(MaKhachHang=ma_khach_hang).first()        
+          # Get fish
+          fish = MatHang.objects.filter(MaMatHang=ma_ca).first()     
+          # Reduct total price in giohang
+          giohang.TongTien -= fish.Dongia
+          giohang.save()
           # Get cart detail
-          chitiet = ChiTietGioHang.objects.filter(MaGioHang=giohang, MaMatHang=ma_ca)
+          chitiet = ChiTietGioHang.objects.filter(MaGioHang=giohang, MaMatHang=ma_ca).first()
+          # Increase SoLuongTon
+          fish.SoLuongTon += chitiet.SoLuong
+          fish.save()
           chitiet.delete()
           return Response({'success': True, 'message': 'Xóa thành công cá khỏi giỏ hàng!'})
      except Exception as e:
@@ -589,88 +627,9 @@ def get_all_districts(request):
           return Response({'success': True, 'districts': serializers.data})
      except:
           return Response({'success': False})
+     
+
 # Checking out cart
-
-
-# ----- OLD VERSION -----
-# # Thực hiện mua cá - dọn giỏ hàng
-     
-# # Cập nhật GIOHANG_CA - khi có thay đổi trong giỏ hàng
-# @api_view(['POST'])
-# def updateCart(request):
-#      ma_tai_khoan = request.data.get('ma_tai_khoan')
-#      ma_ca = request.data.get('ma_ca')
-#      ma_thucan = request.data.get('ma_thucan')
-#      action = request.data.get('increase')
-#      if ma_ca != None:
-#           # Tăng số lượng cá
-#           if action == True:
-#                tai_khoan = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
-#                fish_name_update = CA_BETTA.objects.get(ma_ca=ma_ca)
-#                soluong = GIOHANG_CA.objects.get(ca_betta=fish_name_update, giohang=tai_khoan)
-               
-#                if soluong.so_luong >= fish_name_update.so_luong:
-#                     return Response({'success': False, 'message': 'vượt số lượng tồn'})
-               
-#                soluong.so_luong += 1
-
-#                soluong.save()
-#                return Response({'success': True})
-          
-#           # Giảm số lượng cá
-#           elif action == False:
-#                tai_khoan = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
-#                fish_name_update = CA_BETTA.objects.get(ma_ca=ma_ca)
-#                soluong = GIOHANG_CA.objects.get(ca_betta=fish_name_update, giohang=tai_khoan)
-
-#                if soluong.so_luong == 0:
-#                     return Response({'success': False})
-#                else:
-#                     soluong.so_luong -= 1
-#                     if soluong.so_luong == 0:
-#                          soluong.delete()
-#                     else:
-#                          soluong.save()
-               
-#                return Response({'success': True})
-          
-#      if ma_thucan != None:
-#           # Tăng số lượng thức ăn
-#           if action == True:
-#                tai_khoan = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
-#                food_name_update = THUCAN.objects.get(ma_thucan=ma_thucan)
-#                soluong = GIOHANG_THUCAN.objects.get(thucan=food_name_update, giohang=tai_khoan)
-
-#                if soluong.so_luong >= food_name_update.so_luong:
-#                     return Response({'success': False, 'message': 'vượt số lượng tồn'})
-               
-#                soluong.so_luong += 1
-
-#                soluong.save()
-#                return Response({'success': True})
-          
-#           # Giảm số lượng thức ăn
-#           elif action == False:
-#                tai_khoan = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
-#                food_name_update = THUCAN.objects.get(ma_thucan=ma_thucan)
-#                soluong = GIOHANG_THUCAN.objects.get(thucan=food_name_update, giohang=tai_khoan)
-               
-#                if soluong.so_luong == 0:
-#                     return Response({'success': False})
-#                else:
-#                     soluong.so_luong -= 1
-#                     if soluong.so_luong == 0:
-#                          soluong.delete()
-#                     else:
-#                          soluong.save()
-               
-#                return Response({'success': True})
-     
-# # Truy vấn giỏ hàng - dành cho việc sau khi đăng nhập/ đăng xuất
-
-
-     
-# # api for check out
 # @api_view(['POST'])
 # def check_out(request):
 #      ma_ca = [x for x in request.data.get('ma_ca') if x != None]
