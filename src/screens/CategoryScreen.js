@@ -1,7 +1,6 @@
 // Import component
 import { Image } from "react-native";
 import { SafeAreaView, View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from "react-native";
-import fishcategory from "../components/fishInCategory";
 // Import Hook
 import { useEffect, useState } from "react";
 // Import icons
@@ -11,6 +10,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 // Import context
 import { useAuth } from "../context/authContext";
+import { useIsFocused } from "@react-navigation/native";
 // Import api routes
 import { getAllFishesAll, getAllCategories } from "../routes/HomeAndCategoriesScreen/HomeAndCategoriesRoutes";
 import { addFishToCart } from "../routes/CartRoutes/CartRoutes";
@@ -28,45 +28,50 @@ export default function Category({ route, navigation }) {
     const [searchTerm, setSearchTerm] = useState(""); // This variable is used to store input from user keyboard
     const [searchResults, setSearchResults] = useState([]); // This variable is used to store results of searching
     const [isLoading, setIsLoading] = useState(true);
-    // Declare function here
-        // useEffect for getting data in first time page has been accessed
-    useEffect(() => {
-        // Get all categories from server
-        const fetchCategories = async() => {
-            const allCategories = await getAllCategories();
-            setCategoriesData(allCategories);
-        };
-        fetchCategories();
-        // Get fishes as category from server
-        const fetchFishes = async() => {
+    const isFocusedCategory = useIsFocused();
+    console.log(isFocusedCategory);
+    // Declare function here    
+    // Get all categories from server
+    const fetchCategories = async() => {
+        const allCategories = await getAllCategories();
+        setCategoriesData(allCategories);
+    };
+    // Get fishes as category from server
+    const fetchFishes = async() => {
+        const allFishes = await getAllFishesAll();
+        setFishData(allFishes);
+    };
+    // Set fish data for showing
+    const fetchData = async () => {
+        if (type == "All") {
             const allFishes = await getAllFishesAll();
-            setFishData(allFishes);
-        };
-        fetchFishes();
-        // Set fish data for showing
-        const fetchData = async () => {
-            if (type === "All") {
-                setCountFish(fishData.length);
-                setData(fishData);
-            }
-            else {
-                const filteredData = fishData
-                .filter(fish => fish.ma_loai_ca_info.MaLoaiMatHang === type)
-                .reduce((acc, current) => {
-                    const x = acc.find(item => item.MaMatHang === current.MaMatHang);
-                    if (!x) {
-                        return acc.concat([current]);
-                    } else {
-                        return acc;
-                    }
-                }, []);
-                setCountFish(filteredData.length);
-                setData(filteredData);                
-            };
+            setCountFish(allFishes.length);
+            setData(allFishes);
+        }
+        else {
+            const filteredData = fishData
+            .filter(fish => fish.ma_loai_ca_info.TenLoaiMatHang === type)
+            .reduce((acc, current) => {
+                const x = acc.find(item => item.MaMatHang === current.MaMatHang);
+                if (!x) {
+                    return acc.concat([current]);
+                } else {
+                    return acc;
+                }
+            }, []);
+            setCountFish(filteredData.length);
+            setData(filteredData);                
+        };        
+    };
+    // useEffect for getting data in first time page has been accessed
+    useEffect(() => {
+        if (isFocusedCategory) {
+            fetchCategories();        
+            fetchFishes();        
+            fetchData();
             setIsLoading(false);
-        };
-        fetchData();
-    }, []); 
+        };        
+    }, [isFocusedCategory]);  
     //  Navigate to selected fish
     const hanldleNavigationForCategories = (id, type) => {    
         if (id === "seeAll") {

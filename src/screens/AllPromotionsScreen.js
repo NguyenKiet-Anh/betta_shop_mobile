@@ -30,6 +30,7 @@ export default function AllPromotion({ navigation }) {
         const fetchFishes = async() => {
             const allFishes = await getAllFishesPromotion();            
             setData(allFishes);
+            setCountFish(allFishes.length);
             setIsLoading(false);
         };
         fetchFishes();    
