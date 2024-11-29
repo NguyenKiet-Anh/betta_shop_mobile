@@ -132,22 +132,25 @@ export const deleteFishFromCart = async (userId) => {
 };
 
 // For checking out cart - POST method
-export const checkOutCart = async (userId) => {
+export const checkOutCart = async(userId) => {
   try {
-    return await fetch(`http://${ipAddress}:8000/checkout/${userId}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network working failed");
-        }
-        return response.json();
+      console.log(userId);
+      return await fetch(`http://${ipAddress}:8000/checkOut/${userId}/`,{
+          method: 'DELETE'
       })
-      .then((data) => {
-        return data;
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network working failed');
+          };
+          return response.json();
       })
-      .catch((error) => {
-        console.error("Error checking out: ", error);
-      });
-  } catch (error) {
-    console.error("Error checking out: ", error);
+      .then(data => {
+          return data;
+      })
+      .catch(error => {
+          console.error("Error checking out: ", error);
+      })
+  } catch(error) {
+      console.error("Error checking out: ", error);
   }
 };

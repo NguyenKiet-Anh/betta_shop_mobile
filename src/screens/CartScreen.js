@@ -1,6 +1,6 @@
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, SafeAreaView, Modal, Linking } from "react-native";
 // Import Hook
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useIsFocused } from '@react-navigation/native';
 // Import icons
 import Feather from "react-native-vector-icons/Feather";
@@ -8,30 +8,42 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 // Import context
 import { useAuth } from "../context/authContext";
 // Import api routes
-import { changeAmount, getCartById, removeFishFromCart } from "../routes/CartRoutes/CartRoutes";
+import { changeAmount, checkOutCart, getCartById, removeFishFromCart } from "../routes/CartRoutes/CartRoutes";
 // Main function
 export default function Cart({ navigation, route }) {
+    const ipAddress = '192.168.236.102';
     // Variables here    
     const { userInfo } = useAuth();
     const [fishData, setFishData] = useState([]); // Store fish data fetched from server
-    const [amount, setAmount] = useState(0); //
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [amount, setAmount] = useState(0); // // Store total amount of item in cart
+    const [totalPrice, setTotalPrice] = useState(0); // Store total price
+    const [isModalVisible, setIsModalVisible] = useState(false);  // For controlling modal    
     const [isLoading, setIsLoading] = useState(true); // For controlling render event
     const isFocusedCart = useIsFocused(); // For re-run useEffect
+    // For MOMO integated
+    const [orderId, setOrderId] = useState('');
+    const [paymentURL, setPaymentURL] = useState('');
     // Functions here
     // useEffect for getting wishlsit for the first time accessing wishlist screen
     const refreshCart = async () => {
         const cartData = await getCartById(userInfo.ma_nguoi_dung);
         setFishData(cartData);
-        setIsLoading(false);// Calculate total price
-        const calculateTotalPrice = () => {
+        setIsLoading(false);
+        // Calculate total price and amount
+        const calculateTotalPriceAndAmount = () => {
             let total = 0;
+            let totalAmount = 0;
             cartData.forEach(item => {   
-                total += parseInt(item.ca_info.GiaKhuyenMai) !== parseInt(0) ? parseInt(item.ca_info.GiaKhuyenMai) : parseInt(item.ca_info.Dongia);
+                // Calculate total price
+                total += parseInt(item.ca_info.GiaKhuyenMai) !== parseInt(0) ? 
+                    item.SoLuong * parseInt(item.ca_info.GiaKhuyenMai) : item.SoLuong * parseInt(item.ca_info.Dongia);
+                // Calculate total amount
+                totalAmount += item.SoLuong;
             });
             setTotalPrice(total);
+            setAmount(totalAmount);
         };
-        calculateTotalPrice();
+        calculateTotalPriceAndAmount();
     };     
     useEffect(() => {
         if (isFocusedCart || route.params?.refreshCart) {
@@ -84,7 +96,10 @@ export default function Cart({ navigation, route }) {
             };
         }
     };
-    // Function for removing all cart list
+    // Function for open/ hide modal
+    const toggleModal = () => {
+        setIsModalVisible(!isModalVisible);
+    };
     // Function for removing item from cart list
     const handleRemoveFish = async(id) => {
         const response = await removeFishFromCart(userInfo.ma_nguoi_dung, id);
@@ -102,6 +117,81 @@ export default function Cart({ navigation, route }) {
             alert("Remove fish failed!");
         }
     };
+    // Function for payment
+    const handlePayment = async() => {
+        try {
+            const response = await fetch(`http://${ipAddress}:8000/createPaymentLink/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                    {
+                        "total_price": totalPrice
+                    }
+                ),
+            });         
+            const data = await response.json();
+            if (data.success) {
+                console.log("data returned from create payment link: ", data);
+                // Save orderID and URL link for payment
+                setOrderId(data.result.orderId);
+                setPaymentURL(data.result.payUrl)
+                // Connect to websocket
+                connectWebSocket(data.result.orderId);          
+                // Open Modal
+                await Linking.openURL(data.result.payUrl);
+            } else {
+                alert('Error while trying to create payment link');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error happened while processing');
+        }
+    };
+    // Section for socket connection
+    const socketRef = useRef(null);
+    function connectWebSocket(orderId) {
+        const socketUrl = `ws://${ipAddress}:8000/ws/payment/${orderId}/`;
+        console.log("socket URL: ", socketUrl);
+        socketRef.current = new WebSocket(socketUrl)
+
+        socketRef.current.onopen = () => {
+            console.log("WebSocket connection established.");            
+        };
+
+        socketRef.current.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const { status, message } = data;
+            if (status === 'success') {
+                // If payment is successful, toggle will be shut down
+                toggleModal();
+                // Clear cart
+                setFishData([]);
+                setTotalPrice(0);
+                setAmount(0);
+                // Send api to server to remove all fish in cart           
+                //  
+                const response = checkOutCart(userInfo.ma_nguoi_dung);
+                if (response.success) {
+                    console.log("Remove all carts");
+                    // Continue call api for notification
+                    // Way: call api -> send user_id, totalPrice, -> server get total price + time.datetime now() -> save to notification table -> send notification tables's data back to frontend react native app
+                } else {
+                    console.log("Remove all carts failed");
+                }
+            } else {
+                alert('Payment failed: ' + message);
+            }
+        };
+        socketRef.current.onerror = (error) => {
+            console.log("WebSocket error:", error);
+        };
+
+        socketRef.current.onclose = () => {
+            console.log("WebSocket connection closed.");
+        };
+    }
 
     // Return View for each fish in cart
     const itemView = ({ item }) => {
@@ -185,37 +275,68 @@ export default function Cart({ navigation, route }) {
             </TouchableOpacity>
         );
     };
-
     // Return render here
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.listContainer}>
-                <FlatList
-                    data={fishData}
-                    keyExtractor={item => item.MaMatHang}
-                    renderItem={itemView}
-                >                                        
-                </FlatList>
-            </View>
-            <View style={styles.paymentContainer}>
-                <View>
-                    <Text style={{fontSize: 16,fontWeight: '200'}}>Amount Price</Text>
-                    <View style={styles.priceSection}>
-                        <Feather name="dollar-sign" size={15}></Feather>
-                        <Text style={{fontSize: 25, fontWeight: '500'}}>{parseInt(totalPrice)}</Text>
+        <>
+        {
+            isLoading ? (
+                <Text>Loading ...</Text>
+            ) : (
+                <SafeAreaView style={styles.container}>
+                    <View style={styles.listContainer}>
+                        <FlatList
+                            data={fishData}
+                            keyExtractor={item => item.MaMatHang}
+                            renderItem={itemView}
+                        >                                        
+                        </FlatList>
                     </View>
-                </View>
-                
-                <TouchableOpacity
-                    style={styles.payButton}
-                >                                        
-                        <Text style={{fontSize: 17, fontWeight: '600', color: 'white', marginRight: 10}}>Checkout </Text>
-                        <View style={{width: 30, height: 30, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 20, backgroundColor: 'white'}}>
-                            <Text style={{fontSize: 17, fontWeight: '600', color: '#b141aa'}}>{amount}</Text>
-                        </View>                    
-                </TouchableOpacity>
-            </View>
-        </SafeAreaView>
+                    <View style={styles.paymentContainer}>
+                        <View>
+                            <Text style={{fontSize: 16,fontWeight: '200'}}>Amount Price</Text>
+                            <View style={styles.priceSection}>
+                                <Feather name="dollar-sign" size={15}></Feather>
+                                <Text style={{fontSize: 25, fontWeight: '500'}}>{parseInt(totalPrice)}</Text>
+                            </View>
+                        </View>
+                        
+                        <TouchableOpacity
+                            onPress={toggleModal}
+                            style={styles.payButton}
+                        >                                        
+                                <Text style={{fontSize: 17, fontWeight: '600', color: 'white', marginRight: 10}}>Checkout</Text>
+                                <View style={{width: 30, height: 30, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 20, backgroundColor: 'white'}}>
+                                    <Text style={{fontSize: 17, fontWeight: '600', color: '#b141aa'}}>{amount}</Text>
+                                </View>                    
+                        </TouchableOpacity>
+                    </View>
+                    {/* Modal for confirmation */}
+                    <Modal
+                        visible={isModalVisible}
+                        transparent={true}
+                        animationType="fade"
+                        onRequestClose={toggleModal}
+                    >
+                        <View style={styles.modalBackground}>
+                            <View style={styles.modalContainer}>
+                                <Text style={styles.modalTitle}>Are you sure you want to buy all items in cart?</Text>
+                                <Text style={styles.modalInfo}>Total items: {amount}</Text>
+                                <Text style={styles.modalInfo}>Total price: {totalPrice}</Text>
+                                <View style={styles.modalActions}>
+                                    <TouchableOpacity onPress={toggleModal} style={[styles.modalButton, {backgroundColor: '#ff5863'}]}>
+                                        <Text style={styles.modalButtonText}>Cancel</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={handlePayment} style={styles.modalButton}>
+                                        <Text style={styles.modalButtonText}>Checkout</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </Modal>
+                </SafeAreaView>
+            )
+        }
+        </>
     );
 };
 
@@ -331,5 +452,45 @@ const styles = StyleSheet.create({
         alignItems: 'center',        
         borderRadius: 10,    
         backgroundColor: '#b141aa'        
+    },
+    // Modal Style
+    modalBackground: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    },
+    modalContainer: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        width: 300,
+        alignItems: 'center'
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: '700',
+        marginBottom: 10,
+        textAlign: 'center'
+    },
+    modalInfo: {
+        fontSize: 16,
+        fontWeight: '500',
+        marginVertical: 5
+    },
+    modalActions: {
+        flexDirection: 'row',
+        marginTop: 15
+    },
+    modalButton: {
+        backgroundColor: '#b141aa',
+        padding: 10,
+        marginHorizontal: 5,
+        borderRadius: 5
+    },
+    modalButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: '600'
     }
 })

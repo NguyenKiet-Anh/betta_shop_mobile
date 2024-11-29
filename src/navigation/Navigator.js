@@ -18,6 +18,7 @@ import Notification from "../screens/NotificationScreen";
 import Review from "../screens/ReviewScreen";
 import Profile from "../screens/ProfileScreen";
 import EditProfile from "../screens/ProfileEditScreen";
+import ChangePassword from "../screens/ProfileChangePasswordScreen";
 import AboutUs from "../screens/AboutUsScreen";
 import StoreLocation from "../screens/LocationScreen";
 // Import Icon
@@ -31,7 +32,6 @@ import { useAuth } from "../context/authContext";
 // Import api routes
 import { addFishToWishList, deleteWishList } from "../routes/WishListRoutes/WishListRoutes";
 import { deleteFishFromCart } from "../routes/CartRoutes/CartRoutes";
-import ChangePassword from "../screens/ProfileChangePasswordScreen";
 // Function main
 export default function StackNavigator({ navigation }) {
     // Variables for userId

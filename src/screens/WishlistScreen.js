@@ -23,12 +23,7 @@ export default function WishList({ navigation, route }) {
         const wishListData = await getWishList(userInfo.ma_nguoi_dung);
         setFishData(wishListData);
         setIsLoading(false);
-    };    
-    // useEffect(() => {        
-    //     if (isFocusedWishList) {
-    //         refreshWishList();
-    //     }        
-    // }, [isFocusedWishList]);
+    };        
     useEffect(() => {
         if (isFocusedWishList || route.params?.refreshWishlist) {
             refreshWishList(); // Fetch fresh wishlist data
