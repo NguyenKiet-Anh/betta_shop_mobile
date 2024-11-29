@@ -32,9 +32,11 @@ urlpatterns = [
         "removeCart/<int:ma_khach_hang>/<int:ma_ca>/", remove_cart, name="remove_cart"
     ),
     path("deleteCart/<int:ma_khach_hang>/", delete_cart, name="delete_cart"),
+     path('checkOut/<int:ma_khach_hang>/', check_out, name='check_out'),
     # For payment link - for web
-    path("createPaymentLink/", create_payment_link, name="create_payment_link"),
-    path("transactionStatus/", transaction_status, name="payment-notify"),
+    path('createPaymentLink/', create_payment_link, name='create_payment_link'),
+    path('transactionStatus/', transaction_status, name='transaction_status'),    
+    path('getNotification/', GetNotificationView.as_view(), name='get_notification'),
     # For user
     path("getUser/<int:ma_khach_hang>/", get_user, name="get_user_info"),
     path("updateUser/<int:ma_khach_hang>/", update_user, name="update_user_info"),
