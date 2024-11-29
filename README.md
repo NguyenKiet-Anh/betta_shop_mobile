@@ -1,7 +1,7 @@
 ## betta_shop_mobile
-# Frontend
+<h1>Frontend</h1>
 <h2>- Câu lệnh: npm install</h2>
-# Backend
+<h1>Backend</h1>
 <h2>- Một số libs cần cài thêm (Từ ngày 29/11/2024):</h2>
   <p><i>pip3 install adrf</i></p>
   <p><i>pip install uvicorn</i></p>
