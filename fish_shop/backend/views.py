@@ -19,6 +19,8 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+from django.db.models import F
+from django.core.files.base import ContentFile
 
 # Encodeing image data before sending to client
 import base64, datetime
@@ -483,51 +485,54 @@ def get_cart(request, ma_khach_hang):
 
 
 # Add cart
-@api_view(['POST'])
+@api_view(["POST"])
 def add_cart(request, ma_khach_hang, ma_ca):
-     try:     
-          # Get fish from database
-          fish = MatHang.objects.filter(MaMatHang=ma_ca).first()
-          if fish.SoLuongTon < 1:
-               return Response({'success': False, 'message': 'Cá đã hết hàng'})
-          # Get cart
-          giohang = GioHang.objects.filter(MaKhachHang=ma_khach_hang).first()
-          # Add item to cart
-          check_fish = ChiTietGioHang.objects.filter(MaGioHang=giohang, MaMatHang=fish).first()
-          if check_fish:          
-               # Return message that annouces to client the problem in process
-               return Response({'success': False, 'message': 'Cá đã tồn tại trong giỏ hàng'})
-          else:  
-               # Update TongTien
-               giohang.TongTien += fish.Dongia
-               giohang.save();
-               # Add fish to ChiTietGioHang table
-               # If khuyenmai = false
-               if fish.KhuyenMai == False:
-                    ChiTietGioHang.objects.create(               
-                         MaGioHang = giohang,
-                         MaMatHang = fish,
-                         SoLuong = 1,
-                         ThanhTien = fish.Dongia,
-                         TinhTrang = False
-                    )
-               else:
-                    ChiTietGioHang.objects.create(               
-                         MaGioHang = giohang,
-                         MaMatHang = fish,
-                         SoLuong = 1,
-                         ThanhTien = fish.GiaKhuyenMai,
-                         TinhTrang = False
-                    )
-               # Reduce SoLuongTon
-               fish.SoLuongTon -= 1
-               fish.save()                              
-               # Return message anoucing successful process
-          return Response({'success': True, 'message': 'Thêm cá vào giỏ hàng thành công'})
-     except Exception as e:
-          print(e)
-          return Response({'success': False, 'message': 'Thêm cá vào giỏ hàng thất bại'})
-
+    try:
+        # Get fish from database
+        fish = MatHang.objects.filter(MaMatHang=ma_ca).first()
+        if fish.SoLuongTon < 1:
+            return Response({"success": False, "message": "Cá đã hết hàng"})
+        # Get cart
+        giohang = GioHang.objects.filter(MaKhachHang=ma_khach_hang).first()
+        # Add item to cart
+        check_fish = ChiTietGioHang.objects.filter(
+            MaGioHang=giohang, MaMatHang=fish
+        ).first()
+        if check_fish:
+            # Return message that annouces to client the problem in process
+            return Response(
+                {"success": False, "message": "Cá đã tồn tại trong giỏ hàng"}
+            )
+        else:
+            # Update TongTien
+            giohang.TongTien += fish.Dongia
+            giohang.save()
+            # Add fish to ChiTietGioHang table
+            # If khuyenmai = false
+            if fish.KhuyenMai == False:
+                ChiTietGioHang.objects.create(
+                    MaGioHang=giohang,
+                    MaMatHang=fish,
+                    SoLuong=1,
+                    ThanhTien=fish.Dongia,
+                    TinhTrang=False,
+                )
+            else:
+                ChiTietGioHang.objects.create(
+                    MaGioHang=giohang,
+                    MaMatHang=fish,
+                    SoLuong=1,
+                    ThanhTien=fish.GiaKhuyenMai,
+                    TinhTrang=False,
+                )
+            # Reduce SoLuongTon
+            fish.SoLuongTon -= 1
+            fish.save()
+            # Return message anoucing successful process
+        return Response({"success": True, "message": "Thêm cá vào giỏ hàng thành công"})
+    except Exception as e:
+        print(e)
+        return Response({"success": False, "message": "Thêm cá vào giỏ hàng thất bại"})
 
 
 # Update cart
@@ -605,184 +610,236 @@ def delete_cart(request, ma_khach_hang):
             {"success": False, "message": "Xóa tất cả cá khỏi giỏ hàng thất bại!"}
         )
 
+
 # Check out cart
-@api_view(['DELETE'])
+@api_view(["DELETE"])
 def check_out(request, ma_khach_hang):
-     try:
-          # Get ma_khach_hang
-          khachhang = TaiKhoanKhachHang.objects.filter(MaTaiKhoan=ma_khach_hang).first()          
-          # Get all chitietgiohang
-          giohang = GioHang.objects.filter(MaKhachHang=khachhang.MaKhachHang).first()        
-          chitiet = ChiTietGioHang.objects.filter(MaGioHang=giohang.MaGioHang)
-          chitiet.delete()
-          # Update TongTien in giohang
-          giohang.TongTien = 0
-          giohang.save()
-          return Response({'success': True})
-     except Exception as e:
-          print(e)
-          return Response({'success': False})
-     
+    try:
+        # Get ma_khach_hang
+        khachhang = TaiKhoanKhachHang.objects.filter(MaTaiKhoan=ma_khach_hang).first()
+        # Get all chitietgiohang
+        giohang = GioHang.objects.filter(MaKhachHang=khachhang.MaKhachHang).first()
+        chitiet = ChiTietGioHang.objects.filter(MaGioHang=giohang.MaGioHang)
+        chitiet.delete()
+        # Update TongTien in giohang
+        giohang.TongTien = 0
+        giohang.save()
+        return Response({"success": True})
+    except Exception as e:
+        print(e)
+        return Response({"success": False})
+
+
 # API for create payment link
-@api_view(['POST'])
+@api_view(["POST"])
 def create_payment_link(request):
-     try:
-          # Get data for payment 
-          total_price = request.data.get('total_price')
-          # total_price = request.data.get("totalPrice")
-          # Data for create payment link
-          import json
-          import uuid
-          import requests
-          import hmac
-          import hashlib
-          # parameters send to MoMo get get payUrl
-          endpoint = "https://test-payment.momo.vn/v2/gateway/api/create"
-          accessKey = "F8BBA842ECF85"
-          secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
-          orderInfo = "pay with MoMo"
-          partnerCode = "MOMO"
-          redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b"
-          ipnUrl = "https://9ee0-2001-ee0-266-ba76-2a96-bf50-2d81-c185.ngrok-free.app/getNotification/"
-          amount = str(total_price)
-          orderId = str(uuid.uuid4())
-          requestId = str(uuid.uuid4())
-          extraData = ""  # pass empty value or Encode base64 JsonString
-          partnerName = "MoMo Payment"
-          requestType = "payWithMethod"
-          storeId = "Test Store"
-          orderGroupId = ""
-          autoCapture = True
-          lang = "vi"
-          orderGroupId = ""
-          # before sign HMAC SHA256 with format: accessKey=$accessKey&amount=$amount&extraData=$extraData&ipnUrl=$ipnUrl
-          # &orderId=$orderId&orderInfo=$orderInfo&partnerCode=$partnerCode&redirectUrl=$redirectUrl&requestId=$requestId
-          # &requestType=$requestType
-          rawSignature = "accessKey=" + accessKey + "&amount=" + amount + "&extraData=" + extraData + "&ipnUrl=" + ipnUrl + "&orderId=" + orderId \
-                         + "&orderInfo=" + orderInfo + "&partnerCode=" + partnerCode + "&redirectUrl=" + redirectUrl\
-                         + "&requestId=" + requestId + "&requestType=" + requestType
-          # puts raw signature
-          print("--------------------RAW SIGNATURE----------------")
-          print(rawSignature)
-          # signature
-          h = hmac.new(bytes(secretKey, 'ascii'), bytes(rawSignature, 'ascii'), hashlib.sha256)
-          signature = h.hexdigest()
-          print("--------------------SIGNATURE----------------")
-          print(signature)
-          # json object send to MoMo endpoint
-          data = {
-               'partnerCode': partnerCode,
-               'orderId': orderId,
-               'partnerName': partnerName,
-               'storeId': storeId,
-               'ipnUrl': ipnUrl,
-               'amount': amount,
-               'lang': lang,
-               'requestType': requestType,
-               'redirectUrl': redirectUrl,
-               'autoCapture': autoCapture,
-               'orderInfo': orderInfo,
-               'requestId': requestId,
-               'extraData': extraData,
-               'signature': signature,
-               'orderGroupId': orderGroupId
-          }
-          # Convert to JSON file
-          data = json.dumps(data)
-          # Send link create to MOMO
-          response = requests.post(endpoint, data=data, headers={'Content-Type': 'application/json', 'Content-Length': str(len(data))})
-          # Check response from MOMO
-          if response.status_code == 200:
-               result = response.json()               
-               if result['resultCode'] == 0:
-                    # Trả về link thanh toán nếu thành công
-                    return Response({'success': True, 'result': result, 'message': result["message"]})
-               else:
-                    return Response({'success': False, 'error': result["message"]})
-          else:
-               return Response({'success': False, 'error': 'Request failed', 'details': response.text})
-     except Exception as e:
-          print(e)
-          return Response({'success': False, 'error': str(e)})
+    try:
+        # Get data for payment
+        total_price = request.data.get("total_price")
+        # total_price = request.data.get("totalPrice")
+        # Data for create payment link
+        import json
+        import uuid
+        import requests
+        import hmac
+        import hashlib
+
+        # parameters send to MoMo get get payUrl
+        endpoint = "https://test-payment.momo.vn/v2/gateway/api/create"
+        accessKey = "F8BBA842ECF85"
+        secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
+        orderInfo = "pay with MoMo"
+        partnerCode = "MOMO"
+        redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b"
+        ipnUrl = "https://9ee0-2001-ee0-266-ba76-2a96-bf50-2d81-c185.ngrok-free.app/getNotification/"
+        amount = str(total_price)
+        orderId = str(uuid.uuid4())
+        requestId = str(uuid.uuid4())
+        extraData = ""  # pass empty value or Encode base64 JsonString
+        partnerName = "MoMo Payment"
+        requestType = "payWithMethod"
+        storeId = "Test Store"
+        orderGroupId = ""
+        autoCapture = True
+        lang = "vi"
+        orderGroupId = ""
+        # before sign HMAC SHA256 with format: accessKey=$accessKey&amount=$amount&extraData=$extraData&ipnUrl=$ipnUrl
+        # &orderId=$orderId&orderInfo=$orderInfo&partnerCode=$partnerCode&redirectUrl=$redirectUrl&requestId=$requestId
+        # &requestType=$requestType
+        rawSignature = (
+            "accessKey="
+            + accessKey
+            + "&amount="
+            + amount
+            + "&extraData="
+            + extraData
+            + "&ipnUrl="
+            + ipnUrl
+            + "&orderId="
+            + orderId
+            + "&orderInfo="
+            + orderInfo
+            + "&partnerCode="
+            + partnerCode
+            + "&redirectUrl="
+            + redirectUrl
+            + "&requestId="
+            + requestId
+            + "&requestType="
+            + requestType
+        )
+        # puts raw signature
+        print("--------------------RAW SIGNATURE----------------")
+        print(rawSignature)
+        # signature
+        h = hmac.new(
+            bytes(secretKey, "ascii"), bytes(rawSignature, "ascii"), hashlib.sha256
+        )
+        signature = h.hexdigest()
+        print("--------------------SIGNATURE----------------")
+        print(signature)
+        # json object send to MoMo endpoint
+        data = {
+            "partnerCode": partnerCode,
+            "orderId": orderId,
+            "partnerName": partnerName,
+            "storeId": storeId,
+            "ipnUrl": ipnUrl,
+            "amount": amount,
+            "lang": lang,
+            "requestType": requestType,
+            "redirectUrl": redirectUrl,
+            "autoCapture": autoCapture,
+            "orderInfo": orderInfo,
+            "requestId": requestId,
+            "extraData": extraData,
+            "signature": signature,
+            "orderGroupId": orderGroupId,
+        }
+        # Convert to JSON file
+        data = json.dumps(data)
+        # Send link create to MOMO
+        response = requests.post(
+            endpoint,
+            data=data,
+            headers={
+                "Content-Type": "application/json",
+                "Content-Length": str(len(data)),
+            },
+        )
+        # Check response from MOMO
+        if response.status_code == 200:
+            result = response.json()
+            if result["resultCode"] == 0:
+                # Trả về link thanh toán nếu thành công
+                return Response(
+                    {"success": True, "result": result, "message": result["message"]}
+                )
+            else:
+                return Response({"success": False, "error": result["message"]})
+        else:
+            return Response(
+                {"success": False, "error": "Request failed", "details": response.text}
+            )
+    except Exception as e:
+        print(e)
+        return Response({"success": False, "error": str(e)})
+
 
 from channels.layers import get_channel_layer
 from rest_framework.response import Response
 from adrf.views import APIView
 import asyncio
+
+
 # # For receive MOMO response
 class GetNotificationView(APIView):
-     async def post(self, request):
-          order_id = request.data.get("orderId")
-          status = request.data.get("status")
-          message = request.data.get("message")     
-          
-          print("MOMO response for Order Id: ", order_id)
+    async def post(self, request):
+        order_id = request.data.get("orderId")
+        status = request.data.get("status")
+        message = request.data.get("message")
 
-          if status is None and message == "Successful.":
-               status = "success"
+        print("MOMO response for Order Id: ", order_id)
 
-          if status == "success":
-               print(f"Payment for Order {order_id} was successful.")
-          else:
-               print(f"Payment for Order {order_id} failed or has an issue.")
+        if status is None and message == "Successful.":
+            status = "success"
 
-          channel_layer = get_channel_layer()
-          group_name = f"payment_{order_id}"
+        if status == "success":
+            print(f"Payment for Order {order_id} was successful.")
+        else:
+            print(f"Payment for Order {order_id} failed or has an issue.")
 
-          # Chờ để gửi thông báo bất đồng bộ
-          await channel_layer.group_send(
-               group_name,
-               {
-                    'type': 'payment_status_update',
-                    'status': status,
-                    'message': message,
-               }
-          )
+        channel_layer = get_channel_layer()
+        group_name = f"payment_{order_id}"
 
-          # Trả về Response đồng bộ sau khi hoàn thành các tác vụ bất đồng bộ
-          return Response({"details": request.data})
+        # Chờ để gửi thông báo bất đồng bộ
+        await channel_layer.group_send(
+            group_name,
+            {
+                "type": "payment_status_update",
+                "status": status,
+                "message": message,
+            },
+        )
+
+        # Trả về Response đồng bộ sau khi hoàn thành các tác vụ bất đồng bộ
+        return Response({"details": request.data})
+
 
 # # For tracking transaction status
-@api_view(['POST'])
+@api_view(["POST"])
 def transaction_status(request):
     try:
-          import hmac
-          import hashlib
-          import requests
-          
-          order_id = request.data.get("orderId")
-          print("Check status for Order Id: ", order_id)
-          # order_id = '9221135a-292e-4c0b-b7bc-e2c9013133e1'
+        import hmac
+        import hashlib
+        import requests
 
-          partner_code = "MOMO"
-          access_key = "F8BBA842ECF85"
-          secret_key = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
-          request_id = order_id
-          
-          raw_signature = f"accessKey={access_key}&orderId={order_id}&partnerCode={partner_code}&requestId={request_id}"
-          
-          h = hmac.new(bytes(secret_key, 'ascii'), bytes(raw_signature, 'ascii'), hashlib.sha256)
-          signature = h.hexdigest()        
+        order_id = request.data.get("orderId")
+        print("Check status for Order Id: ", order_id)
+        # order_id = '9221135a-292e-4c0b-b7bc-e2c9013133e1'
 
-          data = {
-               'partnerCode': partner_code,
-               'requestId': request_id,
-               'orderId': order_id,
-               'signature': signature,
-               'lang': 'vi'  # Ngôn ngữ mặc định
-          }
-          endpoint = "https://test-payment.momo.vn/v2/gateway/api/query"
+        partner_code = "MOMO"
+        access_key = "F8BBA842ECF85"
+        secret_key = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
+        request_id = order_id
 
-          response = requests.post(endpoint, json=data, headers={'Content-Type': 'application/json'})
+        raw_signature = f"accessKey={access_key}&orderId={order_id}&partnerCode={partner_code}&requestId={request_id}"
 
-          if response.status_code == 200:
-               result = response.json()
-               return Response({'success': True, 'result': result, 'message': result.get("message", "Success")})
-          else:
-               return Response({'success': False, 'error': 'Request failed', 'details': response.text})
-    
+        h = hmac.new(
+            bytes(secret_key, "ascii"), bytes(raw_signature, "ascii"), hashlib.sha256
+        )
+        signature = h.hexdigest()
+
+        data = {
+            "partnerCode": partner_code,
+            "requestId": request_id,
+            "orderId": order_id,
+            "signature": signature,
+            "lang": "vi",  # Ngôn ngữ mặc định
+        }
+        endpoint = "https://test-payment.momo.vn/v2/gateway/api/query"
+
+        response = requests.post(
+            endpoint, json=data, headers={"Content-Type": "application/json"}
+        )
+
+        if response.status_code == 200:
+            result = response.json()
+            return Response(
+                {
+                    "success": True,
+                    "result": result,
+                    "message": result.get("message", "Success"),
+                }
+            )
+        else:
+            return Response(
+                {"success": False, "error": "Request failed", "details": response.text}
+            )
+
     except Exception as e:
-          return Response({'success': False, 'error': str(e)})
+        return Response({"success": False, "error": str(e)})
+
 
 # Get profile information
 @api_view(["GET"])
@@ -814,6 +871,7 @@ def get_user(request, ma_khach_hang):
             "khach_hang_diachi": serializers3.data,
         }
     )
+
 
 # Update profile
 @api_view(["PUT"])
@@ -860,9 +918,23 @@ def update_user(request, ma_khach_hang):
         return Response({"success": False})
 
 
+# Update avatar
 @api_view(["PUT"])
-def update_avatar(request):
-    pass
+def update_avatar(request, ma_khach_hang):
+    try:
+        avatar = request.data.get("avatar")
+        # Get mataikhoan
+        user = TaiKhoanKhachHang.objects.filter(MaTaiKhoan=ma_khach_hang).first()
+        # Update information
+        update_user = KhachHang.objects.get(MaKhachHang=user.MaKhachHang.MaKhachHang)
+        # Check and update
+        # Update HinhAnh
+        update_user.HinhAnh = avatar
+        update_user.save()
+        return Response({"success": True})
+    except Exception as e:
+        print(e)
+        return Response({"success": False})
 
 
 @api_view(["PUT"])
@@ -946,3 +1018,190 @@ def add_review(request):
         )
     except:
         return Response({"success": False, "message": "Thêm bình luận thất bại"})
+
+
+# Get store's location
+@api_view(["GET"])
+def get_store_locations(request):
+    try:
+        # Fetch all stores with related address data
+        stores = DaiLyDiaChi.objects.select_related("MaDaiLy", "MaQuan").values(
+            store_name=F("MaDaiLy__TenDaiLy"),
+            store_image=F("MaDaiLy__HinhAnh"),
+            district_name=F("MaQuan__TenQuan"),
+            city_name=F("MaQuan__TenThanhPho"),
+            address=F("DiaChi"),
+            latitude=F("ViDo"),
+            longitude=F("KinhDo"),
+        )
+        # Encode images before sending
+        for item in stores:
+            if item.get("store_image"):
+                with open(item["store_image"], "rb") as file:
+                    data = file.read()
+                    base64_encoded_data = base64.b64encode(data).decode("utf-8")
+                    item["store_image"] = base64_encoded_data
+
+        return Response(list(stores))
+    except Exception as e:
+        return Response({"success": "error", "message": str(e)})
+
+
+# ----- OLD VERSION -----
+# # Thực hiện mua cá - dọn giỏ hàng
+
+# # Cập nhật GIOHANG_CA - khi có thay đổi trong giỏ hàng
+# @api_view(['POST'])
+# def updateCart(request):
+#      ma_tai_khoan = request.data.get('ma_tai_khoan')
+#      ma_ca = request.data.get('ma_ca')
+#      ma_thucan = request.data.get('ma_thucan')
+#      action = request.data.get('increase')
+#      if ma_ca != None:
+#           # Tăng số lượng cá
+#           if action == True:
+#                tai_khoan = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
+#                fish_name_update = CA_BETTA.objects.get(ma_ca=ma_ca)
+#                soluong = GIOHANG_CA.objects.get(ca_betta=fish_name_update, giohang=tai_khoan)
+
+#                if soluong.so_luong >= fish_name_update.so_luong:
+#                     return Response({'success': False, 'message': 'vượt số lượng tồn'})
+
+#                soluong.so_luong += 1
+
+#                soluong.save()
+#                return Response({'success': True})
+
+#           # Giảm số lượng cá
+#           elif action == False:
+#                tai_khoan = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
+#                fish_name_update = CA_BETTA.objects.get(ma_ca=ma_ca)
+#                soluong = GIOHANG_CA.objects.get(ca_betta=fish_name_update, giohang=tai_khoan)
+
+#                if soluong.so_luong == 0:
+#                     return Response({'success': False})
+#                else:
+#                     soluong.so_luong -= 1
+#                     if soluong.so_luong == 0:
+#                          soluong.delete()
+#                     else:
+#                          soluong.save()
+
+#                return Response({'success': True})
+
+#      if ma_thucan != None:
+#           # Tăng số lượng thức ăn
+#           if action == True:
+#                tai_khoan = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
+#                food_name_update = THUCAN.objects.get(ma_thucan=ma_thucan)
+#                soluong = GIOHANG_THUCAN.objects.get(thucan=food_name_update, giohang=tai_khoan)
+
+#                if soluong.so_luong >= food_name_update.so_luong:
+#                     return Response({'success': False, 'message': 'vượt số lượng tồn'})
+
+#                soluong.so_luong += 1
+
+#                soluong.save()
+#                return Response({'success': True})
+
+#           # Giảm số lượng thức ăn
+#           elif action == False:
+#                tai_khoan = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
+#                food_name_update = THUCAN.objects.get(ma_thucan=ma_thucan)
+#                soluong = GIOHANG_THUCAN.objects.get(thucan=food_name_update, giohang=tai_khoan)
+
+#                if soluong.so_luong == 0:
+#                     return Response({'success': False})
+#                else:
+#                     soluong.so_luong -= 1
+#                     if soluong.so_luong == 0:
+#                          soluong.delete()
+#                     else:
+#                          soluong.save()
+
+#                return Response({'success': True})
+
+# # Truy vấn giỏ hàng - dành cho việc sau khi đăng nhập/ đăng xuất
+
+
+# # api for check out
+# @api_view(['POST'])
+# def check_out(request):
+#      ma_ca = [x for x in request.data.get('ma_ca') if x != None]
+#      ma_thucan = [x for x in request.data.get('ma_thucan') if x != None]
+#      ma_tai_khoan = request.data.get('ma_tai_khoan')
+
+#      # Tạo tổng tiền & tổng số lượng
+#      tong_tien = float(0)
+#      tong_so_luong = int(0)
+
+#      # Lấy mã giỏ hàng
+#      user_id = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
+
+#      # Xử lý cá
+#      for i in ma_ca:
+#           fish_name = CA_BETTA.objects.get(ma_ca=i)
+
+#           # Kiểm tra cá đã tồn tại trong giỏ hàng
+#           fish = GIOHANG_CA.objects.filter(ca_betta=fish_name, giohang=user_id)
+#           tong_so_luong += fish[0].so_luong
+#           tong_tien += float(fish[0].so_luong * fish[0].gia)
+#           # Cập nhật số lượng tồn
+#           fish_name.so_luong -= fish[0].so_luong
+#           fish_name.save()
+
+#      # Xử lý thức ăn
+#      for i in ma_thucan:
+#           food_name = THUCAN.objects.get(ma_thucan=i)
+
+#           # Kiểm tra cá đã tồn tại trong giỏ hàng
+#           food = GIOHANG_THUCAN.objects.filter(thucan=food_name, giohang=user_id)
+
+#           tong_so_luong += food[0].so_luong
+#           tong_tien += float(food[0].so_luong * food[0].gia)
+#           # Cập nhật số lượng tồn
+#           food_name.so_luong -= food[0].so_luong
+#           food_name.save()
+
+#      new_nguoi_dung = NGUOIDUNG.objects.get(tai_khoan=ma_tai_khoan)
+#      # Tạo hóa đơn
+#      new_hoa_don = HOADON.objects.create(
+#           ngay=timezone.now(),
+#           tong_sl_mua = tong_so_luong,
+#           tong_tien = tong_tien,
+#           ma_nguoi_dung=new_nguoi_dung
+#      )
+#      new_hoa_don.save()
+
+#      # Tạo cthd_ca và thêm từng hạng mục vào
+#      for i in ma_ca:
+#           fish_name = CA_BETTA.objects.get(ma_ca=i)
+
+
+#           fish = GIOHANG_CA.objects.filter(ca_betta=fish_name, giohang=user_id)
+#           new_cthds = CTHD_CA.objects.create(
+#                ma_hoa_don = new_hoa_don,
+#                ma_ca = fish_name,
+#                soluong = fish[0].so_luong,
+#           )
+
+#           # Xóa hết cá trong giỏ hàng
+#           fish.delete()
+
+#      # Tạo cthd_thucan và thêm từng hạng mục vào
+#      for i in ma_thucan:
+#           food_name = THUCAN.objects.get(ma_thucan=i)
+
+#           food = GIOHANG_THUCAN.objects.filter(thucan=food_name, giohang=user_id)
+
+#           new_cthds = CTHD_THUCAN.objects.create(
+#                ma_hoa_don = new_hoa_don,
+#                ma_thucan = food_name,
+#                soluong = food[0].so_luong,
+#           )
+
+#           # Xóa hết cá trong giỏ hàng
+#           food.delete()
+
+#      # Trả phản hồi
+#      return Response({'success': True, 'message': 'Đã tạo hóa đơn!', 'ma_hoa_don': new_hoa_don.ma_hoa_don})

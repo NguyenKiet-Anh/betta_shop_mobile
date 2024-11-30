@@ -43,11 +43,14 @@ urlpatterns = [
     path(
         "changePassword/<int:ma_khach_hang>/", change_password, name="change_password"
     ),  # ma_khach_hang here refered to ma_tai_khoan
+    path("updateAvatar/<int:ma_khach_hang>/", update_avatar, name="update_user_avatar"),
     # For district
     path("getAllDistricts/", get_all_districts, name="get_all_districts"),
     # For review
     path("getReview/<int:id>/", get_review_by_fish_id, name="get_review_by_fish_id"),
     path("addReview/", add_review, name="add_review"),
+    # For store location
+    path("getStoreLocation/", get_store_locations, name="get_store_location"),
 ]
 
 # ----- OLD VERSION -----
