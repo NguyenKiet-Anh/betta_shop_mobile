@@ -116,6 +116,19 @@ class TaiKhoanKhachHang(models.Model):
 
 
 # Table 9
+class DaiLyDiaChi(models.Model):
+    MaDaiLy = models.ForeignKey(DaiLy, on_delete=models.CASCADE)
+    MaQuan = models.ForeignKey(Quan, on_delete=models.CASCADE)
+    DiaChi = models.CharField(max_length=200)
+    KinhDo = models.CharField(max_length=15)
+    ViDo = models.CharField(max_length=15)
+
+    class Meta:
+        db_table = "DAILY_DIACHI"
+        unique_together = ("MaDaiLy", "MaQuan")
+
+
+# Table 10
 class KhachHangDiaChi(models.Model):
     MaKhachHang = models.ForeignKey(KhachHang, on_delete=models.CASCADE)
     MaQuan = models.ForeignKey(Quan, on_delete=models.CASCADE)
@@ -126,7 +139,7 @@ class KhachHangDiaChi(models.Model):
         unique_together = ("MaKhachHang", "MaQuan")
 
 
-# Table 10
+# Table 11
 class PhieuXuatHang(models.Model):
     MaPhieuXuat = models.SmallAutoField(primary_key=True)
     NgayLapPhieu = models.DateField(auto_now_add=True)
@@ -138,7 +151,7 @@ class PhieuXuatHang(models.Model):
         db_table = "PHIEUXUATHANG"
 
 
-# Table 11
+# Table 12
 class ChiTietPhieuXuatHang(models.Model):
     MaCT_PXH = models.AutoField(primary_key=True)
     MaPhieuXuat = models.ForeignKey(PhieuXuatHang, on_delete=models.CASCADE)
@@ -149,7 +162,7 @@ class ChiTietPhieuXuatHang(models.Model):
         db_table = "CHITIET_PXH"
 
 
-# Table 12
+# Table 13
 class YeuThich(models.Model):
     MaKhachHang = models.ForeignKey(KhachHang, on_delete=models.CASCADE)
     MaMatHang = models.ForeignKey(MatHang, on_delete=models.CASCADE)
@@ -159,7 +172,7 @@ class YeuThich(models.Model):
         unique_together = ("MaKhachHang", "MaMatHang")
 
 
-# Table 13
+# Table 14
 class GioHang(models.Model):
     MaGioHang = models.AutoField(primary_key=True)
     MaKhachHang = models.ForeignKey(KhachHang, on_delete=models.CASCADE)
@@ -169,7 +182,7 @@ class GioHang(models.Model):
         db_table = "GIOHANG"
 
 
-# Table 14
+# Table 15
 class ChiTietGioHang(models.Model):
     MaGioHang = models.ForeignKey("GioHang", on_delete=models.CASCADE)
     MaMatHang = models.ForeignKey("MatHang", on_delete=models.CASCADE)
@@ -182,7 +195,7 @@ class ChiTietGioHang(models.Model):
         unique_together = ("MaGioHang", "MaMatHang")
 
 
-# Table 15
+# Table 16
 class DanhGia(models.Model):
     MaKhachHang = models.ForeignKey("KhachHang", on_delete=models.CASCADE)
     MaMatHang = models.ForeignKey("MatHang", on_delete=models.CASCADE)
@@ -195,7 +208,7 @@ class DanhGia(models.Model):
         unique_together = ("MaKhachHang", "MaMatHang", "ThoiDiem")
 
 
-# Table 16
+# Table 17
 class PhuongThucGiaoDich(models.Model):
     MaPhuongThuc = models.SmallAutoField(primary_key=True)
     TenPhuongThuc = models.CharField(max_length=100, unique=True)
@@ -204,7 +217,7 @@ class PhuongThucGiaoDich(models.Model):
         db_table = "PHUONGTHUC_GIAODICH"
 
 
-# Table 17
+# Table 18
 class KhachHangPhuongThuc(models.Model):
     MaKhachHang = models.ForeignKey("KhachHang", on_delete=models.CASCADE)
     MaPhuongThuc = models.ForeignKey("PhuongThucGiaoDich", on_delete=models.CASCADE)
@@ -214,7 +227,7 @@ class KhachHangPhuongThuc(models.Model):
         unique_together = ("MaKhachHang", "MaPhuongThuc")
 
 
-# Table 18
+# Table 19
 class LichSuThanhToan(models.Model):
     MaGioHang = models.ForeignKey("GioHang", on_delete=models.CASCADE)
     MaKhachHang = models.ForeignKey("KhachHang", on_delete=models.CASCADE)

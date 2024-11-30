@@ -75,6 +75,13 @@ class QUAN_Serializer(ModelSerializer):
 
 
 # # Serializer 10
+class DAILY_Serializer(ModelSerializer):
+    class Meta:
+        model = DaiLy
+        fields = "__all__"
+
+
+# # Serializer 11
 class NGUOIDUNG_DIACHI_Serializer(ModelSerializer):
     quan_info = QUAN_Serializer(source="MaQuan", read_only=True)
 
@@ -83,21 +90,21 @@ class NGUOIDUNG_DIACHI_Serializer(ModelSerializer):
         fields = "__all__"
 
 
-# # Serializer 11
+# # Serializer 12
 class QUAN_Serializer(ModelSerializer):
     class Meta:
         model = Quan
         fields = "__all__"
 
 
-# Serializer 12
+# Serializer 13
 class LimitedKHACHHANG_Serializer(ModelSerializer):
     class Meta:
         model = KhachHang
         fields = ["MaKhachHang", "TenKhachHang", "HinhAnh"]
 
 
-# Serialize 13
+# Serialize 14
 class DANHGIA_Serializer(ModelSerializer):
     khachhang_info = LimitedKHACHHANG_Serializer(source="MaKhachHang", read_only=True)
 
