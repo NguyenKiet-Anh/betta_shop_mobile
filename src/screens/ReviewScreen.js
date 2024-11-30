@@ -35,7 +35,7 @@ export default function Review({ route }) {
   const [selectedRating, setSelectedRating] = useState(0); // Selected star rating
   const [commentText, setCommentText] = useState(""); // User's comment text
 
-  // Fetch review data when the page loads
+  // Use Effect to fetch review data when the page loads
   useEffect(() => {
     const fetchReview = async (id) => {
       // Get reviews
@@ -93,6 +93,20 @@ export default function Review({ route }) {
     }
   };
 
+  // Function to show the comment's timestamp
+  const formatDateTime = (dateTime) => {
+    const date = new Date(dateTime);
+
+    const day = String(date.getDate()).padStart(2, "0"); // Ensure 2 digits for day
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, "0"); // Ensure 2 digits for hours
+    const minutes = String(date.getMinutes()).padStart(2, "0"); // Ensure 2 digits for minutes
+
+    return `${day}/${month}/${year} - ${hours}:${minutes}`;
+  };
+
   // Render the review section
   const renderReview = ({ item }) => (
     <View style={styles.reviewItem}>
@@ -106,11 +120,9 @@ export default function Review({ route }) {
         <Text style={styles.customerName}>
           {item.khachhang_info.TenKhachHang}
         </Text>
-        <Text style={styles.starText}>{item.Sao} ★</Text>
+        <Text style={styles.starText}>{"★".repeat(item.Sao)}</Text>
         <Text style={styles.commentText}>{item.BinhLuan}</Text>
-        <Text style={styles.timestamp}>
-          {new Date(item.ThoiDiem).toLocaleDateString()}
-        </Text>
+        <Text style={styles.timestamp}>{formatDateTime(item.ThoiDiem)}</Text>
       </View>
     </View>
   );
