@@ -1,5 +1,5 @@
 const ipAddress = "192.168.232.102";
-// const ipAddress = '192.168.1.21'
+// const ipAddress = "192.168.1.21";
 // For getting user's data
 export const getUserInfo = async (userId) => {
   try {
@@ -15,6 +15,31 @@ export const getUserInfo = async (userId) => {
       });
   } catch (error) {
     console.error("Error fetching user info: ", error);
+  }
+};
+// For updating avatar
+export const updateUserAvatar = async (userId, item) => {
+  try {
+    return await fetch(`http://${ipAddress}:8000/updateAvatar/${userId}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        avatar: item,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network working failed");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      });
+  } catch (error) {
+    console.error("Error updating profile: ", error);
   }
 };
 // For editing information
