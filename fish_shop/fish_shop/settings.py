@@ -27,12 +27,14 @@ SECRET_KEY = "django-insecure-!w71yu$jfvs6r0_i^qbl67sb$ue3ai(739t5rc-knyk4#&@lm%
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.232.102', 
-    '192.168.236.102', 
-    '192.168.153.102', 
-    '127.0.0.1', 
-    'localhost', 
-    '9ee0-2001-ee0-266-ba76-2a96-bf50-2d81-c185.ngrok-free.app'] # Get link from ngrok
+    "192.168.232.102",
+    "192.168.236.102",
+    "192.168.153.102",
+    "127.0.0.1",
+    "192.168.1.21",
+    "localhost",
+    "9ee0-2001-ee0-266-ba76-2a96-bf50-2d81-c185.ngrok-free.app",
+]  # Get link from ngrok
 
 
 # Application definition
@@ -50,11 +52,11 @@ INSTALLED_APPS = [
     "channels",
 ]
 
-ASGI_APPLICATION = 'fish_shop.asgi.application'
+ASGI_APPLICATION = "fish_shop.asgi.application"
 
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
 
@@ -98,8 +100,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "IE307.P11",
         "USER": "postgres",
-        # 'PASSWORD': '027735',
-        "PASSWORD": "Admin123",
+        "PASSWORD": "027735",
+        # "PASSWORD": "Admin123",
         "HOST": "localhost",
         "PORT": "5432",
     }

@@ -6,6 +6,7 @@ from .models import *
 admin.site.register(Quan)
 admin.site.register(LoaiDaiLy)
 admin.site.register(DaiLy)
+admin.site.register(DaiLyDiaChi)
 admin.site.register(LoaiMatHang)
 admin.site.register(MatHang)
 admin.site.register(TaiKhoan)
