@@ -12,5 +12,5 @@
   <p>+ Cài đặt ngrok: tham khảo google</p>
   <p>+ Cài xong lên trang chủ tạo tài khoản và lấy token sử dụng</p>
   <p>+ Cập nhật token vào ngrok local với câu lệnh: <i>ngrok authtoken your_token</i> </p>
-  <p>+ Cuối cùng chạy lệnh: ngrok http ip_address:port</p>
+  <p>+ Cuối cùng chạy lệnh: ngrok http ip_address:port (chạy trên một terminal khác)</p>
   <p>+ Ngrok public thành công ip:port thì lấy link của ngrok (hiện trên console) cập nhật vào settings - thêm vào ALLOW_HOST cũng như thay thế inputUrl trong api createPaymentLink<p>
