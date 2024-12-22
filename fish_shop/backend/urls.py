@@ -4,6 +4,7 @@ from .views import *
 urlpatterns = [
     path("login/", logIn, name="log_in"),
     path("signup/", signUp, name="sign_up"),
+    path("activateAccount/<str:email>", activate_account, name="activate_account"),
     path("home/", getFish_no_promotion, name="get_fishes"),
     # For fish
     path("getCategories/", getCategories, name="get_categories"),

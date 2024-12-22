@@ -90,132 +90,156 @@ def logIn(request):
         return Response({"success": False, "message": "Đăng nhập thất bại!"})
 
 
+# Function for auto generating OTP
+def generate_otp():
+    import random
+    otp = random.randint(1000, 9999)
+    return otp
+
+
+# Function for sending OTP via email
+from datetime import datetime, timedelta
+
+# Settings for sending email
+import smtplib
+import random
+import string
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from datetime import datetime, timedelta
+
+# Configure server for sending email
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+SENDER_EMAIL = "anhkiet.nguyen798@gmail.com"
+SENDER_PASSWORD = "qahd zxob ldon jmxs"
+
+def send_otp(email: str):
+    otp = generate_otp()
+    expires_at = datetime.utcnow() + timedelta(
+        minutes=2
+    )
+
+    subject = "Mã OTP của bạn"
+    body = f"Chào bạn chúng tôi là BettaShop,\n\nMã OTP của bạn là: {otp}\n\nCảm ơn bạn đã sử dụng dịch vụ của chúng tôi."
+
+    msg = MIMEMultipart()
+    msg["From"] = SENDER_EMAIL
+    msg["To"] = email
+    msg["Subject"] = subject
+    msg.attach(MIMEText(body, "plain"))
+
+    try:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(SENDER_EMAIL, SENDER_PASSWORD)
+            server.sendmail(SENDER_EMAIL, email, msg.as_string())  
+
+        print(f"Đã gửi OTP tới email {email}")
+        return otp, expires_at 
+
+    except Exception as e:
+        print(f"Không thể gửi email. Lỗi: {e}")
+        return None, None
+
+
 # api for signing up
 @api_view(["POST"])
-def signUp(request):    
-    if request.data.get("is_first_request", False):
-        username = request.data.get("username")
-        password = request.data.get("password")
-        fullname = request.data.get("fullname")
-        email = request.data.get("email")
-        phone_number = request.data.get("phone_number")
-        district_code = request.data.get("district_code")
-        address = request.data.get("address")
+def signUp(request):
+    username = request.data.get("username")
+    password = request.data.get("password")        
+    phone_number = request.data.get("phone")
+    email = request.data.get("email")
+    address = request.data.get("address")
 
-        print()
-        return
-        try:
-            account = TaiKhoan.objects.filter(TenTaiKhoan=username)
-            if account:
-                return Response({"success": False, "message": "USERNAME đã tồn tại!"})
+    # Check condition
+    try:
+        account = TaiKhoan.objects.filter(TenTaiKhoan=username)
+        if account:
+            return Response({"success": False, "message": "USERNAME exists!"})
 
-            email_used = KhachHang.objects.filter(Email=email)
-            if email_used:
-                return Response(
-                    {
-                        "success": False,
-                        "message": "Email đã được sử dụng trên tài khoản khác",
-                    }
-                )
-
-            phone_used = KhachHang.objects.filter(SoDienThoai=phone_number)
-            if phone_used:
-                return Response(
-                    {
-                        "success": False,
-                        "message": "Số điện thoại đã được sử dụng trên tài khoản khác",
-                    }
-                )
-
-        except TaiKhoan.DoesNotExist:
-            pass
-
-        verification_token = secrets.token_urlsafe(32)
-        token = {"token": verification_token}
-
-        cache_key = f"signup_data_{verification_token}"
-        cache.set(cache_key, token, timeout=300)
-
-        ok = send_mail(
-            "Verify Your Email",
-            f"Click the following link to verify your email: http://localhost:3000/signup?token={verification_token}",
-            "edwarddao20@gmail.com",
-            [request.data["email"]],
-            fail_silently=False,
+        phone_used = KhachHang.objects.filter(SoDienThoai=phone_number)
+        if phone_used:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Phone number has been used",
+                }
+            )
+    except TaiKhoan.DoesNotExist:
+        pass
+    
+    # Send OTP using gmail
+    otp, expired_time = send_otp(email)
+    if otp == None and expired_time == None:
+        return Response({
+            "success": False,
+            "message": "Failed while sending email"
+        })
+    
+    # Create new user and account
+    try:
+        # Create new account
+        new_account = TaiKhoan.objects.create(
+            isAdmin=False,
+            isCustomer=True,
+            isActivated=False,
+            TenTaiKhoan=username,
+            MatKhau=password,
+            verification_token=otp,
         )
+        new_account.save()
+        # Create new user
+        new_user = KhachHang.objects.create(
+            TenKhachHang=username,
+            SoDienThoai=phone_number,  
+            Email=email      
+        )
+        new_user.save()
+        # Create new user address
+        new_user_address = KhachHangDiaChi.objects.create(
+            MaKhachHang = new_user,
+            MaQuan = Quan.objects.get(MaQuan=1),
+            DiaChi = address,
+            KinhDo = 0.000000,
+            ViDo = 0.000000
+        )
+        new_user_address.save()
+        # Link user to account    
+        user_account = TaiKhoanKhachHang.objects.create(
+            MaKhachHang = new_user,
+            MaTaiKhoan = new_account
+        )
+        user_account.save()    
+    except Exception as e:
+        print(e)
 
-        if ok:
-            new_account = TaiKhoan.objects.create(
-                isAdmin=False,
-                isCustomer=True,
-                isActivated=False,
-                TenTaiKhoan=username,
-                MatKhau=password,
-                verification_token=verification_token,
-            )
-            new_account.save()
+    return Response({
+        "success": True,
+        "message": "Your account has been created, but has been not verified yet! Check your mail to verify your account"
+    })
 
-            new_user = KhachHang.objects.create(
-                TenKhachHang=fullname,
-                SoDienThoai=phone_number,
-                Email=email,
-            )
-            new_user.save()
+@api_view(["POST"])
+def activate_account(request, email):    
+    # Receive OTP
+    otp = request.data.get("otp")
+    # Get account and active account
+    khachhang = KhachHang.objects.get(Email=email)
+    taikhoankhachhang = TaiKhoanKhachHang.objects.get(MaKhachHang=khachhang)
+    taikhoan = TaiKhoan.objects.get(MaTaiKhoan=taikhoankhachhang.MaTaiKhoan.MaTaiKhoan)
+    
+    print(taikhoan.verification_token)
+    if (taikhoan.verification_token == otp):
+        taikhoan.isActivated = True
+        taikhoan.save()
 
-            ma_tai_khoan = new_account.MaTaiKhoan
-            ma_khach_hang = new_user.MaKhachHang
+        return Response({
+            "success": True,
+            "message": "Your account has been activated"
+        })
+    # Send message to client
 
-            new_user_account = TaiKhoanKhachHang.objects.create(
-                MaKhachHang=ma_khach_hang,
-                MaTaiKhoan=ma_tai_khoan,
-            )
-            new_user_account.save()
-
-            new_user_address = KhachHangDiaChi.objects.create(
-                MaKhachHang=ma_khach_hang,
-                MaQuan=district_code,
-                DiaChi=address,
-            )
-            new_user_address.save()
-
-            return Response({"success": True, "message": "Đăng ký thành công!"})
-        else:
-            return Response(
-                {"success": False, "message": "Đăng ký thất bại. Email không tồn tại!"}
-            )
-
-    elif request.data.get("activate", False):
-
-        cache_key = f'signup_data_{request.data["token"]}'
-        cached_data = cache.get(cache_key)
-
-        if not cached_data:
-            return Response(
-                {"success": False, "message": "Cached data not found or expired."}
-            )
-
-        try:
-            verification_token = cached_data.get("token")
-
-            activate_account = TaiKhoan.objects.get(
-                verification_token=verification_token
-            )
-            if activate_account:
-                activate_account.is_actived = True
-                activate_account.save()
-                return Response(
-                    {"success": True, "message": "Tài khoản kích hoạt thành công!"}
-                )
-            else:
-                return Response(
-                    {
-                        "success": False,
-                        "message": "Tài khoản đã bị xoá trước khi được kích hoạt!",
-                    }
-                )
-        except:
-            return Response({"success": False, "message": "Lỗi hệ thống!!!"})
-
+    
 
 # Get all categories
 @api_view(["GET"])
