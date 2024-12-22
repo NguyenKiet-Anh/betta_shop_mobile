@@ -1,6 +1,6 @@
 // Import react native elements
 import { useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, Modal, StyleSheet, TouchableOpacity, ScrollView, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // import custom components
@@ -9,17 +9,93 @@ import { SubmitButton } from "../components/SubmitButton";
 
 export default function SignUp({ navigation }) {
   const [username, setUsername] = useState("");
-  const [adress, setAddress] = useState("");
+  const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
+  // For OTP
+  const [otp, setOtp] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleSignUp = async() => {
+  const ipAddress = '192.168.18.102';
+
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
+  const handleSignUp = async(password, passwordAgain) => {
+    if (passwordAgain !== password) {
+      alert("Your confirm password doesnt match with your password!");
+    } else {
+      try {
+        return await fetch(`http://${ipAddress}:8000/signup/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              username: username,
+              password: password,
+              phone: phone,
+              address: address,
+              email: email
+          }),
+        })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network working failed");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.success) {            
+            alert("OTP has been sent to your email! Please check your email!");
+            toggleModal();
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data: ", error);
+        });
+      } catch (error) { 
+        console.error("Error while signing up: ", error);
+      };
+    }
+  };
+
+  const handleSubmitOtp = async() => {
     try {
-        
+      return await fetch(`http://${ipAddress}:8000/activateAccount/${email}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({          
+            otp: otp
+        }),
+      })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network working failed");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.success) {            
+          alert("Your account has been activated");
+          navigation.navigate("Sign-In");
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
     } catch (error) {
-      console.error("Error while signing up: ", error);
-    };
+      console.error("Error while verifying otp: ", error);
+    }
   };
 
   return (
@@ -31,7 +107,7 @@ export default function SignUp({ navigation }) {
         ></Image>
       </View>
 
-      <View style={styles.contentContainer}>
+      <ScrollView style={styles.contentContainer}>
         <View style={styles.body}>
           <Text style={[styles.titleText, styles.bodyMarginVertical]}>
             Sign Up
@@ -62,6 +138,12 @@ export default function SignUp({ navigation }) {
           </View>
           <View style={[styles.bodyMarginVertical, styles.buttonHeight]}>
             <InputField
+              title="Email"
+              setValue={(e) => setEmail(e)}
+            ></InputField>
+          </View>
+          <View style={[styles.bodyMarginVertical, styles.buttonHeight]}>
+            <InputField
               title="Address"
               setValue={(e) => setAddress(e)}
             ></InputField>
@@ -70,7 +152,7 @@ export default function SignUp({ navigation }) {
             <SubmitButton
               title="SIGN UP"
               onPress={() => {
-                handleSignUp();
+                handleSignUp(password, passwordAgain);
               }}
             ></SubmitButton>
           </View>
@@ -87,7 +169,32 @@ export default function SignUp({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </ScrollView>
+
+      <Modal
+          visible={isModalVisible}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={toggleModal}
+      >
+          <View style={styles.modalBackground}>
+              <View style={styles.modalContainer}>
+                  <TextInput
+                    style={styles.modalInputStyle}
+                    value={otp}
+                    onChangeText={(e) => setOtp(e)}
+                  ></TextInput>
+                  <View style={styles.modalActions}>                      
+                      <TouchableOpacity onPress={toggleModal} style={[styles.modalButton, {backgroundColor: '#ff5863'}]}>
+                          <Text style={styles.modalButtonText}>Cancel</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={handleSubmitOtp} style={styles.modalButton}>
+                          <Text style={styles.modalButtonText}>Submit</Text>
+                      </TouchableOpacity>
+                  </View>
+              </View>
+          </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -122,12 +229,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   buttonHeight: {
-    height: 50,
+    height: 45,
   },
 
   footer: {
-    height: "10%",
-    marginTop: 10,
+    height: "10%"
   },
   goToSignIn: {
     flexDirection: "row",
@@ -143,4 +249,38 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#b141aa",
   },
+  // Modal Style
+  modalBackground: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  },
+  modalContainer: {
+      backgroundColor: 'white',
+      padding: 20,
+      borderRadius: 10,
+      width: 300,
+      alignItems: 'center'
+  },
+  modalActions: {
+      flexDirection: 'row',
+      marginTop: 15
+  },
+  modalButton: {
+      backgroundColor: '#b141aa',
+      padding: 10,
+      marginHorizontal: 5,
+      borderRadius: 5
+  },
+  modalButtonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: '600'
+  },
+  modalInputStyle: {
+    width: '90%',
+    height: 50,
+    color: 'black'
+  }
 });
