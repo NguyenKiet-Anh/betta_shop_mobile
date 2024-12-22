@@ -10,7 +10,9 @@ urlpatterns = [
     path("getFishesAll/", getFish_all, name="get_fish_all"),
     path("getFishes/", getFish_no_promotion, name="get_fishes_no_promotion"),
     path("getFishesPromotion/", getFish_promotion, name="get_fishes_promotion"),
+    path("getFishesForAdmin/", get_fish_for_admin, name="get_fishes_for_admin"),
     path("getFishById/<int:id>/", get_fish_by_id, name="get_fish_by_id"),
+    path("deleteFishForAdmin/<int:ma_ca>/", delete_fish_admin, name="delete_fish_admin"),
     # For wishlist
     path("getWishList/<int:ma_khach_hang>/", get_wishList, name="get_wishList"),
     path("addWishList/", add_wishList, name="add_wishList"),
@@ -44,6 +46,8 @@ urlpatterns = [
         "changePassword/<int:ma_khach_hang>/", change_password, name="change_password"
     ),  # ma_khach_hang here refered to ma_tai_khoan
     path("updateAvatar/<int:ma_khach_hang>/", update_avatar, name="update_user_avatar"),
+    path("getUsersForAdmin/", get_user_for_admin, name="get_users_for_admin"),
+    path("deleteUserForAdmin/<int:ma_khach_hang>/", delete_user_for_admin, name="delete_user_for_admin"),
     # For district
     path("getAllDistricts/", get_all_districts, name="get_all_districts"),
     # For review
@@ -53,8 +57,3 @@ urlpatterns = [
     path("getStoreLocation/", get_store_locations, name="get_store_location"),
 ]
 
-# ----- OLD VERSION -----
-# urlpatterns = [
-#     path('get_reports/', views.getReports, name='get_reports'),
-#     path('export_hoadon_pdf/<int:ma_hoa_don>/', views.export_hoadon_pdf, name='export_hoadon_pdf'),
-# ]

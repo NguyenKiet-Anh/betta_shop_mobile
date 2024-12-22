@@ -111,3 +111,44 @@ class DANHGIA_Serializer(ModelSerializer):
     class Meta:
         model = DanhGia
         fields = "__all__"
+
+
+# Serialize 15
+class DANHGIA_ADMIN_Serializer(ModelSerializer):
+    class Meta:
+        model = DanhGia
+        fields = "__all__"
+
+
+# Serialize 16
+class MATHANG_ADMIN_Serializer(ModelSerializer):
+    danhgia = DANHGIA_ADMIN_Serializer(source="danhgia_set", many=True, read_only=True)
+
+    class Meta:
+        model = MatHang
+        fields = "__all__"
+
+
+# Serializer 17
+class KHACHHANG_DIACHI_ADMIN_Serializer(ModelSerializer):
+    class Meta:
+        model = KhachHangDiaChi
+        fields = ["DiaChi"]
+
+
+# Serializer 18
+class KHACHHANG_THANHTOAN_ADMIN_Serializer(ModelSerializer):
+    class Meta:
+        model = LichSuThanhToan
+        fields = "__all__"
+
+
+# Serializer 19
+class KHACHHANG_ADMIN_Serializer(ModelSerializer):
+    diachi = KHACHHANG_DIACHI_ADMIN_Serializer(source="khachhangdiachi_set", many=True, read_only=True)
+    danhgia = DANHGIA_ADMIN_Serializer(source="danhgia_set", many=True, read_only=True)
+    thanhtoan = KHACHHANG_THANHTOAN_ADMIN_Serializer(source="lichsuthanhtoan_set", many=True, read_only=True)
+    
+    class Meta:
+        model = KhachHang
+        fields = "__all__"

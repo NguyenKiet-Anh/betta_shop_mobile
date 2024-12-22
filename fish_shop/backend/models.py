@@ -81,7 +81,7 @@ class MatHang(models.Model):
 class TaiKhoan(models.Model):
     MaTaiKhoan = models.SmallAutoField(primary_key=True)
     isAdmin = models.BooleanField(default=False)
-    isCustomer = models.BooleanField(default=False)
+    isCustomer = models.BooleanField(default=True)
     TenTaiKhoan = models.CharField(max_length=100, unique=True)
     MatKhau = models.CharField(max_length=200)
     isActivated = models.BooleanField(default=False)
@@ -98,7 +98,7 @@ class KhachHang(models.Model):
     MaKhachHang = models.SmallAutoField(primary_key=True)
     TenKhachHang = models.CharField(max_length=100)
     SoDienThoai = models.CharField(max_length=20, unique=True)
-    Email = models.TextField(blank=True, null=True)
+    Email = models.CharField(max_length=200, blank=True, null=True)
     HinhAnh = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
@@ -133,6 +133,8 @@ class KhachHangDiaChi(models.Model):
     MaKhachHang = models.ForeignKey(KhachHang, on_delete=models.CASCADE)
     MaQuan = models.ForeignKey(Quan, on_delete=models.CASCADE)
     DiaChi = models.CharField(max_length=200)
+    KinhDo = models.CharField(max_length=15)
+    ViDo = models.CharField(max_length=15)
 
     class Meta:
         db_table = "KHACHHANG_DIACHI"
@@ -201,7 +203,7 @@ class DanhGia(models.Model):
     MaMatHang = models.ForeignKey("MatHang", on_delete=models.CASCADE)
     ThoiDiem = models.DateTimeField(auto_now_add=True)
     BinhLuan = models.CharField(max_length=500, blank=True, null=True)
-    Sao = models.SmallIntegerField(null=True)
+    Sao = models.DecimalField(max_digits=2, decimal_places=0, default=0)
 
     class Meta:
         db_table = "DANHGIA"
@@ -217,14 +219,14 @@ class PhuongThucGiaoDich(models.Model):
         db_table = "PHUONGTHUC_GIAODICH"
 
 
-# Table 18
-class KhachHangPhuongThuc(models.Model):
-    MaKhachHang = models.ForeignKey("KhachHang", on_delete=models.CASCADE)
-    MaPhuongThuc = models.ForeignKey("PhuongThucGiaoDich", on_delete=models.CASCADE)
+# # Table 18 - no need anymore
+# class KhachHangPhuongThuc(models.Model):
+#     MaKhachHang = models.ForeignKey("KhachHang", on_delete=models.CASCADE)
+#     MaPhuongThuc = models.ForeignKey("PhuongThucGiaoDich", on_delete=models.CASCADE)
 
-    class Meta:
-        db_table = "KHACHHANG_PHUONGTHUC"
-        unique_together = ("MaKhachHang", "MaPhuongThuc")
+#     class Meta:
+#         db_table = "KHACHHANG_PHUONGTHUC"
+#         unique_together = ("MaKhachHang", "MaPhuongThuc")
 
 
 # Table 19

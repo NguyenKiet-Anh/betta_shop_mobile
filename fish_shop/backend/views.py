@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.serializers import Serializer
 from .models import *
@@ -34,6 +35,29 @@ from validate_email import (
 )  # pip install py3-validate-email==1.0.4, pip install dnspython==2.4.1
 
 # Create your views here.
+# BASE_DIR for getting images
+from pathlib import Path
+import os
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent
+IMAGE_DIR = os.path.join(BASE_DIR, "database", "betta_shop_mobile")
+
+# Function for using image directory in both Windows and Linux Ubuntu
+def get_image_directory(path):
+    if os.name == "posix":
+        return Path(path.replace('\\', '/'))
+    elif os.name == "nt":
+        return Path(path.replace('/', '\\'))
+
+
+def get_path_for_image(path):
+    target_dir = "images"
+    relative_path = path.parts[path.parts.index(target_dir) :]
+    relative_path_str = Path(*relative_path).as_posix()
+    if os.name == "nt":
+        final_path = Path(str(IMAGE_DIR) + '\\' + relative_path_str)
+    elif os.name == "posix":
+        final_path = Path(str(IMAGE_DIR) + '/' + relative_path_str)
+    return final_path
 
 
 # api for logging in
@@ -42,7 +66,11 @@ def logIn(request):
     try:
         password = request.data.get("password")
         username = request.data.get("username")
-        account = TaiKhoan.objects.get(TenTaiKhoan=username, MatKhau=password)
+        try:
+            account = TaiKhoan.objects.get(TenTaiKhoan=username, MatKhau=password)
+        except Exception as e:
+            print("error", e)
+
         if account.isActivated:
             return Response(
                 {
@@ -64,8 +92,7 @@ def logIn(request):
 
 # api for signing up
 @api_view(["POST"])
-def signUp(request):
-
+def signUp(request):    
     if request.data.get("is_first_request", False):
         username = request.data.get("username")
         password = request.data.get("password")
@@ -75,6 +102,8 @@ def signUp(request):
         district_code = request.data.get("district_code")
         address = request.data.get("address")
 
+        print()
+        return
         try:
             account = TaiKhoan.objects.filter(TenTaiKhoan=username)
             if account:
@@ -210,24 +239,28 @@ def getFish_all(request):
     for item in serializers.data:
         # Encode HinhAnh1 before sending
         if item["HinhAnh1"]:
+            item["HinhAnh1"] = get_path_for_image(get_image_directory(item["HinhAnh1"]))
             with open(item["HinhAnh1"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh1"] = base64_encoded_data
         # Encode HinhAnh2 before sending
         if item["HinhAnh2"]:
+            item["HinhAnh2"] = get_path_for_image(get_image_directory(item["HinhAnh2"]))
             with open(item["HinhAnh2"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh2"] = base64_encoded_data
         # Encode HinhAnh3 before sending
         if item["HinhAnh3"]:
+            item["HinhAnh3"] = get_path_for_image(get_image_directory(item["HinhAnh3"]))
             with open(item["HinhAnh3"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh3"] = base64_encoded_data
         # Encode HinhAnh4 before sending
         if item["HinhAnh4"]:
+            item["HinhAnh4"] = get_path_for_image(get_image_directory(item["HinhAnh4"]))
             with open(item["HinhAnh4"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
@@ -240,31 +273,35 @@ def getFish_all(request):
 @api_view(["GET"])
 def getFish_no_promotion(request):
     # Get data from database
-    fishes = MatHang.objects.filter(KhuyenMai=False)
+    fishes = MatHang.objects.filter(KhuyenMai=False)    
     # Convert from Queryset format to Json format, many = True because there are many data rows.
     serializers = MATHANG_Serializer(fishes, many=True)
     # Encode images before sending
     for item in serializers.data:
         # Encode HinhAnh1 before sending
         if item["HinhAnh1"]:
+            item["HinhAnh1"] = get_path_for_image(get_image_directory(item["HinhAnh1"]))
             with open(item["HinhAnh1"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh1"] = base64_encoded_data
         # Encode HinhAnh2 before sending
         if item["HinhAnh2"]:
+            item["HinhAnh2"] = get_path_for_image(get_image_directory(item["HinhAnh2"]))
             with open(item["HinhAnh2"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh2"] = base64_encoded_data
         # Encode HinhAnh3 before sending
         if item["HinhAnh3"]:
+            item["HinhAnh3"] = get_path_for_image(get_image_directory(item["HinhAnh3"]))
             with open(item["HinhAnh3"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh3"] = base64_encoded_data
         # Encode HinhAnh4 before sending
         if item["HinhAnh4"]:
+            item["HinhAnh4"] = get_path_for_image(get_image_directory(item["HinhAnh4"]))
             with open(item["HinhAnh4"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
@@ -284,30 +321,83 @@ def getFish_promotion(request):
     for item in serializers.data:
         # Encode HinhAnh1 before sending
         if item["HinhAnh1"]:
+            item["HinhAnh1"] = get_path_for_image(get_image_directory(item["HinhAnh1"]))
             with open(item["HinhAnh1"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh1"] = base64_encoded_data
         # Encode HinhAnh2 before sending
         if item["HinhAnh2"]:
+            item["HinhAnh2"] = get_path_for_image(get_image_directory(item["HinhAnh2"]))
             with open(item["HinhAnh2"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh2"] = base64_encoded_data
         # Encode HinhAnh3 before sending
         if item["HinhAnh3"]:
+            item["HinhAnh3"] = get_path_for_image(get_image_directory(item["HinhAnh3"]))
             with open(item["HinhAnh3"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh3"] = base64_encoded_data
         # Encode HinhAnh4 before sending
         if item["HinhAnh4"]:
+            item["HinhAnh4"] = get_path_for_image(get_image_directory(item["HinhAnh4"]))
             with open(item["HinhAnh4"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh4"] = base64_encoded_data
     # Return Json format
     return Response(serializers.data)
+
+
+# Get fish for Admin pages
+@api_view(["GET"])
+def get_fish_for_admin(request):
+    fishes = MatHang.objects.all()
+    # Serializing data
+    serializers = MATHANG_ADMIN_Serializer(fishes, many=True)
+    # Encode images before sending
+    for item in serializers.data:
+        # Encode HinhAnh1 before sending
+        if item["HinhAnh1"]:            
+            item["HinhAnh1"] = get_path_for_image(get_image_directory(item["HinhAnh1"]))
+            with open(item["HinhAnh1"], "rb") as file:
+                data = file.read()
+                base64_encoded_data = base64.b64encode(data).decode("utf-8")
+                item["HinhAnh1"] = base64_encoded_data            
+    # Get some fields from serializer instead of getting all fields
+    result = []
+    for item in serializers.data:        
+        result.append({
+            "MaMatHang": item["MaMatHang"],
+            "TenMatHang": item["TenMatHang"],
+            "HinhAnh": item["HinhAnh1"],            
+            "DonGia": item["Dongia"],
+            "KhuyenMai": item["KhuyenMai"],
+            "GiaKhuyenMai": item["GiaKhuyenMai"],
+            "GioiTinh": item["Gioitinh"],
+            "SoLuotDanhgia": len(item["danhgia"])
+        })
+    # Return Json format
+    return Response(result)
+
+
+# Delete fish in admin page
+@api_view(["DELETE"])
+def delete_fish_admin(request, ma_ca):
+    try:
+        fish = MatHang.objects.get(MaMatHang = ma_ca)
+        fish.delete()
+        return Response({
+            "status": True,
+            "message": "Fish has been removed"
+        })
+    except Exception as e:
+        return Response({
+            "status": False,
+            "message": "Fish not found"
+        })
 
 
 # Get fish by fish's id
@@ -324,24 +414,28 @@ def get_fish_by_id(request, id):
 
     # Encode images before sending
     if data.get("HinhAnh1"):
+        data["HinhAnh1"] = get_path_for_image(get_image_directory(data["HinhAnh1"]))
         with open(data["HinhAnh1"], "rb") as file:
             image_data = file.read()
             base64_encoded = base64.b64encode(image_data).decode("utf-8")
             data["HinhAnh1"] = base64_encoded
 
     if data.get("HinhAnh2"):
+        data["HinhAnh2"] = get_path_for_image(get_image_directory(data["HinhAnh2"]))
         with open(data["HinhAnh2"], "rb") as file:
             image_data = file.read()
             base64_encoded = base64.b64encode(image_data).decode("utf-8")
             data["HinhAnh2"] = base64_encoded
 
     if data.get("HinhAnh3"):
+        data["HinhAnh3"] = get_path_for_image(get_image_directory(data["HinhAnh3"]))
         with open(data["HinhAnh3"], "rb") as file:
             image_data = file.read()
             base64_encoded = base64.b64encode(image_data).decode("utf-8")
             data["HinhAnh3"] = base64_encoded
 
     if data.get("HinhAnh4"):
+        data["HinhAnh4"] = get_path_for_image(get_image_directory(data["HinhAnh4"]))
         with open(data["HinhAnh4"], "rb") as file:
             image_data = file.read()
             base64_encoded = base64.b64encode(image_data).decode("utf-8")
@@ -361,28 +455,29 @@ def get_wishList(request, ma_khach_hang):
     for item in serializers.data:
         # Encode HinhAnh1 before sending
         if item["ca_info"]["HinhAnh1"]:
+            item["ca_info"]["HinhAnh1"] = get_path_for_image(get_image_directory(item["ca_info"]["HinhAnh1"]))
             with open(item["ca_info"]["HinhAnh1"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["ca_info"]["HinhAnh1"] = base64_encoded_data
         # Encode HinhAnh2 before sending
-        if item["ca_info"]["HinhAnh2"]:
-            with open(item["ca_info"]["HinhAnh2"], "rb") as file:
-                data = file.read()
-                base64_encoded_data = base64.b64encode(data).decode("utf-8")
-                item["ca_info"]["HinhAnh2"] = base64_encoded_data
+        # if item["ca_info"]["HinhAnh2"]:
+        #     with open(item["ca_info"]["HinhAnh2"], "rb") as file:
+        #         data = file.read()
+        #         base64_encoded_data = base64.b64encode(data).decode("utf-8")
+        #         item["ca_info"]["HinhAnh2"] = base64_encoded_data
         # Encode HinhAnh3 before sending
-        if item["ca_info"]["HinhAnh3"]:
-            with open(item["ca_info"]["HinhAnh3"], "rb") as file:
-                data = file.read()
-                base64_encoded_data = base64.b64encode(data).decode("utf-8")
-                item["ca_info"]["HinhAnh3"] = base64_encoded_data
+        # if item["ca_info"]["HinhAnh3"]:
+        #     with open(item["ca_info"]["HinhAnh3"], "rb") as file:
+        #         data = file.read()
+        #         base64_encoded_data = base64.b64encode(data).decode("utf-8")
+        #         item["ca_info"]["HinhAnh3"] = base64_encoded_data
         # Encode HinhAnh4 before sending
-        if item["ca_info"]["HinhAnh4"]:
-            with open(item["ca_info"]["HinhAnh4"], "rb") as file:
-                data = file.read()
-                base64_encoded_data = base64.b64encode(data).decode("utf-8")
-                item["ca_info"]["HinhAnh4"] = base64_encoded_data
+        # if item["ca_info"]["HinhAnh4"]:
+        #     with open(item["ca_info"]["HinhAnh4"], "rb") as file:
+        #         data = file.read()
+        #         base64_encoded_data = base64.b64encode(data).decode("utf-8")
+        #         item["ca_info"]["HinhAnh4"] = base64_encoded_data
     return Response(serializers.data)
 
 
@@ -459,28 +554,29 @@ def get_cart(request, ma_khach_hang):
     for item in serializers.data:
         # Encode HinhAnh1 before sending
         if item["ca_info"]["HinhAnh1"]:
+            item["ca_info"]["HinhAnh1"] = get_path_for_image(get_image_directory(item["ca_info"]["HinhAnh1"]))
             with open(item["ca_info"]["HinhAnh1"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["ca_info"]["HinhAnh1"] = base64_encoded_data
         # Encode HinhAnh2 before sending
-        if item["ca_info"]["HinhAnh2"]:
-            with open(item["ca_info"]["HinhAnh2"], "rb") as file:
-                data = file.read()
-                base64_encoded_data = base64.b64encode(data).decode("utf-8")
-                item["ca_info"]["HinhAnh2"] = base64_encoded_data
+        # if item["ca_info"]["HinhAnh2"]:
+        #     with open(item["ca_info"]["HinhAnh2"], "rb") as file:
+        #         data = file.read()
+        #         base64_encoded_data = base64.b64encode(data).decode("utf-8")
+                # item["ca_info"]["HinhAnh2"] = base64_encoded_data
         # Encode HinhAnh3 before sending
-        if item["ca_info"]["HinhAnh3"]:
-            with open(item["ca_info"]["HinhAnh3"], "rb") as file:
-                data = file.read()
-                base64_encoded_data = base64.b64encode(data).decode("utf-8")
-                item["ca_info"]["HinhAnh3"] = base64_encoded_data
+        # if item["ca_info"]["HinhAnh3"]:
+        #     with open(item["ca_info"]["HinhAnh3"], "rb") as file:
+        #         data = file.read()
+        #         base64_encoded_data = base64.b64encode(data).decode("utf-8")
+        #         item["ca_info"]["HinhAnh3"] = base64_encoded_data
         # Encode HinhAnh4 before sending
-        if item["ca_info"]["HinhAnh4"]:
-            with open(item["ca_info"]["HinhAnh4"], "rb") as file:
-                data = file.read()
-                base64_encoded_data = base64.b64encode(data).decode("utf-8")
-                item["ca_info"]["HinhAnh4"] = base64_encoded_data
+        # if item["ca_info"]["HinhAnh4"]:
+        #     with open(item["ca_info"]["HinhAnh4"], "rb") as file:
+        #         data = file.read()
+        #         base64_encoded_data = base64.b64encode(data).decode("utf-8")
+        #         item["ca_info"]["HinhAnh4"] = base64_encoded_data
     return Response(serializers.data)
 
 
@@ -851,6 +947,7 @@ def get_user(request, ma_khach_hang):
     data = serializers.data
     # Encode avatar before sending
     if data["HinhAnh"]:
+        data["HinhAnh"] = get_path_for_image(get_image_directory(data["HinhAnh"]))
         with open(data["HinhAnh"], "rb") as file:
             data_img = file.read()
             base64_encoded_data = base64.b64encode(data_img).decode("utf-8")
@@ -899,8 +996,9 @@ def update_user(request, ma_khach_hang):
             MaKhachHang=user.MaKhachHang.MaKhachHang
         )
         # Update district code
+        new_quan = Quan.objects.get(MaQuan=district_code)        
         if district_code != update_user_address.MaQuan:
-            update_user_address.MaQuan.MaQuan = district_code
+            update_user_address.MaQuan = new_quan
             # Update address
         if address != update_user_address.DiaChi:
             update_user_address.DiaChi = address
@@ -964,7 +1062,51 @@ def get_all_districts(request):
         return Response({"success": False})
 
 
-# Checking out cart
+# Get profile of all user for Admin
+@api_view(["GET"])
+def get_user_for_admin(request):
+    khachhangs = KhachHang.objects.all()
+    # Serializing data
+    serializers = KHACHHANG_ADMIN_Serializer(khachhangs, many=True)    
+    # Encode avatar before sending
+    for item in serializers.data:
+        item["HinhAnh"] = get_path_for_image(get_image_directory(item["HinhAnh"]))
+        with open(item["HinhAnh"], "rb") as file:
+            data_img = file.read()
+            base64_encoded_data = base64.b64encode(data_img).decode("utf-8")
+            item["HinhAnh"] = base64_encoded_data
+    # Get address
+    serializers2 = NGUOIDUNG_DIACHI_Serializer
+    # Get exactl fields for returning
+    result = []
+    for item in serializers.data:
+        result.append({
+            "MaKhachHang": item["MaKhachHang"],
+            "TenKhachHang": item["TenKhachHang"],
+            "HinhAnh": item["HinhAnh"],
+            "SoDienThoai": item["SoDienThoai"],
+            "TongLuotThanhToan": len(item["thanhtoan"]),
+            "TongLuotDanhGia": len(item["danhgia"])            
+        })
+    # Return here
+    return Response(result)
+
+
+# Delete user in admin page
+@api_view(["DELETE"])
+def delete_user_for_admin(request, ma_khach_hang):
+    try:        
+        customer = KhachHang.objects.get(MaKhachHang = ma_khach_hang)
+        customer.delete()
+        return Response({
+            "status": True,
+            "message": "This user has been removed"
+        })
+    except:
+        return Response({
+            "status": False,
+            "message": "User not found"
+        })
 
 
 # Get reviews by fish's id
@@ -983,7 +1125,9 @@ def get_review_by_fish_id(request, id):
     for item in serializers.data:
         # Customer avatar
         customer_info = item.get("khachhang_info", {})
+        print(customer_info)
         if customer_info.get("HinhAnh"):
+            customer_info["HinhAnh"] = get_path_for_image(get_image_directory(customer_info["HinhAnh"]))
             with open(customer_info["HinhAnh"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
@@ -1037,6 +1181,7 @@ def get_store_locations(request):
         # Encode images before sending
         for item in stores:
             if item.get("store_image"):
+                item["store_image"] = get_path_for_image(get_image_directory(item["store_image"]))
                 with open(item["store_image"], "rb") as file:
                     data = file.read()
                     base64_encoded_data = base64.b64encode(data).decode("utf-8")
