@@ -33,8 +33,13 @@ export default function Category({ route, navigation }) {
     // Declare function here    
     // Get all categories from server
     const fetchCategories = async() => {
-        const allCategories = await getAllCategories();
-        setCategoriesData(allCategories);
+        const allCategories = await getAllCategories();        
+        setCategoriesData([
+            {
+                "MaLoaiMatHang": "All",
+                "TenLoaiMatHang": "All"
+            },
+            ...allCategories]);
     };
     // Get fishes as category from server
     const fetchFishes = async() => {
@@ -200,6 +205,7 @@ export default function Category({ route, navigation }) {
         );
     };
     // Main return
+    console.log(categoriesData);
     return (
         <>
         {
@@ -226,7 +232,7 @@ export default function Category({ route, navigation }) {
                         </View>
                         <View style={styles.bodySection}>
                             <View style={{marginVertical: 15}}>
-                                <Text style={{fontSize: 18, fontWeight: 600}}>Tất cả ({countFish})</Text>
+                                <Text style={{fontSize: 18, fontWeight: 600}}>Total ({countFish})</Text>
                                 
                                 <View style={{marginVertical: 7}}>
                                     <FlatList

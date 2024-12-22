@@ -43,12 +43,16 @@ export default function EditProfile({ navigation }) {
             value: item.MaQuan,
         }));
 
-    setDistrictNameData(districtData);
+        setDistrictNameData(districtData);
         setIsLoading(false);
+
+        navigation.setOptions({
+            headerTitle: data.khach_hang_info.TenKhachHang,
+        });
     };
     useEffect(() => {
         if (isFocusedEditProfile) {
-            fetchData(userInfo.ma_nguoi_dung);
+            fetchData(userInfo.ma_nguoi_dung);            
         };
     }, [isFocusedEditProfile]);
     const handleSubmitChange = async() => {

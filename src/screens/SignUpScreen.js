@@ -9,12 +9,18 @@ import { SubmitButton } from "../components/SubmitButton";
 
 export default function SignUp({ navigation }) {
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [adress, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
 
-  const handleSignUp = () => {};
+  const handleSignUp = async() => {
+    try {
+        
+    } catch (error) {
+      console.error("Error while signing up: ", error);
+    };
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,8 +62,8 @@ export default function SignUp({ navigation }) {
           </View>
           <View style={[styles.bodyMarginVertical, styles.buttonHeight]}>
             <InputField
-              title="Email"
-              setValue={(e) => setEmail(e)}
+              title="Address"
+              setValue={(e) => setAddress(e)}
             ></InputField>
           </View>
           <View style={styles.bodyMarginVertical}>

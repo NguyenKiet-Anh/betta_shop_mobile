@@ -1,5 +1,4 @@
-const ipAddress = "192.168.232.102";
-// const ipAddress = "192.168.1.21";
+const ipAddress = "192.168.18.102";
 // For getting Cart - GET method
 export const getCartById = async (id) => {
   try {

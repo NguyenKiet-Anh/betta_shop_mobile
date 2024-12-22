@@ -21,6 +21,8 @@ import EditProfile from "../screens/ProfileEditScreen";
 import ChangePassword from "../screens/ProfileChangePasswordScreen";
 import AboutUs from "../screens/AboutUsScreen";
 import StoreLocation from "../screens/LocationScreen";
+import ProductManagement from "../screens/ProductManagementScreen";
+import CustomerManagement from "../screens/CustomerManagementScreen";
 // Import Icon
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -36,6 +38,7 @@ import { deleteFishFromCart } from "../routes/CartRoutes/CartRoutes";
 export default function StackNavigator({ navigation }) {
     // Variables for userId
     const { userInfo } = useAuth();
+    
     // Function add wishlist
     const handleAddFishToWishList = async(id) => {
         const response = await addFishToWishList(userInfo.ma_nguoi_dung, id);
@@ -94,16 +97,35 @@ export default function StackNavigator({ navigation }) {
                     ),
                     }}
                 ></Drawer.Screen>
-                {/* Route for Store location */}
-                <Drawer.Screen
-                    name="Store Location"
-                    component={StoreLocation}
-                ></Drawer.Screen>
-                {/* Route for Help */}
-                <Drawer.Screen
-                    name="About Us"
-                    component={AboutUs}
-                ></Drawer.Screen>                
+                {
+                    userInfo.isAdmin ? (
+                        <>
+                            {/* Route for Store location */}
+                            <Drawer.Screen
+                                name="Products Management"
+                                component={ProductManagement}
+                            ></Drawer.Screen>
+                            {/* Route for Help */}
+                            <Drawer.Screen
+                                name="Customers Management"
+                                component={CustomerManagement}
+                            ></Drawer.Screen>
+                        </>
+                    ) : (
+                        <>
+                            {/* Route for Store location */}
+                            <Drawer.Screen
+                                name="Store Location"
+                                component={StoreLocation}
+                            ></Drawer.Screen>
+                            {/* Route for Help */}
+                            <Drawer.Screen
+                                name="About Us"
+                                component={AboutUs}
+                            ></Drawer.Screen>
+                        </>
+                    )
+                }                                
             </Drawer.Navigator>
         );
     };

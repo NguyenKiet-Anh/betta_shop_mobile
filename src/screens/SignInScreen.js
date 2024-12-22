@@ -7,8 +7,7 @@ import { SubmitButton } from "../components/SubmitButton";
 // import useAuth
 import { useAuth } from "../context/authContext";
 export default function SignIn({ navigation }) {
-    // const ipAddress = '192.168.232.102';
-    const ipAddress = '192.168.1.21';
+    const ipAddress = '192.168.18.102';
     const { login } = useAuth();
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -41,7 +40,7 @@ export default function SignIn({ navigation }) {
                     alert('Sign In failed!');
                 }
             } else {
-                alert('Sign Ii failed!');
+                alert('Sign In failed!');
             }
         } catch (error) {
             console.error('Error:', error);

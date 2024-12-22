@@ -47,6 +47,10 @@ export default function Detail({ route, navigation }) {
                 }]
             );
             setIsLoading(false);
+
+            navigation.setOptions({
+                headerTitle: fishData.TenMatHang,
+            });
         };
         fetchFish(itemId);
     }, []);    
@@ -135,7 +139,10 @@ export default function Detail({ route, navigation }) {
                                             >
                                                 <Text style={{fontWeight: 'bold', color: 'white'}}>See reviews</Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity style={styles.addCartButton}>
+                                            <TouchableOpacity 
+                                                style={styles.addCartButton}
+                                                onPress={() => {handleAddFishToCart(fish.MaMatHang);}}
+                                            >
                                                 <Text style={{fontWeight: 'bold', color: 'white'}}>Add to cart</Text>
                                                 <Text style={{fontSize: 20, color: 'white'}}>|</Text>
                                                 <FontAwesome5 name="cart-plus" size={22} color={'white'}></FontAwesome5>

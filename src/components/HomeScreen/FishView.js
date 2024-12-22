@@ -98,7 +98,7 @@ export default function FishView({ navigation, item }) {
 // Define styles outside the component function
 const styles = StyleSheet.create({
     fishInCategoryFlatlistSection: {
-        width: 215,
+        width: 200,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -106,13 +106,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f4f4',
         borderRadius: 10
     },
-    fishInCategoryFlatlistContent: {        
+    fishInCategoryFlatlistContent: {
+        width: '90%',
         marginHorizontal: 3,
         marginVertical: 10
     },
     seeAll: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     fishInCategoryFlatlistImage: {

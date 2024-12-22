@@ -1,4 +1,4 @@
-const ipAddress = "192.168.232.102";
+const ipAddress = "192.168.18.102";
 // const ipAddress = "192.168.1.21";
 // For getting - GET method
 export const getFishById = async (id) => {

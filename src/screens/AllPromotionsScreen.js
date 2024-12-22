@@ -144,7 +144,7 @@ export default function AllPromotion({ navigation }) {
                         </View>
                         <View style={styles.bodySection}>
                             <View style={{marginVertical: 15}}>
-                                <Text style={{fontSize: 18, fontWeight: 600}}>Tất cả ({countFish})</Text>                        
+                                <Text style={{fontSize: 18, fontWeight: 600}}>Total ({countFish})</Text>                        
                             </View>
                             <View>
                                 { data.length > 0 ? (

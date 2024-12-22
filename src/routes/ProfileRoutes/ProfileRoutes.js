@@ -1,5 +1,4 @@
-const ipAddress = "192.168.232.102";
-// const ipAddress = "192.168.1.21";
+const ipAddress = "192.168.18.102";
 // For getting user's data
 export const getUserInfo = async (userId) => {
   try {
