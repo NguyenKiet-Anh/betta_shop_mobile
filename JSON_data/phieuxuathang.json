@@ -1,0 +1,62 @@
+[
+  {
+    "model": "backend.phieuxuathang",
+    "pk": 1,
+    "fields": {
+      "NgayLapPhieu": "2024-12-22",
+      "TongTien": "3640000.0000",
+      "MaDaiLy": 1,
+      "MaKhachHang": 1
+    }
+  },
+  {
+    "model": "backend.phieuxuathang",
+    "pk": 2,
+    "fields": {
+      "NgayLapPhieu": "2024-12-22",
+      "TongTien": "6340000.0000",
+      "MaDaiLy": 2,
+      "MaKhachHang": 2
+    }
+  },
+  {
+    "model": "backend.phieuxuathang",
+    "pk": 3,
+    "fields": {
+      "NgayLapPhieu": "2024-12-22",
+      "TongTien": "3460000.0000",
+      "MaDaiLy": 3,
+      "MaKhachHang": 3
+    }
+  },
+  {
+    "model": "backend.phieuxuathang",
+    "pk": 4,
+    "fields": {
+      "NgayLapPhieu": "2024-12-22",
+      "TongTien": "6430000.0000",
+      "MaDaiLy": 4,
+      "MaKhachHang": 4
+    }
+  },
+  {
+    "model": "backend.phieuxuathang",
+    "pk": 5,
+    "fields": {
+      "NgayLapPhieu": "2024-12-22",
+      "TongTien": "4360000.0000",
+      "MaDaiLy": 5,
+      "MaKhachHang": 5
+    }
+  },
+  {
+    "model": "backend.phieuxuathang",
+    "pk": 6,
+    "fields": {
+      "NgayLapPhieu": "2024-12-22",
+      "TongTien": "4630000.0000",
+      "MaDaiLy": 6,
+      "MaKhachHang": 6
+    }
+  }
+]

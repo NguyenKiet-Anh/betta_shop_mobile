@@ -1,0 +1,101 @@
+[
+  {
+    "model": "backend.dailydiachi",
+    "pk": 1,
+    "fields": {
+      "MaDaiLy": 1,
+      "MaQuan": 1,
+      "DiaChi": "815/4/7/18 HL2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh",
+      "KinhDo": "106.60085349065",
+      "ViDo": "10.763397007114"
+    }
+  },
+  {
+    "model": "backend.dailydiachi",
+    "pk": 2,
+    "fields": {
+      "MaDaiLy": 2,
+      "MaQuan": 2,
+      "DiaChi": "235 Lê Trọng Tấn, Sơn Kỳ, Tân Phú, Hồ Chí Minh",
+      "KinhDo": "106.62323023409",
+      "ViDo": "10.807080488575"
+    }
+  },
+  {
+    "model": "backend.dailydiachi",
+    "pk": 3,
+    "fields": {
+      "MaDaiLy": 3,
+      "MaQuan": 3,
+      "DiaChi": "I11 Cư Xá Phú Lâm B, Phường 13, Quận 6, Hồ Chí Minh",
+      "KinhDo": "106.62872673112",
+      "ViDo": "10.754254858524"
+    }
+  },
+  {
+    "model": "backend.dailydiachi",
+    "pk": 4,
+    "fields": {
+      "MaDaiLy": 4,
+      "MaQuan": 4,
+      "DiaChi": "Hàn Thuyên, Phường Linh Trung, Thủ Đức, Hồ Chí Minh",
+      "KinhDo": "106.80174407277",
+      "ViDo": "10.870381323834"
+    }
+  },
+  {
+    "model": "backend.dailydiachi",
+    "pk": 5,
+    "fields": {
+      "MaDaiLy": 5,
+      "MaQuan": 1,
+      "DiaChi": "496 Lê Văn Quới, Bình Trị Đông A, Bình Tân, Hồ Chí Minh",
+      "KinhDo": "106.60576563535",
+      "ViDo": "10.776501771982"
+    }
+  },
+  {
+    "model": "backend.dailydiachi",
+    "pk": 6,
+    "fields": {
+      "MaDaiLy": 6,
+      "MaQuan": 2,
+      "DiaChi": "216 Thoại Ngọc Hầu, Phú Thạnh, Tân Phú, Hồ Chí Minh",
+      "KinhDo": "106.63060886966",
+      "ViDo": "10.778830216248"
+    }
+  },
+  {
+    "model": "backend.dailydiachi",
+    "pk": 7,
+    "fields": {
+      "MaDaiLy": 7,
+      "MaQuan": 3,
+      "DiaChi": "386 Nguyễn Văn Luông, Phường 12, Quận 6, Hồ Chí Minh",
+      "KinhDo": "106.63532009975",
+      "ViDo": "10.751170907265"
+    }
+  },
+  {
+    "model": "backend.dailydiachi",
+    "pk": 8,
+    "fields": {
+      "MaDaiLy": 8,
+      "MaQuan": 4,
+      "DiaChi": "Mạc Đĩnh Chi, Đông Hoà, Dĩ An, Hồ Chí Minh",
+      "KinhDo": "106.78195810759",
+      "ViDo": "10.881535285631"
+    }
+  },
+  {
+    "model": "backend.dailydiachi",
+    "pk": 9,
+    "fields": {
+      "MaDaiLy": 9,
+      "MaQuan": 1,
+      "DiaChi": "689 Tân Kỳ, Tân Quý, Bình Tân, Hồ Chí Minh",
+      "KinhDo": "106.60762939181",
+      "ViDo": "10.792994083430"
+    }
+  }
+]

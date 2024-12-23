@@ -1,0 +1,110 @@
+[
+  {
+    "model": "backend.daily",
+    "pk": 1,
+    "fields": {
+      "MaLoaiDaiLy": 1,
+      "TenDaiLy": "Đại lý Bình Tân 1",
+      "SoDienThoai": "09876543212",
+      "NgayTiepNhan": "2024-12-13",
+      "SoTienNo": "0.0000",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\stores\\store-1.jpeg"
+    }
+  },
+  {
+    "model": "backend.daily",
+    "pk": 2,
+    "fields": {
+      "MaLoaiDaiLy": 1,
+      "TenDaiLy": "Đại lý Bình Tân 2",
+      "SoDienThoai": "09876543213",
+      "NgayTiepNhan": "2024-12-13",
+      "SoTienNo": "0.0000",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\stores\\store-2.jpeg"
+    }
+  },
+  {
+    "model": "backend.daily",
+    "pk": 3,
+    "fields": {
+      "MaLoaiDaiLy": 2,
+      "TenDaiLy": "Đại lý Tân Phú 1",
+      "SoDienThoai": "09876543214",
+      "NgayTiepNhan": "2024-12-22",
+      "SoTienNo": "0.0000",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\stores\\store-3.jpeg"
+    }
+  },
+  {
+    "model": "backend.daily",
+    "pk": 4,
+    "fields": {
+      "MaLoaiDaiLy": 2,
+      "TenDaiLy": "Đại lý Tân Phú 2",
+      "SoDienThoai": "09876543215",
+      "NgayTiepNhan": "2024-12-22",
+      "SoTienNo": "0.0000",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\stores\\store-4.jpeg"
+    }
+  },
+  {
+    "model": "backend.daily",
+    "pk": 5,
+    "fields": {
+      "MaLoaiDaiLy": 3,
+      "TenDaiLy": "Đại lý Bình Thạnh 1",
+      "SoDienThoai": "09876543216",
+      "NgayTiepNhan": "2024-12-22",
+      "SoTienNo": "0.0000",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\stores\\store-5.jpeg"
+    }
+  },
+  {
+    "model": "backend.daily",
+    "pk": 6,
+    "fields": {
+      "MaLoaiDaiLy": 3,
+      "TenDaiLy": "Đại lý Bình Thạnh 2",
+      "SoDienThoai": "09876543217",
+      "NgayTiepNhan": "2024-12-22",
+      "SoTienNo": "0.0000",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\stores\\store-6.jpeg"
+    }
+  },
+  {
+    "model": "backend.daily",
+    "pk": 7,
+    "fields": {
+      "MaLoaiDaiLy": 1,
+      "TenDaiLy": "Đại lý Thủ Đức 1",
+      "SoDienThoai": "09876543218",
+      "NgayTiepNhan": "2024-12-22",
+      "SoTienNo": "0.0000",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\stores\\store-7.jpeg"
+    }
+  },
+  {
+    "model": "backend.daily",
+    "pk": 8,
+    "fields": {
+      "MaLoaiDaiLy": 3,
+      "TenDaiLy": "Đại lý Thủ Đức 2",
+      "SoDienThoai": "09876543219",
+      "NgayTiepNhan": "2024-12-22",
+      "SoTienNo": "0.0000",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\stores\\store-8.jpeg"
+    }
+  },
+  {
+    "model": "backend.daily",
+    "pk": 9,
+    "fields": {
+      "MaLoaiDaiLy": 2,
+      "TenDaiLy": "Đại lý Tân Phú Đông",
+      "SoDienThoai": "09876543220",
+      "NgayTiepNhan": "2024-12-22",
+      "SoTienNo": "0.0000",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\stores\\store-9.jpeg"
+    }
+  }
+]

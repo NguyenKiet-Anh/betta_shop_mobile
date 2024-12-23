@@ -1,0 +1,27 @@
+[
+  {
+    "model": "backend.quan",
+    "pk": 1,
+    "fields": { "TenQuan": "Bình Tân", "TenThanhPho": "Hồ Chí Minh" }
+  },
+  {
+    "model": "backend.quan",
+    "pk": 2,
+    "fields": { "TenQuan": "Tân Phú", "TenThanhPho": "Hồ Chí Minh" }
+  },
+  {
+    "model": "backend.quan",
+    "pk": 3,
+    "fields": { "TenQuan": "6", "TenThanhPho": "Hồ Chí Minh" }
+  },
+  {
+    "model": "backend.quan",
+    "pk": 4,
+    "fields": { "TenQuan": "Thủ Đức", "TenThanhPho": "Hồ Chí Minh" }
+  },
+  {
+    "model": "backend.quan",
+    "pk": 5,
+    "fields": { "TenQuan": "Tân Phú Đông", "TenThanhPho": "Sa Đéc" }
+  }
+]

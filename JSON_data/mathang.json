@@ -1,0 +1,1066 @@
+[
+  {
+    "model": "backend.mathang",
+    "pk": 1,
+    "fields": {
+      "TenMatHang": "Cá betta 1713 – Crowntail đuôi tưa phong sương peacemaker anshar",
+      "SoLuongTon": 7,
+      "Dongia": "150000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "110000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1713-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1713-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1713-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1713-4.jpg",
+      "MaDaiLy": 1,
+      "MaLoaiMatHang": 3
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 2,
+    "fields": {
+      "TenMatHang": "Cá betta 1763 – Crowntail đuôi tưa huyết kiếm wayfinder dionysus",
+      "SoLuongTon": 8,
+      "Dongia": "150000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "110000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1763-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1763-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1763-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1763-4.jpg",
+      "MaDaiLy": 2,
+      "MaLoaiMatHang": 3
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 3,
+    "fields": {
+      "TenMatHang": "Cá betta 1777 – Crowntail đuôi tưa tứ hải stormbringer enlil",
+      "SoLuongTon": 9,
+      "Dongia": "150000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "110000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1777-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1777-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1777-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1777-4.jpg",
+      "MaDaiLy": 3,
+      "MaLoaiMatHang": 3
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 4,
+    "fields": {
+      "TenMatHang": "Cá betta 1789 – Crowntail đuôi tưa warbringer sobek",
+      "SoLuongTon": 10,
+      "Dongia": "150000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1789-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1789-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1789-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1789-4.jpg",
+      "MaDaiLy": 4,
+      "MaLoaiMatHang": 3
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 5,
+    "fields": {
+      "TenMatHang": "Cá betta 1799 – Crowntail đuôi tưa stormguard tezcatlipoca",
+      "SoLuongTon": 3,
+      "Dongia": "170000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1799-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1799-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1799-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1799-4.jpg",
+      "MaDaiLy": 5,
+      "MaLoaiMatHang": 3
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 6,
+    "fields": {
+      "TenMatHang": "Cá betta 1817 – Crowntail đuôi tưa stoneheart shiva",
+      "SoLuongTon": 11,
+      "Dongia": "110000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1817-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1817-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1817-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1817-4.jpg",
+      "MaDaiLy": 6,
+      "MaLoaiMatHang": 3
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 7,
+    "fields": {
+      "TenMatHang": "Cá betta 1865 – Crowntail đuôi tưa bloodseeker janus",
+      "SoLuongTon": 15,
+      "Dongia": "130000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1865-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1865-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1865-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1865-4.jpg",
+      "MaDaiLy": 7,
+      "MaLoaiMatHang": 3
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 8,
+    "fields": {
+      "TenMatHang": "Cá betta 1867 – Crowntail đuôi tưa runewarden cerunnos",
+      "SoLuongTon": 17,
+      "Dongia": "150000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "130000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1867-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1867-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1867-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1867-4.jpg",
+      "MaDaiLy": 8,
+      "MaLoaiMatHang": 3
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 9,
+    "fields": {
+      "TenMatHang": "Cá betta 1881 – Crowntail đuôi tưa heartbreaker balder",
+      "SoLuongTon": 12,
+      "Dongia": "160000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1881-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1881-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1881-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1881-4.jpg",
+      "MaDaiLy": 9,
+      "MaLoaiMatHang": 3
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 10,
+    "fields": {
+      "TenMatHang": "Cá betta 1882 – Crowntail đuôi tưa ironforge mercury",
+      "SoLuongTon": 20,
+      "Dongia": "100000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "80000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1882-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1882-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1882-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1882-4.jpg",
+      "MaDaiLy": 1,
+      "MaLoaiMatHang": 3
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 11,
+    "fields": {
+      "TenMatHang": "Cá betta 1883 – Crowntail đuôi tưa skullbreaker ares",
+      "SoLuongTon": 6,
+      "Dongia": "150000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "110000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1883-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1883-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1883-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-1883-4.jpg",
+      "MaDaiLy": 2,
+      "MaLoaiMatHang": 3
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 12,
+    "fields": {
+      "TenMatHang": "Cá betta 2067 – Crowntail đuôi tưa vanguard warrior",
+      "SoLuongTon": 9,
+      "Dongia": "140000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-2067-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-2067-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-2067-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\crowntail\\betta-2067-4.jpg",
+      "MaDaiLy": 3,
+      "MaLoaiMatHang": 3
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 13,
+    "fields": {
+      "TenMatHang": "Cá betta 1299 – Red fancy copper lotus Aker form đẹp",
+      "SoLuongTon": 14,
+      "Dongia": "150000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-1299-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-1299-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-1299-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-1299-4.jpg",
+      "MaDaiLy": 4,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 14,
+    "fields": {
+      "TenMatHang": "Cá betta 1469 – Halfmoon dumbo lavender màu tím đẹp",
+      "SoLuongTon": 3,
+      "Dongia": "140000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "110000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-1469-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-1469-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-1469-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-1469-4.jpg",
+      "MaDaiLy": 5,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 15,
+    "fields": {
+      "TenMatHang": "Cá betta 2064 – Halfmoon blue red lifeguard",
+      "SoLuongTon": 9,
+      "Dongia": "80000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2064-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2064-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2064-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2064-4.jpg",
+      "MaDaiLy": 6,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 16,
+    "fields": {
+      "TenMatHang": "Cá betta 2097 – Halfmoon màu đồng hiếm stormbringer",
+      "SoLuongTon": 18,
+      "Dongia": "40000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2097-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2097-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2097-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2097-4.jpg",
+      "MaDaiLy": 7,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 17,
+    "fields": {
+      "TenMatHang": "Cá betta 2100 – Halfmoon mustard gas stonefist",
+      "SoLuongTon": 5,
+      "Dongia": "80000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "50000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2100-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2100-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2100-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2100-4.jpg",
+      "MaDaiLy": 8,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 18,
+    "fields": {
+      "TenMatHang": "Cá betta 2134 – Halfmoon yellow koi the unbroken",
+      "SoLuongTon": 7,
+      "Dongia": "80000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2134-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2134-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2134-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2134-4.jpg",
+      "MaDaiLy": 9,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 19,
+    "fields": {
+      "TenMatHang": "Cá betta 2174 – Halfmoon koi blue white voidwalker",
+      "SoLuongTon": 11,
+      "Dongia": "100000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "80000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2174-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2174-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2174-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2174-4.jpg",
+      "MaDaiLy": 1,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 20,
+    "fields": {
+      "TenMatHang": "Cá betta 2202 – Halfmoon blue red ironforge",
+      "SoLuongTon": 18,
+      "Dongia": "120000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "90000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2202-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2202-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2202-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2202-4.jpg",
+      "MaDaiLy": 2,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 21,
+    "fields": {
+      "TenMatHang": "Cá betta 2230 – Halfmoon blue red chaosforged",
+      "SoLuongTon": 4,
+      "Dongia": "90000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "40000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2230-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2230-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2230-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2230-4.jpg",
+      "MaDaiLy": 3,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 22,
+    "fields": {
+      "TenMatHang": "Cá betta 2464 – Halfmoon blue dragonheart",
+      "SoLuongTon": 7,
+      "Dongia": "80000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2464-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2464-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2464-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2464-4.jpg",
+      "MaDaiLy": 4,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 23,
+    "fields": {
+      "TenMatHang": "Cá betta 2465 – Halfmoon blue steelshadow",
+      "SoLuongTon": 10,
+      "Dongia": "50000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "10000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2465-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2465-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2465-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2465-4.jpg",
+      "MaDaiLy": 5,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 24,
+    "fields": {
+      "TenMatHang": "Cá betta 2472 – Mái halfmoon blue red worldbreaker",
+      "SoLuongTon": 14,
+      "Dongia": "80000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2472-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2472-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2472-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2472-4.jpg",
+      "MaDaiLy": 6,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 25,
+    "fields": {
+      "TenMatHang": "Cá betta 2478 – Mái halfmoon mustard gas doomseeker",
+      "SoLuongTon": 19,
+      "Dongia": "40000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2478-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2478-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2478-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2478-4.jpg",
+      "MaDaiLy": 7,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 26,
+    "fields": {
+      "TenMatHang": "Cá betta 2479 – Mái halfmoon super red sunkeeper",
+      "SoLuongTon": 16,
+      "Dongia": "40000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2479-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2479-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2479-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2479-4.jpg",
+      "MaDaiLy": 8,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 27,
+    "fields": {
+      "TenMatHang": "Cá betta 2485 – Mái halfmoon blue oathbearer",
+      "SoLuongTon": 5,
+      "Dongia": "60000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "40000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2485-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2485-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2485-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2485-4.jpg",
+      "MaDaiLy": 9,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 28,
+    "fields": {
+      "TenMatHang": "Cá betta 2501 – Halfmoon blue gas dreadnought",
+      "SoLuongTon": 9,
+      "Dongia": "10000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2501-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2501-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2501-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\halfmoon\\betta-2501-4.jpg",
+      "MaDaiLy": 1,
+      "MaLoaiMatHang": 1
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 29,
+    "fields": {
+      "TenMatHang": "Cá betta 1123 – Koi nemo candy viên kẹo ngọt ngào Hypnos",
+      "SoLuongTon": 11,
+      "Dongia": "240000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "180000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1123-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1123-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1123-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1123-4.jpg",
+      "MaDaiLy": 2,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 30,
+    "fields": {
+      "TenMatHang": "Cá betta 2018 – Koi nemo tiger titan",
+      "SoLuongTon": 14,
+      "Dongia": "140000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2018-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2018-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2018-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2018-4.jpg",
+      "MaDaiLy": 3,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 31,
+    "fields": {
+      "TenMatHang": "Cá betta 1648 – Koi nemo tiger body sumo itzamna",
+      "SoLuongTon": 18,
+      "Dongia": "140000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "60000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1648-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1648-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1648-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1648-4.jpg",
+      "MaDaiLy": 4,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 32,
+    "fields": {
+      "TenMatHang": "Cá betta 2214 – Mái koi nemo lightstriker",
+      "SoLuongTon": 7,
+      "Dongia": "110000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2214-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2214-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2214-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2214-4.jpg",
+      "MaDaiLy": 5,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 33,
+    "fields": {
+      "TenMatHang": "Cá betta 2248 – Mái koi nemo candy chaosbringer",
+      "SoLuongTon": 14,
+      "Dongia": "140000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "110000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2248-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2248-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2248-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2248-4.jpg",
+      "MaDaiLy": 6,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 34,
+    "fields": {
+      "TenMatHang": "Cá betta 1711 – Koi nemo candy vũ tướng conqueror janus",
+      "SoLuongTon": 8,
+      "Dongia": "180000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "140000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1711-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1711-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1711-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1711-4.jpg",
+      "MaDaiLy": 7,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 35,
+    "fields": {
+      "TenMatHang": "Cá betta 1673 – Mái koi nemo xích hổ stalwart horus",
+      "SoLuongTon": 11,
+      "Dongia": "110000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1673-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1673-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1673-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1673-4.jpg",
+      "MaDaiLy": 8,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 36,
+    "fields": {
+      "TenMatHang": "Cá betta 2292 – Mái koi nemo savior",
+      "SoLuongTon": 7,
+      "Dongia": "110000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2292-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2292-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2292-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2292-4.jpg",
+      "MaDaiLy": 9,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 37,
+    "fields": {
+      "TenMatHang": "Cá betta 2116 – Koi nemo tiger candy dawnbringer",
+      "SoLuongTon": 17,
+      "Dongia": "140000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2116-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2116-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2116-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2116-4.jpg",
+      "MaDaiLy": 1,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 38,
+    "fields": {
+      "TenMatHang": "Cá betta 2301 – Mái koi nemo soldier",
+      "SoLuongTon": 7,
+      "Dongia": "150000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "110000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2301-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2301-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2301-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2301-4.jpg",
+      "MaDaiLy": 2,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 39,
+    "fields": {
+      "TenMatHang": "Cá betta 2377 – Koi nemo candy nền vàng cam truthseeker",
+      "SoLuongTon": 15,
+      "Dongia": "150000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "140000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2377-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2377-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2377-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2377-4.jpg",
+      "MaDaiLy": 3,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 40,
+    "fields": {
+      "TenMatHang": "Cá betta 1943 – Koi nemo titger chaosbreaker amaterasu",
+      "SoLuongTon": 14,
+      "Dongia": "140000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "110000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1943-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1943-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1943-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1943-4.jpg",
+      "MaDaiLy": 4,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 41,
+    "fields": {
+      "TenMatHang": "Cá betta 1481 – Mái koi nemo candy galaxy pluto",
+      "SoLuongTon": 18,
+      "Dongia": "110000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1481-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1481-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1481-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-1481-4.jpg",
+      "MaDaiLy": 5,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 42,
+    "fields": {
+      "TenMatHang": "Cá betta 2225 – Mái koi nemo candy steelbearer",
+      "SoLuongTon": 15,
+      "Dongia": "80000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2225-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2225-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2225-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2225-4.jpg",
+      "MaDaiLy": 6,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 43,
+    "fields": {
+      "TenMatHang": "Cá betta 2184 – Mái koi nemo tiger bonecrusher",
+      "SoLuongTon": 5,
+      "Dongia": "150000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2184-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2184-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2184-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2184-4.jpg",
+      "MaDaiLy": 7,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 44,
+    "fields": {
+      "TenMatHang": "Cá betta 2295 – Koi nemo candy knight",
+      "SoLuongTon": 6,
+      "Dongia": "140000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2295-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2295-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2295-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\nemo\\betta-2295-4.jpg",
+      "MaDaiLy": 8,
+      "MaLoaiMatHang": 4
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 45,
+    "fields": {
+      "TenMatHang": "Cá betta 646 – Samurai xanh super star siêu sayda",
+      "SoLuongTon": 16,
+      "Dongia": "180000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "150000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-646-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-646-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-646-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-646-4.jpg",
+      "MaDaiLy": 9,
+      "MaLoaiMatHang": 2
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 46,
+    "fields": {
+      "TenMatHang": "Cá betta 1324 – Halfmoon samurai super star",
+      "SoLuongTon": 8,
+      "Dongia": "180000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "80000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1324-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1324-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1324-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1324-4.jpg",
+      "MaDaiLy": 1,
+      "MaLoaiMatHang": 2
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 47,
+    "fields": {
+      "TenMatHang": "Cá betta 1325 – Halfmoon samurai butterfly illusion",
+      "SoLuongTon": 13,
+      "Dongia": "180000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1325-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1325-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1325-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1325-4.jpg",
+      "MaDaiLy": 2,
+      "MaLoaiMatHang": 2
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 48,
+    "fields": {
+      "TenMatHang": "Cá betta 1531 – Samurai super star chiến binh Minamoto no Yoritomo",
+      "SoLuongTon": 15,
+      "Dongia": "150000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1531-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1531-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1531-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1531-4.jpg",
+      "MaDaiLy": 3,
+      "MaLoaiMatHang": 2
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 49,
+    "fields": {
+      "TenMatHang": "Cá betta 1876 – Samurai super star stormbreaker indra",
+      "SoLuongTon": 4,
+      "Dongia": "180000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "150000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1876-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1876-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1876-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-1876-4.jpg",
+      "MaDaiLy": 4,
+      "MaLoaiMatHang": 2
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 50,
+    "fields": {
+      "TenMatHang": "Cá betta 2311 – Mái samurai star legend",
+      "SoLuongTon": 15,
+      "Dongia": "110000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2311-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2311-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2311-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2311-4.jpg",
+      "MaDaiLy": 5,
+      "MaLoaiMatHang": 2
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 51,
+    "fields": {
+      "TenMatHang": "Cá betta 2399 – Rồng đen samurai kingmaker",
+      "SoLuongTon": 23,
+      "Dongia": "150000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "60000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2399-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2399-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2399-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2399-4.jpg",
+      "MaDaiLy": 6,
+      "MaLoaiMatHang": 2
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 52,
+    "fields": {
+      "TenMatHang": "Cá betta 2420 – Samurai lửa stonefist",
+      "SoLuongTon": 20,
+      "Dongia": "180000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2420-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2420-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2420-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2420-4.jpg",
+      "MaDaiLy": 7,
+      "MaLoaiMatHang": 2
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 53,
+    "fields": {
+      "TenMatHang": "Cá betta 2458 – Samurai fortuneseeker",
+      "SoLuongTon": 20,
+      "Dongia": "150000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2458-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2458-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2458-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2458-4.jpg",
+      "MaDaiLy": 8,
+      "MaLoaiMatHang": 2
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 54,
+    "fields": {
+      "TenMatHang": "Cá betta 2475 – Samurai lửa swordbringer",
+      "SoLuongTon": 25,
+      "Dongia": "10000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2475-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2475-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2475-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2475-4.jpg",
+      "MaDaiLy": 9,
+      "MaLoaiMatHang": 2
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 55,
+    "fields": {
+      "TenMatHang": "Cá betta 2481 – Samurai super star flameguard",
+      "SoLuongTon": 13,
+      "Dongia": "150000.0000",
+      "KhuyenMai": true,
+      "GiaKhuyenMai": "120000.0000",
+      "TenDVT": "con",
+      "Gioitinh": "M",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2481-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2481-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2481-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2481-4.jpg",
+      "MaDaiLy": 1,
+      "MaLoaiMatHang": 2
+    }
+  },
+  {
+    "model": "backend.mathang",
+    "pk": 56,
+    "fields": {
+      "TenMatHang": "Cá betta 2486 – Mái samurai star the unyielding",
+      "SoLuongTon": 16,
+      "Dongia": "110000.0000",
+      "KhuyenMai": false,
+      "GiaKhuyenMai": "0.0000",
+      "TenDVT": "con",
+      "Gioitinh": "F",
+      "HinhAnh1": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2486-1.jpg",
+      "HinhAnh2": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2486-2.jpg",
+      "HinhAnh3": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2486-3.jpg",
+      "HinhAnh4": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\fishes\\samurai\\betta-2486-4.jpg",
+      "MaDaiLy": 2,
+      "MaLoaiMatHang": 2
+    }
+  }
+]

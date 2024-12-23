@@ -1,0 +1,62 @@
+[
+  {
+    "model": "backend.khachhang",
+    "pk": 1,
+    "fields": {
+      "TenKhachHang": "Nguyễn Văn A",
+      "SoDienThoai": "0918676585",
+      "Email": "nva@gmail.com",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\users\\staff-1.jpeg"
+    }
+  },
+  {
+    "model": "backend.khachhang",
+    "pk": 2,
+    "fields": {
+      "TenKhachHang": "Nguyễn Văn B",
+      "SoDienThoai": "0918676586",
+      "Email": "nvb@gmail.com",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\users\\staff-2.jpeg"
+    }
+  },
+  {
+    "model": "backend.khachhang",
+    "pk": 3,
+    "fields": {
+      "TenKhachHang": "Nguyễn Văn C",
+      "SoDienThoai": "0918676587",
+      "Email": "nvc@gmail.com",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\users\\staff-3.jpeg"
+    }
+  },
+  {
+    "model": "backend.khachhang",
+    "pk": 4,
+    "fields": {
+      "TenKhachHang": "Nguyễn Văn D",
+      "SoDienThoai": "0918676588",
+      "Email": "nvd@gmail.com",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\users\\staff-4.jpeg"
+    }
+  },
+  {
+    "model": "backend.khachhang",
+    "pk": 5,
+    "fields": {
+      "TenKhachHang": "Nguyễn Văn E",
+      "SoDienThoai": "0918676589",
+      "Email": "nve@gmail.com",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\users\\staff-5.jpeg"
+    }
+  },
+  {
+    "model": "backend.khachhang",
+    "pk": 6,
+    "fields": {
+      "TenKhachHang": "Nguyễn Văn F",
+      "SoDienThoai": "0918676590",
+      "Email": "nvf@gmail.com",
+      "HinhAnh": "D:\\Studying\\UIT Online Class\\IE307.P11 - Cong Nghe Lap Trinh Da Nen Tang Cho Ung Dung Di Dong\\Bao Cao\\GitHub\\database\\images\\users\\staff-6.jpeg"
+    }
+  }
+]

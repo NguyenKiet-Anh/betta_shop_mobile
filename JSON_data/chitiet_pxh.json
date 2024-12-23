@@ -1,0 +1,127 @@
+[
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 1,
+    "fields": { "MaPhieuXuat": 1, "MaMatHang": 1, "SoLuongXuat": 5 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 2,
+    "fields": { "MaPhieuXuat": 1, "MaMatHang": 4, "SoLuongXuat": 4 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 3,
+    "fields": { "MaPhieuXuat": 1, "MaMatHang": 7, "SoLuongXuat": 10 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 4,
+    "fields": { "MaPhieuXuat": 1, "MaMatHang": 12, "SoLuongXuat": 3 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 5,
+    "fields": { "MaPhieuXuat": 2, "MaMatHang": 8, "SoLuongXuat": 4 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 6,
+    "fields": { "MaPhieuXuat": 2, "MaMatHang": 36, "SoLuongXuat": 5 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 7,
+    "fields": { "MaPhieuXuat": 2, "MaMatHang": 19, "SoLuongXuat": 1 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 8,
+    "fields": { "MaPhieuXuat": 2, "MaMatHang": 29, "SoLuongXuat": 6 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 9,
+    "fields": { "MaPhieuXuat": 3, "MaMatHang": 9, "SoLuongXuat": 8 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 10,
+    "fields": { "MaPhieuXuat": 3, "MaMatHang": 40, "SoLuongXuat": 2 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 11,
+    "fields": { "MaPhieuXuat": 3, "MaMatHang": 17, "SoLuongXuat": 1 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 12,
+    "fields": { "MaPhieuXuat": 3, "MaMatHang": 20, "SoLuongXuat": 4 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 13,
+    "fields": { "MaPhieuXuat": 3, "MaMatHang": 15, "SoLuongXuat": 3 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 14,
+    "fields": { "MaPhieuXuat": 4, "MaMatHang": 44, "SoLuongXuat": 10 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 15,
+    "fields": { "MaPhieuXuat": 4, "MaMatHang": 17, "SoLuongXuat": 1 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 16,
+    "fields": { "MaPhieuXuat": 4, "MaMatHang": 20, "SoLuongXuat": 4 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 17,
+    "fields": { "MaPhieuXuat": 4, "MaMatHang": 15, "SoLuongXuat": 3 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 18,
+    "fields": { "MaPhieuXuat": 5, "MaMatHang": 48, "SoLuongXuat": 10 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 19,
+    "fields": { "MaPhieuXuat": 5, "MaMatHang": 52, "SoLuongXuat": 8 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 20,
+    "fields": { "MaPhieuXuat": 5, "MaMatHang": 32, "SoLuongXuat": 4 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 21,
+    "fields": { "MaPhieuXuat": 5, "MaMatHang": 13, "SoLuongXuat": 12 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 22,
+    "fields": { "MaPhieuXuat": 6, "MaMatHang": 10, "SoLuongXuat": 13 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 23,
+    "fields": { "MaPhieuXuat": 6, "MaMatHang": 16, "SoLuongXuat": 8 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 24,
+    "fields": { "MaPhieuXuat": 6, "MaMatHang": 22, "SoLuongXuat": 1 }
+  },
+  {
+    "model": "backend.chitietphieuxuathang",
+    "pk": 25,
+    "fields": { "MaPhieuXuat": 6, "MaMatHang": 24, "SoLuongXuat": 4 }
+  }
+]
