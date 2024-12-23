@@ -1,0 +1,31 @@
+- Front-end:
+    0. Check current IP Address => save to ipAddress in `authContext.js`
+
+    1. npm install (add `--force` if `npm install` not working)
+
+    2. npx expo install react-native-reanimated
+
+    3. npx expo start
+
+    4. Press `a` to open on android
+
+- Back-end:
+    0. Check current IP Address => save to ALLOWED_HOSTS in `setting.py`
+
+    1. Run: `python -m venv venv`
+
+    2. Run: `venv\scripts\activate` (press `r` if a question appear)
+
+    3. Run: `pip install -r requirements.txt`
+
+    4. Setup ngrok (reference: https://download.ngrok.com/windows)
+
+    5. Run: `ngrok http ip_address:port` (on OS terminal and port:8000)
+ 
+    6. Save ngrok link (remove `https://` prefix) to ALLOWED_HOSTS in `setting.py`
+
+    7. Run: `uvicorn fish_shop.asgi:application --host your_ip_address --port 8000` (on backend project terminal)
+
+    8. Export database data, Run: `python -Xutf8 manage.py dumpdata -o data.json`
+
+    9. Export database table data, Run: `python -Xutf8 manage.py dumpdata backend.<table name> -o data.json`
