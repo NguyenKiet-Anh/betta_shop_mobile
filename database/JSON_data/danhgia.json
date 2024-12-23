@@ -1,0 +1,266 @@
+[
+  {
+    "model": "backend.danhgia",
+    "pk": 1,
+    "fields": {
+      "MaKhachHang": 1,
+      "MaMatHang": 1,
+      "ThoiDiem": "2024-12-22T08:01:02.006Z",
+      "BinhLuan": "Cá đẹp",
+      "Sao": 50
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 2,
+    "fields": {
+      "MaKhachHang": 2,
+      "MaMatHang": 2,
+      "ThoiDiem": "2024-12-22T08:01:20.844Z",
+      "BinhLuan": "Giá có hơi đắt",
+      "Sao": 45
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 3,
+    "fields": {
+      "MaKhachHang": 3,
+      "MaMatHang": 3,
+      "ThoiDiem": "2024-12-22T08:01:43.905Z",
+      "BinhLuan": "Cá này có giảm giá không shop",
+      "Sao": 40
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 4,
+    "fields": {
+      "MaKhachHang": 4,
+      "MaMatHang": 4,
+      "ThoiDiem": "2024-12-22T08:02:08.638Z",
+      "BinhLuan": "Cá hơi nhỏ, khá tốn công nuôi",
+      "Sao": 30
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 5,
+    "fields": {
+      "MaKhachHang": 5,
+      "MaMatHang": 5,
+      "ThoiDiem": "2024-12-22T08:02:35.413Z",
+      "BinhLuan": "Cá đẹp, nuôi dễ, giá cả cũng phải chăng",
+      "Sao": 45
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 6,
+    "fields": {
+      "MaKhachHang": 6,
+      "MaMatHang": 6,
+      "ThoiDiem": "2024-12-22T08:02:58.246Z",
+      "BinhLuan": "Cá này không hợp phong thủy trang trí cho lắm",
+      "Sao": 25
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 7,
+    "fields": {
+      "MaKhachHang": 1,
+      "MaMatHang": 13,
+      "ThoiDiem": "2024-12-22T08:03:19.989Z",
+      "BinhLuan": "Cá này không hợp phong thủy trang trí cho lắm",
+      "Sao": 25
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 8,
+    "fields": {
+      "MaKhachHang": 2,
+      "MaMatHang": 14,
+      "ThoiDiem": "2024-12-22T08:03:41.820Z",
+      "BinhLuan": "Cá đẹp",
+      "Sao": 50
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 9,
+    "fields": {
+      "MaKhachHang": 3,
+      "MaMatHang": 15,
+      "ThoiDiem": "2024-12-22T08:03:55.185Z",
+      "BinhLuan": "Giá có hơi đắt",
+      "Sao": 45
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 10,
+    "fields": {
+      "MaKhachHang": 4,
+      "MaMatHang": 16,
+      "ThoiDiem": "2024-12-22T08:04:11.865Z",
+      "BinhLuan": "Cá này có giảm giá không shop",
+      "Sao": 40
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 11,
+    "fields": {
+      "MaKhachHang": 5,
+      "MaMatHang": 17,
+      "ThoiDiem": "2024-12-22T08:04:31.191Z",
+      "BinhLuan": "Cá hơi nhỏ, khá tốn công nuôi",
+      "Sao": 20
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 12,
+    "fields": {
+      "MaKhachHang": 6,
+      "MaMatHang": 18,
+      "ThoiDiem": "2024-12-22T08:04:51.926Z",
+      "BinhLuan": "Cá đẹp, nuôi dễ, giá cả cũng phải chăng",
+      "Sao": 50
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 13,
+    "fields": {
+      "MaKhachHang": 1,
+      "MaMatHang": 29,
+      "ThoiDiem": "2024-12-22T08:05:12.055Z",
+      "BinhLuan": "Cá đẹp, nuôi dễ, giá cả cũng phải chăng",
+      "Sao": 40
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 14,
+    "fields": {
+      "MaKhachHang": 2,
+      "MaMatHang": 30,
+      "ThoiDiem": "2024-12-22T08:05:31.603Z",
+      "BinhLuan": "Cá này không hợp phong thủy trang trí cho lắm",
+      "Sao": 10
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 15,
+    "fields": {
+      "MaKhachHang": 3,
+      "MaMatHang": 31,
+      "ThoiDiem": "2024-12-22T08:05:54.186Z",
+      "BinhLuan": "Cá đẹp",
+      "Sao": 45
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 16,
+    "fields": {
+      "MaKhachHang": 4,
+      "MaMatHang": 32,
+      "ThoiDiem": "2024-12-22T08:06:09.313Z",
+      "BinhLuan": "Giá có hơi đắt",
+      "Sao": 30
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 17,
+    "fields": {
+      "MaKhachHang": 5,
+      "MaMatHang": 33,
+      "ThoiDiem": "2024-12-22T08:06:33.240Z",
+      "BinhLuan": "Cá này có giảm giá không shop",
+      "Sao": 40
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 18,
+    "fields": {
+      "MaKhachHang": 6,
+      "MaMatHang": 34,
+      "ThoiDiem": "2024-12-22T08:06:48.771Z",
+      "BinhLuan": "Cá hơi nhỏ, khá tốn công nuôi",
+      "Sao": 15
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 19,
+    "fields": {
+      "MaKhachHang": 1,
+      "MaMatHang": 45,
+      "ThoiDiem": "2024-12-22T08:07:06.329Z",
+      "BinhLuan": "Cá hơi nhỏ, khá tốn công nuôi",
+      "Sao": 20
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 20,
+    "fields": {
+      "MaKhachHang": 2,
+      "MaMatHang": 46,
+      "ThoiDiem": "2024-12-22T08:07:24.238Z",
+      "BinhLuan": "Cá đẹp, nuôi dễ, giá cả cũng phải chăng",
+      "Sao": 40
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 21,
+    "fields": {
+      "MaKhachHang": 3,
+      "MaMatHang": 47,
+      "ThoiDiem": "2024-12-22T08:07:41.745Z",
+      "BinhLuan": "Cá này không hợp phong thủy trang trí cho lắm",
+      "Sao": 30
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 22,
+    "fields": {
+      "MaKhachHang": 4,
+      "MaMatHang": 48,
+      "ThoiDiem": "2024-12-22T08:07:56.816Z",
+      "BinhLuan": "Cá đẹp",
+      "Sao": 50
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 23,
+    "fields": {
+      "MaKhachHang": 5,
+      "MaMatHang": 49,
+      "ThoiDiem": "2024-12-22T08:08:10.485Z",
+      "BinhLuan": "Giá có hơi đắt",
+      "Sao": 45
+    }
+  },
+  {
+    "model": "backend.danhgia",
+    "pk": 24,
+    "fields": {
+      "MaKhachHang": 6,
+      "MaMatHang": 50,
+      "ThoiDiem": "2024-12-22T08:08:23.191Z",
+      "BinhLuan": "Cá này có giảm giá không shop",
+      "Sao": 35
+    }
+  }
+]

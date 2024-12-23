@@ -1,0 +1,122 @@
+[
+  {
+    "model": "backend.yeuthich",
+    "pk": 1,
+    "fields": { "MaKhachHang": 1, "MaMatHang": 1 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 2,
+    "fields": { "MaKhachHang": 2, "MaMatHang": 2 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 3,
+    "fields": { "MaKhachHang": 3, "MaMatHang": 3 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 4,
+    "fields": { "MaKhachHang": 4, "MaMatHang": 4 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 5,
+    "fields": { "MaKhachHang": 5, "MaMatHang": 5 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 6,
+    "fields": { "MaKhachHang": 6, "MaMatHang": 6 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 7,
+    "fields": { "MaKhachHang": 1, "MaMatHang": 13 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 8,
+    "fields": { "MaKhachHang": 2, "MaMatHang": 14 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 9,
+    "fields": { "MaKhachHang": 3, "MaMatHang": 15 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 10,
+    "fields": { "MaKhachHang": 4, "MaMatHang": 16 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 11,
+    "fields": { "MaKhachHang": 5, "MaMatHang": 17 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 12,
+    "fields": { "MaKhachHang": 6, "MaMatHang": 18 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 13,
+    "fields": { "MaKhachHang": 1, "MaMatHang": 29 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 14,
+    "fields": { "MaKhachHang": 2, "MaMatHang": 20 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 15,
+    "fields": { "MaKhachHang": 3, "MaMatHang": 31 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 16,
+    "fields": { "MaKhachHang": 4, "MaMatHang": 32 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 17,
+    "fields": { "MaKhachHang": 5, "MaMatHang": 33 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 18,
+    "fields": { "MaKhachHang": 6, "MaMatHang": 34 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 19,
+    "fields": { "MaKhachHang": 1, "MaMatHang": 35 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 20,
+    "fields": { "MaKhachHang": 2, "MaMatHang": 46 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 21,
+    "fields": { "MaKhachHang": 3, "MaMatHang": 47 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 22,
+    "fields": { "MaKhachHang": 4, "MaMatHang": 48 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 23,
+    "fields": { "MaKhachHang": 5, "MaMatHang": 49 }
+  },
+  {
+    "model": "backend.yeuthich",
+    "pk": 24,
+    "fields": { "MaKhachHang": 6, "MaMatHang": 50 }
+  }
+]

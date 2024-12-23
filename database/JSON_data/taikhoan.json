@@ -1,0 +1,74 @@
+[
+  {
+    "model": "backend.taikhoan",
+    "pk": 1,
+    "fields": {
+      "isAdmin": true,
+      "isCustomer": false,
+      "TenTaiKhoan": "nva",
+      "MatKhau": "123456",
+      "isActivated": true,
+      "verification_token": null
+    }
+  },
+  {
+    "model": "backend.taikhoan",
+    "pk": 2,
+    "fields": {
+      "isAdmin": false,
+      "isCustomer": true,
+      "TenTaiKhoan": "nvb",
+      "MatKhau": "123",
+      "isActivated": true,
+      "verification_token": null
+    }
+  },
+  {
+    "model": "backend.taikhoan",
+    "pk": 3,
+    "fields": {
+      "isAdmin": false,
+      "isCustomer": true,
+      "TenTaiKhoan": "nvc",
+      "MatKhau": "027735",
+      "isActivated": true,
+      "verification_token": null
+    }
+  },
+  {
+    "model": "backend.taikhoan",
+    "pk": 4,
+    "fields": {
+      "isAdmin": false,
+      "isCustomer": true,
+      "TenTaiKhoan": "nvd",
+      "MatKhau": "027735",
+      "isActivated": true,
+      "verification_token": null
+    }
+  },
+  {
+    "model": "backend.taikhoan",
+    "pk": 5,
+    "fields": {
+      "isAdmin": false,
+      "isCustomer": true,
+      "TenTaiKhoan": "nve",
+      "MatKhau": "027735",
+      "isActivated": true,
+      "verification_token": null
+    }
+  },
+  {
+    "model": "backend.taikhoan",
+    "pk": 6,
+    "fields": {
+      "isAdmin": false,
+      "isCustomer": true,
+      "TenTaiKhoan": "nvf",
+      "MatKhau": "027735",
+      "isActivated": true,
+      "verification_token": null
+    }
+  }
+]

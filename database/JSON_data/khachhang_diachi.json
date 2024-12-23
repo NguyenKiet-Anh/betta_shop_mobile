@@ -1,0 +1,56 @@
+[
+  {
+    "model": "backend.khachhangdiachi",
+    "pk": 1,
+    "fields": {
+      "MaKhachHang": 1,
+      "MaQuan": 1,
+      "DiaChi": "23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh"
+    }
+  },
+  {
+    "model": "backend.khachhangdiachi",
+    "pk": 2,
+    "fields": {
+      "MaKhachHang": 2,
+      "MaQuan": 2,
+      "DiaChi": "820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh"
+    }
+  },
+  {
+    "model": "backend.khachhangdiachi",
+    "pk": 3,
+    "fields": {
+      "MaKhachHang": 3,
+      "MaQuan": 3,
+      "DiaChi": "33 Văn Cao, Phú Thạnh, Tân Bình, Hồ Chí Minh"
+    }
+  },
+  {
+    "model": "backend.khachhangdiachi",
+    "pk": 4,
+    "fields": {
+      "MaKhachHang": 4,
+      "MaQuan": 4,
+      "DiaChi": "25 Văn Cao, Phú Thạnh, Phú Nhuận, Hồ Chí Minh"
+    }
+  },
+  {
+    "model": "backend.khachhangdiachi",
+    "pk": 5,
+    "fields": {
+      "MaKhachHang": 5,
+      "MaQuan": 1,
+      "DiaChi": "26 Văn Cao, Phú Thạnh, Bình Tân, Hồ Chí Minh"
+    }
+  },
+  {
+    "model": "backend.khachhangdiachi",
+    "pk": 6,
+    "fields": {
+      "MaKhachHang": 6,
+      "MaQuan": 2,
+      "DiaChi": "27 Văn Cao, Phú Thạnh, Thủ Đức, Hồ Chí Minh"
+    }
+  }
+]

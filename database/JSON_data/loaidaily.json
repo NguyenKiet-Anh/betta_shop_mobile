@@ -1,0 +1,26 @@
+[
+  {
+    "model": "backend.loaidaily",
+    "pk": 1,
+    "fields": {
+      "TenLoaiDaiLy": "Đại lý cấp 1",
+      "SoTienNoToiDa": "50000000.0000"
+    }
+  },
+  {
+    "model": "backend.loaidaily",
+    "pk": 2,
+    "fields": {
+      "TenLoaiDaiLy": "Đại lý cấp 2",
+      "SoTienNoToiDa": "65000000.0000"
+    }
+  },
+  {
+    "model": "backend.loaidaily",
+    "pk": 3,
+    "fields": {
+      "TenLoaiDaiLy": "Đại lý cấp 3",
+      "SoTienNoToiDa": "80000000.0000"
+    }
+  }
+]

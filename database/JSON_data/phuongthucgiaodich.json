@@ -1,0 +1,17 @@
+[
+  {
+    "model": "backend.phuongthucgiaodich",
+    "pk": 1,
+    "fields": { "TenPhuongThuc": "Chuyển khoản" }
+  },
+  {
+    "model": "backend.phuongthucgiaodich",
+    "pk": 2,
+    "fields": { "TenPhuongThuc": "Tiền mặt" }
+  },
+  {
+    "model": "backend.phuongthucgiaodich",
+    "pk": 3,
+    "fields": { "TenPhuongThuc": "Ghi nợ" }
+  }
+]

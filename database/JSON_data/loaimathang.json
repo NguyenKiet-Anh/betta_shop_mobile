@@ -1,0 +1,22 @@
+[
+  {
+    "model": "backend.loaimathang",
+    "pk": 1,
+    "fields": { "TenLoaiMatHang": "Halfmoon" }
+  },
+  {
+    "model": "backend.loaimathang",
+    "pk": 2,
+    "fields": { "TenLoaiMatHang": "Samurai" }
+  },
+  {
+    "model": "backend.loaimathang",
+    "pk": 3,
+    "fields": { "TenLoaiMatHang": "CrownTail" }
+  },
+  {
+    "model": "backend.loaimathang",
+    "pk": 4,
+    "fields": { "TenLoaiMatHang": "Nemo" }
+  }
+]

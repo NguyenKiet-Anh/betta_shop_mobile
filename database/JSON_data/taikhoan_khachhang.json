@@ -1,0 +1,32 @@
+[
+  {
+    "model": "backend.taikhoankhachhang",
+    "pk": 1,
+    "fields": { "MaKhachHang": 1, "MaTaiKhoan": 1 }
+  },
+  {
+    "model": "backend.taikhoankhachhang",
+    "pk": 2,
+    "fields": { "MaKhachHang": 2, "MaTaiKhoan": 2 }
+  },
+  {
+    "model": "backend.taikhoankhachhang",
+    "pk": 3,
+    "fields": { "MaKhachHang": 3, "MaTaiKhoan": 3 }
+  },
+  {
+    "model": "backend.taikhoankhachhang",
+    "pk": 4,
+    "fields": { "MaKhachHang": 4, "MaTaiKhoan": 4 }
+  },
+  {
+    "model": "backend.taikhoankhachhang",
+    "pk": 5,
+    "fields": { "MaKhachHang": 5, "MaTaiKhoan": 5 }
+  },
+  {
+    "model": "backend.taikhoankhachhang",
+    "pk": 6,
+    "fields": { "MaKhachHang": 6, "MaTaiKhoan": 6 }
+  }
+]
