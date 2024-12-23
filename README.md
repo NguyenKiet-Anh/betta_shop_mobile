@@ -14,3 +14,5 @@
   <p>+ Cập nhật token vào ngrok local với câu lệnh: <i>ngrok authtoken your_token</i> </p>
   <p>+ Cuối cùng chạy lệnh: ngrok http ip_address:port (chạy trên một terminal khác)</p>
   <p>+ Ngrok public thành công ip:port thì lấy link của ngrok (hiện trên console) cập nhật vào settings - thêm vào ALLOW_HOST cũng như thay thế inputUrl trong api createPaymentLink<p>
+
+<h2> Thực hiện merge các branch: database, backend, frontend vào branch main (Từ ngày 23/12/2024)</h2>
