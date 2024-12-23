@@ -16,6 +16,8 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+IMAGE_READ_PATH = str(Path(__file__).resolve().parent.parent.parent.parent)
+IMAGE_WRITE_PATH = os.path.join(IMAGE_READ_PATH, "database/")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -27,10 +29,9 @@ SECRET_KEY = "django-insecure-!w71yu$jfvs6r0_i^qbl67sb$ue3ai(739t5rc-knyk4#&@lm%
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "192.168.18.102",
     "127.0.0.1",
-    "localhost",
-    "9ee0-2001-ee0-266-ba76-2a96-bf50-2d81-c185.ngrok-free.app",
+    "172.16.2.211",
+    "4fa7-1-52-116-147.ngrok-free.app",  # Let this line stay at last. DO NOT CHANGE ORDER
 ]  # Get link from ngrok
 
 
@@ -97,8 +98,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "IE307.P11",
         "USER": "postgres",
-        "PASSWORD": "027735",
-        # "PASSWORD": "Admin123",
+        # "PASSWORD": "027735",
+        "PASSWORD": "Admin123",
         "HOST": "localhost",
         "PORT": "5432",
     }

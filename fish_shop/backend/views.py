@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
+from django.conf import settings
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from rest_framework.response import Response
@@ -10,6 +11,7 @@ from rest_framework.serializers import Serializer
 from .models import *
 from .serializers import *
 from backend import serializers
+from pathlib import Path
 
 from reportlab.pdfgen import canvas
 from reportlab.lib import fonts
@@ -24,7 +26,7 @@ from django.db.models import F
 from django.core.files.base import ContentFile
 
 # Encodeing image data before sending to client
-import base64, datetime
+import base64, datetime, os
 
 # Verify Email Import
 import secrets
@@ -38,15 +40,17 @@ from validate_email import (
 # BASE_DIR for getting images
 from pathlib import Path
 import os
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent
 IMAGE_DIR = os.path.join(BASE_DIR, "database", "betta_shop_mobile")
+
 
 # Function for using image directory in both Windows and Linux Ubuntu
 def get_image_directory(path):
     if os.name == "posix":
-        return Path(path.replace('\\', '/'))
+        return Path(path.replace("\\", "/"))
     elif os.name == "nt":
-        return Path(path.replace('/', '\\'))
+        return Path(path.replace("/", "\\"))
 
 
 def get_path_for_image(path):
@@ -54,10 +58,13 @@ def get_path_for_image(path):
     relative_path = path.parts[path.parts.index(target_dir) :]
     relative_path_str = Path(*relative_path).as_posix()
     if os.name == "nt":
-        final_path = Path(str(IMAGE_DIR) + '\\' + relative_path_str)
+        return Path(
+            (str(settings.IMAGE_WRITE_PATH) + relative_path_str).replace("/", "\\")
+        )
     elif os.name == "posix":
-        final_path = Path(str(IMAGE_DIR) + '/' + relative_path_str)
-    return final_path
+        return Path(
+            (str(settings.IMAGE_WRITE_PATH) + relative_path_str).replace("\\", "/")
+        )
 
 
 # api for logging in
@@ -93,6 +100,7 @@ def logIn(request):
 # Function for auto generating OTP
 def generate_otp():
     import random
+
     otp = random.randint(1000, 9999)
     return otp
 
@@ -114,11 +122,10 @@ SMTP_PORT = 587
 SENDER_EMAIL = "anhkiet.nguyen798@gmail.com"
 SENDER_PASSWORD = "qahd zxob ldon jmxs"
 
+
 def send_otp(email: str):
     otp = generate_otp()
-    expires_at = datetime.utcnow() + timedelta(
-        minutes=2
-    )
+    expires_at = datetime.utcnow() + timedelta(minutes=2)
 
     subject = "Mã OTP của bạn"
     body = f"Chào bạn chúng tôi là BettaShop,\n\nMã OTP của bạn là: {otp}\n\nCảm ơn bạn đã sử dụng dịch vụ của chúng tôi."
@@ -133,10 +140,10 @@ def send_otp(email: str):
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
             server.starttls()
             server.login(SENDER_EMAIL, SENDER_PASSWORD)
-            server.sendmail(SENDER_EMAIL, email, msg.as_string())  
+            server.sendmail(SENDER_EMAIL, email, msg.as_string())
 
         print(f"Đã gửi OTP tới email {email}")
-        return otp, expires_at 
+        return otp, expires_at
 
     except Exception as e:
         print(f"Không thể gửi email. Lỗi: {e}")
@@ -147,7 +154,7 @@ def send_otp(email: str):
 @api_view(["POST"])
 def signUp(request):
     username = request.data.get("username")
-    password = request.data.get("password")        
+    password = request.data.get("password")
     phone_number = request.data.get("phone")
     email = request.data.get("email")
     address = request.data.get("address")
@@ -168,15 +175,12 @@ def signUp(request):
             )
     except TaiKhoan.DoesNotExist:
         pass
-    
+
     # Send OTP using gmail
     otp, expired_time = send_otp(email)
     if otp == None and expired_time == None:
-        return Response({
-            "success": False,
-            "message": "Failed while sending email"
-        })
-    
+        return Response({"success": False, "message": "Failed while sending email"})
+
     # Create new user and account
     try:
         # Create new account
@@ -191,55 +195,51 @@ def signUp(request):
         new_account.save()
         # Create new user
         new_user = KhachHang.objects.create(
-            TenKhachHang=username,
-            SoDienThoai=phone_number,  
-            Email=email      
+            TenKhachHang=username, SoDienThoai=phone_number, Email=email
         )
         new_user.save()
         # Create new user address
         new_user_address = KhachHangDiaChi.objects.create(
-            MaKhachHang = new_user,
-            MaQuan = Quan.objects.get(MaQuan=1),
-            DiaChi = address,
-            KinhDo = 0.000000,
-            ViDo = 0.000000
+            MaKhachHang=new_user,
+            MaQuan=Quan.objects.get(MaQuan=1),
+            DiaChi=address,
+            KinhDo=0.000000,
+            ViDo=0.000000,
         )
         new_user_address.save()
-        # Link user to account    
+        # Link user to account
         user_account = TaiKhoanKhachHang.objects.create(
-            MaKhachHang = new_user,
-            MaTaiKhoan = new_account
+            MaKhachHang=new_user, MaTaiKhoan=new_account
         )
-        user_account.save()    
+        user_account.save()
     except Exception as e:
         print(e)
 
-    return Response({
-        "success": True,
-        "message": "Your account has been created, but has been not verified yet! Check your mail to verify your account"
-    })
+    return Response(
+        {
+            "success": True,
+            "message": "Your account has been created, but has been not verified yet! Check your mail to verify your account",
+        }
+    )
+
 
 @api_view(["POST"])
-def activate_account(request, email):    
+def activate_account(request, email):
     # Receive OTP
     otp = request.data.get("otp")
     # Get account and active account
     khachhang = KhachHang.objects.get(Email=email)
     taikhoankhachhang = TaiKhoanKhachHang.objects.get(MaKhachHang=khachhang)
     taikhoan = TaiKhoan.objects.get(MaTaiKhoan=taikhoankhachhang.MaTaiKhoan.MaTaiKhoan)
-    
+
     print(taikhoan.verification_token)
-    if (taikhoan.verification_token == otp):
+    if taikhoan.verification_token == otp:
         taikhoan.isActivated = True
         taikhoan.save()
 
-        return Response({
-            "success": True,
-            "message": "Your account has been activated"
-        })
+        return Response({"success": True, "message": "Your account has been activated"})
     # Send message to client
 
-    
 
 # Get all categories
 @api_view(["GET"])
@@ -263,28 +263,28 @@ def getFish_all(request):
     for item in serializers.data:
         # Encode HinhAnh1 before sending
         if item["HinhAnh1"]:
-            item["HinhAnh1"] = get_path_for_image(get_image_directory(item["HinhAnh1"]))
+            item["HinhAnh1"] = get_path_for_image(Path(item["HinhAnh1"]))
             with open(item["HinhAnh1"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh1"] = base64_encoded_data
         # Encode HinhAnh2 before sending
         if item["HinhAnh2"]:
-            item["HinhAnh2"] = get_path_for_image(get_image_directory(item["HinhAnh2"]))
+            item["HinhAnh2"] = get_path_for_image(Path(item["HinhAnh2"]))
             with open(item["HinhAnh2"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh2"] = base64_encoded_data
         # Encode HinhAnh3 before sending
         if item["HinhAnh3"]:
-            item["HinhAnh3"] = get_path_for_image(get_image_directory(item["HinhAnh3"]))
+            item["HinhAnh3"] = get_path_for_image(Path(item["HinhAnh3"]))
             with open(item["HinhAnh3"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh3"] = base64_encoded_data
         # Encode HinhAnh4 before sending
         if item["HinhAnh4"]:
-            item["HinhAnh4"] = get_path_for_image(get_image_directory(item["HinhAnh4"]))
+            item["HinhAnh4"] = get_path_for_image(Path(item["HinhAnh4"]))
             with open(item["HinhAnh4"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
@@ -297,35 +297,35 @@ def getFish_all(request):
 @api_view(["GET"])
 def getFish_no_promotion(request):
     # Get data from database
-    fishes = MatHang.objects.filter(KhuyenMai=False)    
+    fishes = MatHang.objects.filter(KhuyenMai=False)
     # Convert from Queryset format to Json format, many = True because there are many data rows.
     serializers = MATHANG_Serializer(fishes, many=True)
     # Encode images before sending
     for item in serializers.data:
         # Encode HinhAnh1 before sending
         if item["HinhAnh1"]:
-            item["HinhAnh1"] = get_path_for_image(get_image_directory(item["HinhAnh1"]))
+            item["HinhAnh1"] = get_path_for_image(Path(item["HinhAnh1"]))
             with open(item["HinhAnh1"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh1"] = base64_encoded_data
         # Encode HinhAnh2 before sending
         if item["HinhAnh2"]:
-            item["HinhAnh2"] = get_path_for_image(get_image_directory(item["HinhAnh2"]))
+            item["HinhAnh2"] = get_path_for_image(Path(item["HinhAnh2"]))
             with open(item["HinhAnh2"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh2"] = base64_encoded_data
         # Encode HinhAnh3 before sending
         if item["HinhAnh3"]:
-            item["HinhAnh3"] = get_path_for_image(get_image_directory(item["HinhAnh3"]))
+            item["HinhAnh3"] = get_path_for_image(Path(item["HinhAnh3"]))
             with open(item["HinhAnh3"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh3"] = base64_encoded_data
         # Encode HinhAnh4 before sending
         if item["HinhAnh4"]:
-            item["HinhAnh4"] = get_path_for_image(get_image_directory(item["HinhAnh4"]))
+            item["HinhAnh4"] = get_path_for_image(Path(item["HinhAnh4"]))
             with open(item["HinhAnh4"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
@@ -345,28 +345,28 @@ def getFish_promotion(request):
     for item in serializers.data:
         # Encode HinhAnh1 before sending
         if item["HinhAnh1"]:
-            item["HinhAnh1"] = get_path_for_image(get_image_directory(item["HinhAnh1"]))
+            item["HinhAnh1"] = get_path_for_image(Path(item["HinhAnh1"]))
             with open(item["HinhAnh1"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh1"] = base64_encoded_data
         # Encode HinhAnh2 before sending
         if item["HinhAnh2"]:
-            item["HinhAnh2"] = get_path_for_image(get_image_directory(item["HinhAnh2"]))
+            item["HinhAnh2"] = get_path_for_image(Path(item["HinhAnh2"]))
             with open(item["HinhAnh2"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh2"] = base64_encoded_data
         # Encode HinhAnh3 before sending
         if item["HinhAnh3"]:
-            item["HinhAnh3"] = get_path_for_image(get_image_directory(item["HinhAnh3"]))
+            item["HinhAnh3"] = get_path_for_image(Path(item["HinhAnh3"]))
             with open(item["HinhAnh3"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
                 item["HinhAnh3"] = base64_encoded_data
         # Encode HinhAnh4 before sending
         if item["HinhAnh4"]:
-            item["HinhAnh4"] = get_path_for_image(get_image_directory(item["HinhAnh4"]))
+            item["HinhAnh4"] = get_path_for_image(Path(item["HinhAnh4"]))
             with open(item["HinhAnh4"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
@@ -384,25 +384,27 @@ def get_fish_for_admin(request):
     # Encode images before sending
     for item in serializers.data:
         # Encode HinhAnh1 before sending
-        if item["HinhAnh1"]:            
-            item["HinhAnh1"] = get_path_for_image(get_image_directory(item["HinhAnh1"]))
+        if item["HinhAnh1"]:
+            item["HinhAnh1"] = get_path_for_image(Path(item["HinhAnh1"]))
             with open(item["HinhAnh1"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
-                item["HinhAnh1"] = base64_encoded_data            
+                item["HinhAnh1"] = base64_encoded_data
     # Get some fields from serializer instead of getting all fields
     result = []
-    for item in serializers.data:        
-        result.append({
-            "MaMatHang": item["MaMatHang"],
-            "TenMatHang": item["TenMatHang"],
-            "HinhAnh": item["HinhAnh1"],            
-            "DonGia": item["Dongia"],
-            "KhuyenMai": item["KhuyenMai"],
-            "GiaKhuyenMai": item["GiaKhuyenMai"],
-            "GioiTinh": item["Gioitinh"],
-            "SoLuotDanhgia": len(item["danhgia"])
-        })
+    for item in serializers.data:
+        result.append(
+            {
+                "MaMatHang": item["MaMatHang"],
+                "TenMatHang": item["TenMatHang"],
+                "HinhAnh": item["HinhAnh1"],
+                "DonGia": item["Dongia"],
+                "KhuyenMai": item["KhuyenMai"],
+                "GiaKhuyenMai": item["GiaKhuyenMai"],
+                "GioiTinh": item["Gioitinh"],
+                "SoLuotDanhgia": len(item["danhgia"]),
+            }
+        )
     # Return Json format
     return Response(result)
 
@@ -411,17 +413,11 @@ def get_fish_for_admin(request):
 @api_view(["DELETE"])
 def delete_fish_admin(request, ma_ca):
     try:
-        fish = MatHang.objects.get(MaMatHang = ma_ca)
+        fish = MatHang.objects.get(MaMatHang=ma_ca)
         fish.delete()
-        return Response({
-            "status": True,
-            "message": "Fish has been removed"
-        })
+        return Response({"status": True, "message": "Fish has been removed"})
     except Exception as e:
-        return Response({
-            "status": False,
-            "message": "Fish not found"
-        })
+        return Response({"status": False, "message": "Fish not found"})
 
 
 # Get fish by fish's id
@@ -438,28 +434,28 @@ def get_fish_by_id(request, id):
 
     # Encode images before sending
     if data.get("HinhAnh1"):
-        data["HinhAnh1"] = get_path_for_image(get_image_directory(data["HinhAnh1"]))
+        data["HinhAnh1"] = get_path_for_image(Path(data["HinhAnh1"]))
         with open(data["HinhAnh1"], "rb") as file:
             image_data = file.read()
             base64_encoded = base64.b64encode(image_data).decode("utf-8")
             data["HinhAnh1"] = base64_encoded
 
     if data.get("HinhAnh2"):
-        data["HinhAnh2"] = get_path_for_image(get_image_directory(data["HinhAnh2"]))
+        data["HinhAnh2"] = get_path_for_image(Path(data["HinhAnh2"]))
         with open(data["HinhAnh2"], "rb") as file:
             image_data = file.read()
             base64_encoded = base64.b64encode(image_data).decode("utf-8")
             data["HinhAnh2"] = base64_encoded
 
     if data.get("HinhAnh3"):
-        data["HinhAnh3"] = get_path_for_image(get_image_directory(data["HinhAnh3"]))
+        data["HinhAnh3"] = get_path_for_image(Path(data["HinhAnh3"]))
         with open(data["HinhAnh3"], "rb") as file:
             image_data = file.read()
             base64_encoded = base64.b64encode(image_data).decode("utf-8")
             data["HinhAnh3"] = base64_encoded
 
     if data.get("HinhAnh4"):
-        data["HinhAnh4"] = get_path_for_image(get_image_directory(data["HinhAnh4"]))
+        data["HinhAnh4"] = get_path_for_image(Path(data["HinhAnh4"]))
         with open(data["HinhAnh4"], "rb") as file:
             image_data = file.read()
             base64_encoded = base64.b64encode(image_data).decode("utf-8")
@@ -479,7 +475,9 @@ def get_wishList(request, ma_khach_hang):
     for item in serializers.data:
         # Encode HinhAnh1 before sending
         if item["ca_info"]["HinhAnh1"]:
-            item["ca_info"]["HinhAnh1"] = get_path_for_image(get_image_directory(item["ca_info"]["HinhAnh1"]))
+            item["ca_info"]["HinhAnh1"] = get_path_for_image(
+                Path(item["ca_info"]["HinhAnh1"])
+            )
             with open(item["ca_info"]["HinhAnh1"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
@@ -578,7 +576,9 @@ def get_cart(request, ma_khach_hang):
     for item in serializers.data:
         # Encode HinhAnh1 before sending
         if item["ca_info"]["HinhAnh1"]:
-            item["ca_info"]["HinhAnh1"] = get_path_for_image(get_image_directory(item["ca_info"]["HinhAnh1"]))
+            item["ca_info"]["HinhAnh1"] = get_path_for_image(
+                get_image_directory(item["ca_info"]["HinhAnh1"])
+            )
             with open(item["ca_info"]["HinhAnh1"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
@@ -588,7 +588,7 @@ def get_cart(request, ma_khach_hang):
         #     with open(item["ca_info"]["HinhAnh2"], "rb") as file:
         #         data = file.read()
         #         base64_encoded_data = base64.b64encode(data).decode("utf-8")
-                # item["ca_info"]["HinhAnh2"] = base64_encoded_data
+        # item["ca_info"]["HinhAnh2"] = base64_encoded_data
         # Encode HinhAnh3 before sending
         # if item["ca_info"]["HinhAnh3"]:
         #     with open(item["ca_info"]["HinhAnh3"], "rb") as file:
@@ -771,7 +771,7 @@ def create_payment_link(request):
         orderInfo = "pay with MoMo"
         partnerCode = "MOMO"
         redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b"
-        ipnUrl = "https://9ee0-2001-ee0-266-ba76-2a96-bf50-2d81-c185.ngrok-free.app/getNotification/"
+        ipnUrl = "https://{}/getNotification/".format(settings.ALLOWED_HOSTS[-1])
         amount = str(total_price)
         orderId = str(uuid.uuid4())
         requestId = str(uuid.uuid4())
@@ -971,7 +971,7 @@ def get_user(request, ma_khach_hang):
     data = serializers.data
     # Encode avatar before sending
     if data["HinhAnh"]:
-        data["HinhAnh"] = get_path_for_image(get_image_directory(data["HinhAnh"]))
+        data["HinhAnh"] = get_path_for_image(Path(data["HinhAnh"]))
         with open(data["HinhAnh"], "rb") as file:
             data_img = file.read()
             base64_encoded_data = base64.b64encode(data_img).decode("utf-8")
@@ -1020,7 +1020,7 @@ def update_user(request, ma_khach_hang):
             MaKhachHang=user.MaKhachHang.MaKhachHang
         )
         # Update district code
-        new_quan = Quan.objects.get(MaQuan=district_code)        
+        new_quan = Quan.objects.get(MaQuan=district_code)
         if district_code != update_user_address.MaQuan:
             update_user_address.MaQuan = new_quan
             # Update address
@@ -1045,18 +1045,42 @@ def update_user(request, ma_khach_hang):
 def update_avatar(request, ma_khach_hang):
     try:
         avatar = request.data.get("avatar")
-        # Get mataikhoan
+        if not avatar:
+            return Response({"success": False, "message": "No avatar provided."})
+
+        # Extract image name and Base64 data
+        image_name = avatar.get("name")
+        base64_data = avatar.get("base64")
+
+        if not image_name or not base64_data:
+            return Response({"success": False, "message": "Invalid avatar data."})
+
+        # Define the image path
+        image_path = os.path.join(settings.IMAGE_WRITE_PATH, "images/users", image_name)
+
+        if os.name == "posix":
+            image_path = image_path.replace("\\", "/")
+        elif os.name == "nt":
+            image_path = image_path.replace("/", "\\")
+
+        # Decode Base64 data and write to file
+        with open(image_path, "wb") as image_file:
+            image_file.write(base64.b64decode(base64_data.split(",")[1]))
+
+        # Fetch the user record
         user = TaiKhoanKhachHang.objects.filter(MaTaiKhoan=ma_khach_hang).first()
-        # Update information
+        if not user:
+            return Response({"success": False, "message": "User not found."})
+
+        # Update user avatar path
         update_user = KhachHang.objects.get(MaKhachHang=user.MaKhachHang.MaKhachHang)
-        # Check and update
-        # Update HinhAnh
-        update_user.HinhAnh = avatar
+        update_user.HinhAnh = image_path
         update_user.save()
+
         return Response({"success": True})
     except Exception as e:
         print(e)
-        return Response({"success": False})
+        return Response({"success": False, "message": str(e)})
 
 
 @api_view(["PUT"])
@@ -1091,10 +1115,10 @@ def get_all_districts(request):
 def get_user_for_admin(request):
     khachhangs = KhachHang.objects.all()
     # Serializing data
-    serializers = KHACHHANG_ADMIN_Serializer(khachhangs, many=True)    
+    serializers = KHACHHANG_ADMIN_Serializer(khachhangs, many=True)
     # Encode avatar before sending
     for item in serializers.data:
-        item["HinhAnh"] = get_path_for_image(get_image_directory(item["HinhAnh"]))
+        item["HinhAnh"] = get_path_for_image(Path(item["HinhAnh"]))
         with open(item["HinhAnh"], "rb") as file:
             data_img = file.read()
             base64_encoded_data = base64.b64encode(data_img).decode("utf-8")
@@ -1104,14 +1128,16 @@ def get_user_for_admin(request):
     # Get exactl fields for returning
     result = []
     for item in serializers.data:
-        result.append({
-            "MaKhachHang": item["MaKhachHang"],
-            "TenKhachHang": item["TenKhachHang"],
-            "HinhAnh": item["HinhAnh"],
-            "SoDienThoai": item["SoDienThoai"],
-            "TongLuotThanhToan": len(item["thanhtoan"]),
-            "TongLuotDanhGia": len(item["danhgia"])            
-        })
+        result.append(
+            {
+                "MaKhachHang": item["MaKhachHang"],
+                "TenKhachHang": item["TenKhachHang"],
+                "HinhAnh": item["HinhAnh"],
+                "SoDienThoai": item["SoDienThoai"],
+                "TongLuotThanhToan": len(item["thanhtoan"]),
+                "TongLuotDanhGia": len(item["danhgia"]),
+            }
+        )
     # Return here
     return Response(result)
 
@@ -1119,18 +1145,12 @@ def get_user_for_admin(request):
 # Delete user in admin page
 @api_view(["DELETE"])
 def delete_user_for_admin(request, ma_khach_hang):
-    try:        
-        customer = KhachHang.objects.get(MaKhachHang = ma_khach_hang)
+    try:
+        customer = KhachHang.objects.get(MaKhachHang=ma_khach_hang)
         customer.delete()
-        return Response({
-            "status": True,
-            "message": "This user has been removed"
-        })
+        return Response({"status": True, "message": "This user has been removed"})
     except:
-        return Response({
-            "status": False,
-            "message": "User not found"
-        })
+        return Response({"status": False, "message": "User not found"})
 
 
 # Get reviews by fish's id
@@ -1151,7 +1171,9 @@ def get_review_by_fish_id(request, id):
         customer_info = item.get("khachhang_info", {})
         print(customer_info)
         if customer_info.get("HinhAnh"):
-            customer_info["HinhAnh"] = get_path_for_image(get_image_directory(customer_info["HinhAnh"]))
+            customer_info["HinhAnh"] = get_path_for_image(
+                Path(customer_info["HinhAnh"])
+            )
             with open(customer_info["HinhAnh"], "rb") as file:
                 data = file.read()
                 base64_encoded_data = base64.b64encode(data).decode("utf-8")
@@ -1180,11 +1202,29 @@ def add_review(request):
             Sao=sao,
         )
         new_danhgia.save()
+
+        current_user = KhachHang.objects.filter(MaKhachHang=makhachhang).first()
+        # Serializing data
+        serializers = NGUOIDUNG_Serializer(current_user)
+        data = serializers.data
+
+        # Customer avatar
+        if data["HinhAnh"]:
+            with open(data["HinhAnh"], "rb") as file:
+                avatar = file.read()
+                base64_encoded_data = base64.b64encode(avatar).decode("utf-8")
+                data["HinhAnh"] = base64_encoded_data
+
         # Return message anoucing successful process
         return Response(
-            {"success": True, "message": "Thêm bình luận vào đánh giá thành công"}
+            {
+                "success": True,
+                "message": "Thêm bình luận vào đánh giá thành công",
+                "current_user": data,
+            }
         )
-    except:
+    except Exception as e:
+        print(e)
         return Response({"success": False, "message": "Thêm bình luận thất bại"})
 
 
@@ -1205,7 +1245,7 @@ def get_store_locations(request):
         # Encode images before sending
         for item in stores:
             if item.get("store_image"):
-                item["store_image"] = get_path_for_image(get_image_directory(item["store_image"]))
+                item["store_image"] = get_path_for_image(Path(item["store_image"]))
                 with open(item["store_image"], "rb") as file:
                     data = file.read()
                     base64_encoded_data = base64.b64encode(data).decode("utf-8")
@@ -1213,164 +1253,5 @@ def get_store_locations(request):
 
         return Response(list(stores))
     except Exception as e:
+        print(e)
         return Response({"success": "error", "message": str(e)})
-
-
-# ----- OLD VERSION -----
-# # Thực hiện mua cá - dọn giỏ hàng
-
-# # Cập nhật GIOHANG_CA - khi có thay đổi trong giỏ hàng
-# @api_view(['POST'])
-# def updateCart(request):
-#      ma_tai_khoan = request.data.get('ma_tai_khoan')
-#      ma_ca = request.data.get('ma_ca')
-#      ma_thucan = request.data.get('ma_thucan')
-#      action = request.data.get('increase')
-#      if ma_ca != None:
-#           # Tăng số lượng cá
-#           if action == True:
-#                tai_khoan = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
-#                fish_name_update = CA_BETTA.objects.get(ma_ca=ma_ca)
-#                soluong = GIOHANG_CA.objects.get(ca_betta=fish_name_update, giohang=tai_khoan)
-
-#                if soluong.so_luong >= fish_name_update.so_luong:
-#                     return Response({'success': False, 'message': 'vượt số lượng tồn'})
-
-#                soluong.so_luong += 1
-
-#                soluong.save()
-#                return Response({'success': True})
-
-#           # Giảm số lượng cá
-#           elif action == False:
-#                tai_khoan = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
-#                fish_name_update = CA_BETTA.objects.get(ma_ca=ma_ca)
-#                soluong = GIOHANG_CA.objects.get(ca_betta=fish_name_update, giohang=tai_khoan)
-
-#                if soluong.so_luong == 0:
-#                     return Response({'success': False})
-#                else:
-#                     soluong.so_luong -= 1
-#                     if soluong.so_luong == 0:
-#                          soluong.delete()
-#                     else:
-#                          soluong.save()
-
-#                return Response({'success': True})
-
-#      if ma_thucan != None:
-#           # Tăng số lượng thức ăn
-#           if action == True:
-#                tai_khoan = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
-#                food_name_update = THUCAN.objects.get(ma_thucan=ma_thucan)
-#                soluong = GIOHANG_THUCAN.objects.get(thucan=food_name_update, giohang=tai_khoan)
-
-#                if soluong.so_luong >= food_name_update.so_luong:
-#                     return Response({'success': False, 'message': 'vượt số lượng tồn'})
-
-#                soluong.so_luong += 1
-
-#                soluong.save()
-#                return Response({'success': True})
-
-#           # Giảm số lượng thức ăn
-#           elif action == False:
-#                tai_khoan = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
-#                food_name_update = THUCAN.objects.get(ma_thucan=ma_thucan)
-#                soluong = GIOHANG_THUCAN.objects.get(thucan=food_name_update, giohang=tai_khoan)
-
-#                if soluong.so_luong == 0:
-#                     return Response({'success': False})
-#                else:
-#                     soluong.so_luong -= 1
-#                     if soluong.so_luong == 0:
-#                          soluong.delete()
-#                     else:
-#                          soluong.save()
-
-#                return Response({'success': True})
-
-# # Truy vấn giỏ hàng - dành cho việc sau khi đăng nhập/ đăng xuất
-
-
-# # api for check out
-# @api_view(['POST'])
-# def check_out(request):
-#      ma_ca = [x for x in request.data.get('ma_ca') if x != None]
-#      ma_thucan = [x for x in request.data.get('ma_thucan') if x != None]
-#      ma_tai_khoan = request.data.get('ma_tai_khoan')
-
-#      # Tạo tổng tiền & tổng số lượng
-#      tong_tien = float(0)
-#      tong_so_luong = int(0)
-
-#      # Lấy mã giỏ hàng
-#      user_id = GIOHANG.objects.get(ma_tai_khoan=ma_tai_khoan)
-
-#      # Xử lý cá
-#      for i in ma_ca:
-#           fish_name = CA_BETTA.objects.get(ma_ca=i)
-
-#           # Kiểm tra cá đã tồn tại trong giỏ hàng
-#           fish = GIOHANG_CA.objects.filter(ca_betta=fish_name, giohang=user_id)
-#           tong_so_luong += fish[0].so_luong
-#           tong_tien += float(fish[0].so_luong * fish[0].gia)
-#           # Cập nhật số lượng tồn
-#           fish_name.so_luong -= fish[0].so_luong
-#           fish_name.save()
-
-#      # Xử lý thức ăn
-#      for i in ma_thucan:
-#           food_name = THUCAN.objects.get(ma_thucan=i)
-
-#           # Kiểm tra cá đã tồn tại trong giỏ hàng
-#           food = GIOHANG_THUCAN.objects.filter(thucan=food_name, giohang=user_id)
-
-#           tong_so_luong += food[0].so_luong
-#           tong_tien += float(food[0].so_luong * food[0].gia)
-#           # Cập nhật số lượng tồn
-#           food_name.so_luong -= food[0].so_luong
-#           food_name.save()
-
-#      new_nguoi_dung = NGUOIDUNG.objects.get(tai_khoan=ma_tai_khoan)
-#      # Tạo hóa đơn
-#      new_hoa_don = HOADON.objects.create(
-#           ngay=timezone.now(),
-#           tong_sl_mua = tong_so_luong,
-#           tong_tien = tong_tien,
-#           ma_nguoi_dung=new_nguoi_dung
-#      )
-#      new_hoa_don.save()
-
-#      # Tạo cthd_ca và thêm từng hạng mục vào
-#      for i in ma_ca:
-#           fish_name = CA_BETTA.objects.get(ma_ca=i)
-
-
-#           fish = GIOHANG_CA.objects.filter(ca_betta=fish_name, giohang=user_id)
-#           new_cthds = CTHD_CA.objects.create(
-#                ma_hoa_don = new_hoa_don,
-#                ma_ca = fish_name,
-#                soluong = fish[0].so_luong,
-#           )
-
-#           # Xóa hết cá trong giỏ hàng
-#           fish.delete()
-
-#      # Tạo cthd_thucan và thêm từng hạng mục vào
-#      for i in ma_thucan:
-#           food_name = THUCAN.objects.get(ma_thucan=i)
-
-#           food = GIOHANG_THUCAN.objects.filter(thucan=food_name, giohang=user_id)
-
-#           new_cthds = CTHD_THUCAN.objects.create(
-#                ma_hoa_don = new_hoa_don,
-#                ma_thucan = food_name,
-#                soluong = food[0].so_luong,
-#           )
-
-#           # Xóa hết cá trong giỏ hàng
-#           food.delete()
-
-#      # Trả phản hồi
-#      return Response({'success': True, 'message': 'Đã tạo hóa đơn!', 'ma_hoa_don': new_hoa_don.ma_hoa_don})
