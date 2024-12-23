@@ -5,34 +5,37 @@ export const AuthContext = createContext();
 
 // Create provider for Context
 export const AuthProvider = ({ children }) => {
-    // Declare state variables
-    const [isLogged, setIsLogged] = useState(false);
-    const [userInfo, setUserInfo] = useState({});
+  // Declare state variables
+  const [isLogged, setIsLogged] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
 
-    // Declare functions here
-    const login = (userData) => {
-        setUserInfo(userData);
-        setIsLogged(true);
-    };
+  const ipAddress = "172.16.2.211";
 
-    const logout = () => {        
-        setIsLogged(false);
-        setUserInfo({});        
-    };
+  // Declare functions here
+  const login = (userData) => {
+    setUserInfo(userData);
+    setIsLogged(true);
+  };
 
-    // Return context provider with values
-    return (
-        <AuthContext.Provider
-            value={{
-                isLogged,
-                userInfo,
-                login,
-                logout
-            }}
-        >
-            { children }
-        </AuthContext.Provider>
-    );
+  const logout = () => {
+    setIsLogged(false);
+    setUserInfo({});
+  };
+
+  // Return context provider with values
+  return (
+    <AuthContext.Provider
+      value={{
+        ipAddress,
+        isLogged,
+        userInfo,
+        login,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 // Custom hook to use context easily

@@ -1,7 +1,6 @@
-const ipAddress = "192.168.18.102";
 // For Home
 // For getting all fishes in both promotion and non-promotion
-export const getAllFishesAll = async () => {
+export const getAllFishesAll = async (ipAddress) => {
   try {
     return await fetch(`http://${ipAddress}:8000/getFishesAll`)
       .then((response) => {
@@ -23,7 +22,7 @@ export const getAllFishesAll = async () => {
 };
 
 // For getting all fishes
-export const getAllFishes = async () => {
+export const getAllFishes = async (ipAddress) => {
   try {
     return await fetch(`http://${ipAddress}:8000/getFishes`)
       .then((response) => {
@@ -45,7 +44,7 @@ export const getAllFishes = async () => {
 };
 
 // For getting all fishes in promotion
-export const getAllFishesPromotion = async () => {
+export const getAllFishesPromotion = async (ipAddress) => {
   try {
     return await fetch(`http://${ipAddress}:8000/getFishesPromotion`)
       .then((response) => {
@@ -67,7 +66,7 @@ export const getAllFishesPromotion = async () => {
 };
 
 // For getting all categories
-export const getAllCategories = async () => {
+export const getAllCategories = async (ipAddress) => {
   try {
     return await fetch(`http://${ipAddress}:8000/getCategories/`)
       .then((response) => {
@@ -90,7 +89,7 @@ export const getAllCategories = async () => {
 
 // For Category
 // For getting fishes by their category
-export const getFishesByCategory = async () => {
+export const getFishesByCategory = async (ipAddress) => {
   try {
     return await fetch(`http://${ipAddress}:8000/getFishesByCategory`)
       .then((response) => {

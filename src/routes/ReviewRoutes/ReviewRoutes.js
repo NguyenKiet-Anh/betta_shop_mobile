@@ -1,6 +1,5 @@
-const ipAddress = "192.168.18.102";
 // For getting - GET method
-export const getReviewByFishId = async (id) => {
+export const getReviewByFishId = async (ipAddress, id) => {
   try {
     return await fetch(`http://${ipAddress}:8000/getReview/${id}`)
       .then((response) => {

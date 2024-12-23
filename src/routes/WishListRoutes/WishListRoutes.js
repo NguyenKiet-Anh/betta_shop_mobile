@@ -1,6 +1,5 @@
-const ipAddress = "192.168.18.102";
 // Get wishlist by id
-export const getWishList = async (id) => {
+export const getWishList = async (ipAddress, id) => {
   try {
     // Get wishlist by userId - MaKhachHang
     return await fetch(`http://${ipAddress}:8000/getWishList/${id}/`)
@@ -21,7 +20,7 @@ export const getWishList = async (id) => {
   }
 };
 // For removing fish from wish list - DELETE method
-export const addFishToWishList = async (userId, fishId) => {
+export const addFishToWishList = async (ipAddress, userId, fishId) => {
   try {
     return await fetch(`http://${ipAddress}:8000/addWishList/`, {
       method: "POST",
@@ -51,7 +50,7 @@ export const addFishToWishList = async (userId, fishId) => {
 };
 
 // For remove item from wishlist
-export const removeFishFromWishList = async (userId, fishId) => {
+export const removeFishFromWishList = async (ipAddress, userId, fishId) => {
   try {
     return await fetch(
       `http://${ipAddress}:8000/removeWishList/${userId}/${fishId}/`,
@@ -77,7 +76,7 @@ export const removeFishFromWishList = async (userId, fishId) => {
 };
 
 // Delete all items in wishlist
-export const deleteWishList = async (userId) => {
+export const deleteWishList = async (ipAddress, userId) => {
   try {
     return await fetch(`http://${ipAddress}:8000/deleteWishList/${userId}/`, {
       method: "DELETE",

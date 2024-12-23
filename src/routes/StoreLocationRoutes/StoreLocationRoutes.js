@@ -1,6 +1,5 @@
-const ipAddress = "192.168.18.102";
 // For getting - GET method
-export const getStoreLocations = async () => {
+export const getStoreLocations = async (ipAddress) => {
   try {
     return await fetch(`http://${ipAddress}:8000/getStoreLocation`)
       .then((response) => {

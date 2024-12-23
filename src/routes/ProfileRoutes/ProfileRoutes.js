@@ -1,6 +1,5 @@
-const ipAddress = "192.168.18.102";
 // For getting user's data
-export const getUserInfo = async (userId) => {
+export const getUserInfo = async (ipAddress, userId) => {
   try {
     return await fetch(`http://${ipAddress}:8000/getUser/${userId}/`)
       .then((response) => {
@@ -17,7 +16,7 @@ export const getUserInfo = async (userId) => {
   }
 };
 // For updating avatar
-export const updateUserAvatar = async (userId, item) => {
+export const updateUserAvatar = async (ipAddress, userId, item) => {
   try {
     return await fetch(`http://${ipAddress}:8000/updateAvatar/${userId}/`, {
       method: "PUT",
@@ -42,7 +41,7 @@ export const updateUserAvatar = async (userId, item) => {
   }
 };
 // For editing information
-export const updateUserInfo = async (userId, item) => {
+export const updateUserInfo = async (ipAddress, userId, item) => {
   try {
     return await fetch(`http://${ipAddress}:8000/updateUser/${userId}/`, {
       method: "PUT",
@@ -71,7 +70,7 @@ export const updateUserInfo = async (userId, item) => {
   }
 };
 // For change password
-export const changePassword = async (userId, newPassword) => {
+export const changePassword = async (ipAddress, userId, newPassword) => {
   try {
     return await fetch(`http://${ipAddress}:8000/changePassword/${userId}/`, {
       method: "PUT",
@@ -97,7 +96,7 @@ export const changePassword = async (userId, newPassword) => {
 };
 
 // Get all districts
-export const getAllDistricts = async () => {
+export const getAllDistricts = async (ipAddress) => {
   try {
     return await fetch(`http://${ipAddress}:8000/getAllDistricts/`)
       .then((response) => {

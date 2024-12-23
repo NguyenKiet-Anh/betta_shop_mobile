@@ -1,6 +1,5 @@
-const ipAddress = "192.168.18.102";
 // For getting Cart - GET method
-export const getCartById = async (id) => {
+export const getCartById = async (ipAddress, id) => {
   try {
     return await fetch(`http://${ipAddress}:8000/getCart/${id}/`)
       .then((response) => {
@@ -21,7 +20,7 @@ export const getCartById = async (id) => {
 };
 
 // For adding - POST method
-export const addFishToCart = async (userId, fishId) => {
+export const addFishToCart = async (ipAddress, userId, fishId) => {
   try {
     return await fetch(
       `http://${ipAddress}:8000/addCart/${userId}/${fishId}/`,
@@ -50,7 +49,7 @@ export const addFishToCart = async (userId, fishId) => {
 };
 
 // For changing amount of product - PUT method
-export const changeAmount = async (userId, action, fishId) => {
+export const changeAmount = async (ipAddress, userId, action, fishId) => {
   try {
     return await fetch(
       `http://${ipAddress}:8000/updateCart/${userId}/${fishId}/`,
@@ -82,7 +81,7 @@ export const changeAmount = async (userId, action, fishId) => {
 };
 
 // For removing product from cart - DELETE method
-export const removeFishFromCart = async (userId, fishId) => {
+export const removeFishFromCart = async (ipAddress, userId, fishId) => {
   try {
     return await fetch(
       `http://${ipAddress}:8000/removeCart/${userId}/${fishId}/`,
@@ -108,7 +107,7 @@ export const removeFishFromCart = async (userId, fishId) => {
 };
 
 // Deleting all items in cart
-export const deleteFishFromCart = async (userId) => {
+export const deleteFishFromCart = async (ipAddress, userId) => {
   try {
     return await fetch(`http://${ipAddress}:8000/deleteCart/${userId}/`, {
       method: "DELETE",
@@ -131,25 +130,25 @@ export const deleteFishFromCart = async (userId) => {
 };
 
 // For checking out cart - POST method
-export const checkOutCart = async(userId) => {
+export const checkOutCart = async (ipAddress, userId) => {
   try {
-      console.log(userId);
-      return await fetch(`http://${ipAddress}:8000/checkOut/${userId}/`,{
-          method: 'DELETE'
+    console.log(userId);
+    return await fetch(`http://${ipAddress}:8000/checkOut/${userId}/`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network working failed");
+        }
+        return response.json();
       })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network working failed');
-          };
-          return response.json();
+      .then((data) => {
+        return data;
       })
-      .then(data => {
-          return data;
-      })
-      .catch(error => {
-          console.error("Error checking out: ", error);
-      })
-  } catch(error) {
-      console.error("Error checking out: ", error);
+      .catch((error) => {
+        console.error("Error checking out: ", error);
+      });
+  } catch (error) {
+    console.error("Error checking out: ", error);
   }
 };
