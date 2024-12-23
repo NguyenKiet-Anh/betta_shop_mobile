@@ -21,9 +21,7 @@ import { getFishById } from "../routes/DetailScreen/DetailRoutes";
 
 export default function Review({ route }) {
   // Variable for user id
-  const { userInfo } = useAuth();
-  const ipAddress = "192.168.232.102";
-  //   const ipAddress = "192.168.1.21";
+  const { userInfo, ipAddress } = useAuth();
   // Variable for fish id
   const { itemId } = route.params;
   // Variables for review page
@@ -39,10 +37,10 @@ export default function Review({ route }) {
   useEffect(() => {
     const fetchReview = async (id) => {
       // Get reviews
-      const reviewData = await getReviewByFishId(id);
+      const reviewData = await getReviewByFishId(ipAddress, id);
       setReview(reviewData);
-      // Get fishe
-      const fishData = await getFishById(id);
+      // Get fishes
+      const fishData = await getFishById(ipAddress, id);
       setFish(fishData);
       setIsLoading(false);
     };
@@ -52,7 +50,7 @@ export default function Review({ route }) {
   // Function to calculate the average rating
   const calculateAverageStar = () => {
     const totalStars = review.reduce((sum, item) => sum + item.Sao, 0);
-    return (totalStars / review.length).toFixed(1);
+    return (totalStars / 10 / review.length).toFixed(1);
   };
 
   // Function to handle "Sent" button click
@@ -73,13 +71,20 @@ export default function Review({ route }) {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         if (data.success) {
           alert("You have commented on this fish!");
           // Refresh the reviews
           setReview((prev) => [
             ...prev,
-            { Sao: selectedRating, BinhLuan: commentText },
+            {
+              Sao: selectedRating,
+              BinhLuan: commentText,
+              ThoiDiem: new Date().toISOString(),
+              khachhang_info: {
+                TenKhachHang: data.current_user.TenKhachHang,
+                HinhAnh: data.current_user.HinhAnh,
+              },
+            },
           ]);
           setSelectedRating(0);
           setCommentText("");
@@ -120,7 +125,21 @@ export default function Review({ route }) {
         <Text style={styles.customerName}>
           {item.khachhang_info.TenKhachHang}
         </Text>
-        <Text style={styles.starText}>{"★".repeat(item.Sao)}</Text>
+        <View style={styles.starIcon}>
+          {Array.from({ length: Math.floor(item.Sao / 10) }, (_, index) => (
+            <Image
+              source={require("../assets/images/icon/fullStarIcon_green.png")}
+              key={index}
+              style={{ width: 14, height: 14 }}
+            />
+          ))}
+          {item.Sao % 10 !== 0 && (
+            <Image
+              source={require("../assets/images/icon/halfStarIcon_green.png")}
+              style={{ width: 14, height: 14 }}
+            />
+          )}
+        </View>
         <Text style={styles.commentText}>{item.BinhLuan}</Text>
         <Text style={styles.timestamp}>{formatDateTime(item.ThoiDiem)}</Text>
       </View>
@@ -151,7 +170,11 @@ export default function Review({ route }) {
               <View style={styles.statisticArea}>
                 <Text style={styles.statisticText}>
                   Average Rating:{" "}
-                  {review.length > 0 ? calculateAverageStar() : "N/A"} ★
+                  {review.length > 0 ? calculateAverageStar() : "N/A"}{" "}
+                  <Image
+                    source={require("../assets/images/icon/fullStarIcon_green.png")}
+                    style={{ width: 16, height: 16 }}
+                  />
                 </Text>
                 <Text style={styles.statisticText}>
                   Total Comments: {review.length}
@@ -186,25 +209,42 @@ export default function Review({ route }) {
       {commentAreaVisible ? (
         // Comment area
         <View style={styles.commentArea}>
-          <Text style={styles.ratingText}>Rating:</Text>
+          <View style={styles.commentHeader}>
+            <Text style={styles.ratingText}>Rating:</Text>
+            {/* Exit Button */}
+            <TouchableOpacity
+              style={styles.exitButton}
+              onPress={() => setCommentAreaVisible(false)}
+            >
+              <Text style={styles.exitButtonText}>x</Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.starRow}>
-            {[1, 2, 3, 4, 5].map((star) => (
+            {[10, 20, 30, 40, 50].map((star) => (
               <TouchableOpacity
                 key={star}
-                onPress={() => setSelectedRating(star)}
+                style={styles.starTouchable}
+                onPressIn={(e) => {
+                  const { locationX } = e.nativeEvent;
+                  // Determine if the user tapped on the left (half) or right (full) of the star
+                  const isHalf = locationX < 24; // Assuming each star is 24px wide
+                  setSelectedRating(isHalf ? star - 5 : star);
+                }}
               >
-                <Text
-                  style={
+                <Image
+                  source={
                     selectedRating >= star
-                      ? styles.filledStar
-                      : styles.emptyStar
+                      ? require("../assets/images/icon/fullStarIcon.png")
+                      : selectedRating >= star - 5
+                      ? require("../assets/images/icon/halfStarIcon.png")
+                      : require("../assets/images/icon/emptyStarIcon.png")
                   }
-                >
-                  ★
-                </Text>
+                  style={{ width: 48, height: 48 }}
+                />
               </TouchableOpacity>
             ))}
           </View>
+
           <TextInput
             style={styles.textInput}
             multiline
@@ -288,11 +328,12 @@ const styles = StyleSheet.create({
   customerName: {
     fontWeight: "bold",
   },
-  starText: {
-    color: "#4CAF50",
+  starIcon: {
+    flexDirection: "row",
+    marginTop: 5,
   },
   commentText: {
-    marginTop: 4,
+    marginVertical: 4,
     color: "#333",
   },
   timestamp: {
@@ -313,6 +354,21 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: "#ddd",
   },
+  commentHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  exitButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  exitButtonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+  },
   ratingText: {
     fontSize: 16,
     marginBottom: 8,
@@ -321,13 +377,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 8,
   },
-  filledStar: {
-    fontSize: 24,
-    color: "#ffa500",
-  },
-  emptyStar: {
-    fontSize: 24,
-    color: "#ddd",
+  starTouchable: {
+    width: 48,
+    height: 48,
+    justifyContent: "center",
+    alignItems: "center",
   },
   textInput: {
     height: 100,

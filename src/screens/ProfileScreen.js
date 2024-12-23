@@ -29,7 +29,7 @@ import {
 // Main function
 export default function Profile({ navigation }) {
   // Variables here
-  const { userInfo, logout } = useAuth(); // Get userId
+  const { userInfo, ipAddress, logout } = useAuth(); // Get userId
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [showPassword, setShowPassword] = useState(true); // Control showing password
@@ -38,7 +38,7 @@ export default function Profile({ navigation }) {
 
   // Declare function here
   const fetchData = async (id) => {
-    const data = await getUserInfo(id);
+    const data = await getUserInfo(ipAddress, id);
     setUserData(data);
     setIsLoading(false);
   };
@@ -47,59 +47,60 @@ export default function Profile({ navigation }) {
       fetchData(userInfo.ma_nguoi_dung);
     }
   }, [isFocusedProfile]);
-  // Upload avatar upload
+
   const handleUploadAvatar = async () => {
-    // Ask for permissions
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert("Permission Denied", "We need access to your media library.");
-      return;
-    }
-
-    // Open the Image Library
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images, // Only images
-      allowsEditing: true, // Allow cropping
-      aspect: [4, 3], // Crop ratio
-      quality: 1, // Max quality
-    });
-
-    if (!result.canceled) {
-      try {
-        // Convert the URI to base64
-        const base64Image = await FileSystem.readAsStringAsync(
-          result.assets[0].uri,
-          {
-            encoding: FileSystem.EncodingType.Base64,
-          }
+    try {
+      // Request permissions
+      const mediaPermission =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (mediaPermission.status !== "granted") {
+        Alert.alert(
+          "Permission Denied",
+          "We need access to your media library."
         );
-        console.log(base64Image);
-        // Save the base64 string to the state
-        setUserData((prevData) => ({
-          ...prevData,
-          khach_hang_info: {
-            ...prevData.khach_hang_info,
-            HinhAnh: base64Image, // Save the base64-encoded string
-          },
-        }));
-        //   // Save selected image URI
-        //   setAvatar(result.assets[0].uri);
-        //   // Update new avatar to database
-        //   try {
-        //     const response = await updateUserAvatar(
-        //       userInfo.ma_nguoi_dung,
-        //       result.assets[0].uri
-        //     );
-        //     if (response.success) {
-        //       alert("Update successfully!");
-        //       // navigation.navigate("Profile");
-        //     } else {
-        //       alert("Update failed!");
-        //     }
-      } catch (error) {
-        console.error("Error converting image to base64:", error);
-        Alert.alert("Error", "Failed to convert image to base64.");
+        return;
       }
+
+      // Open the Image Library
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [2, 3],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        // Convert image to base64 format
+        const fileUri = result.assets[0].uri;
+        const fileName = fileUri.split("/").pop();
+        const base64Image = await FileSystem.readAsStringAsync(fileUri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+
+        // Create the image object
+        const imageObject = {
+          name: fileName,
+          base64: `data:image/jpeg;base64,${base64Image}`,
+        };
+
+        // Send to backend
+        const response = await updateUserAvatar(
+          ipAddress,
+          userInfo.ma_nguoi_dung,
+          imageObject
+        );
+
+        if (response) {
+          Alert.alert("Success", "Avatar updated successfully!");
+          // setAvatar(imageObject.base64); // Update avatar in the UI
+          fetchData(userInfo.ma_nguoi_dung); // Refresh user data
+        } else {
+          Alert.alert("Error", "Failed to update avatar.");
+        }
+      }
+    } catch (error) {
+      console.error("Error uploading avatar:", error);
+      Alert.alert("Error", "An unexpected error occurred.");
     }
   };
 
@@ -315,7 +316,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginHorizontal: 30,
-    marginVertical: 10,
   },
   button: {
     height: 45,

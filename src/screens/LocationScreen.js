@@ -5,8 +5,10 @@ import { Picker } from "@react-native-picker/picker";
 
 // Import Routes Here
 import { getStoreLocations } from "../routes/StoreLocationRoutes/StoreLocationRoutes";
+import { useAuth } from "../context/authContext";
 
 export default function StoreLocation() {
+  const { ipAddress } = useAuth();
   const [stores, setStores] = useState([]);
   const [selectedStore, setSelectedStore] = useState(null);
   const mapRef = useRef(null);
@@ -15,7 +17,7 @@ export default function StoreLocation() {
     // Fetch store locations from backend
     const fetchStores = async () => {
       try {
-        const location = await getStoreLocations();
+        const location = await getStoreLocations(ipAddress);
         setStores(location);
       } catch (error) {
         console.error("Error fetching stores:", error);
