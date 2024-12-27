@@ -84,10 +84,10 @@ export default function SignUp({ navigation }) {
       })
       .then((data) => {
         if (data.success) {            
-          alert("Your account has been activated");
+          alert("Your account has been activated!");
           navigation.navigate("Sign-In");
         } else {
-          alert(data.message);
+          alert("Your OTP is incorrect");
         }
       })
       .catch((error) => {
@@ -179,17 +179,16 @@ export default function SignUp({ navigation }) {
       >
           <View style={styles.modalBackground}>
               <View style={styles.modalContainer}>
+                  <Text style={styles.modalTextHeader}>OTP Verification</Text>
                   <TextInput
                     style={styles.modalInputStyle}
                     value={otp}
+                    placeholder="Enter your OTP ..."
                     onChangeText={(e) => setOtp(e)}
                   ></TextInput>
-                  <View style={styles.modalActions}>                      
-                      <TouchableOpacity onPress={toggleModal} style={[styles.modalButton, {backgroundColor: '#ff5863'}]}>
-                          <Text style={styles.modalButtonText}>Cancel</Text>
-                      </TouchableOpacity>
+                  <View style={styles.modalActions}>
                       <TouchableOpacity onPress={handleSubmitOtp} style={styles.modalButton}>
-                          <Text style={styles.modalButtonText}>Submit</Text>
+                          <Text style={styles.modalButtonText}>Verify</Text>
                       </TouchableOpacity>
                   </View>
               </View>
@@ -263,6 +262,11 @@ const styles = StyleSheet.create({
       width: 300,
       alignItems: 'center'
   },
+  modalTextHeader: {
+    fontSize: 18,
+    fontWeight: '500',
+    marginBottom: 17
+  },
   modalActions: {
       flexDirection: 'row',
       marginTop: 15
@@ -279,8 +283,11 @@ const styles = StyleSheet.create({
       fontWeight: '600'
   },
   modalInputStyle: {
-    width: '90%',
+    width: '100%',
     height: 50,
-    color: 'black'
+    color: 'black',
+    paddingLeft: 5,
+    borderWidth: 1,
+    borderRadius: 7
   }
 });
