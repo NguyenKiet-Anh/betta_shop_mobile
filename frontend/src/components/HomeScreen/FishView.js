@@ -11,7 +11,14 @@ import { addFishToCart } from "../../routes/CartRoutes/CartRoutes";
 // Main Function here
 export default function FishView({ navigation, item }) {
   // Variable for user id
-  const { userInfo, ipAddress } = useAuth();
+  const {
+    userInfo,
+    cartLength,
+    setCartLength,
+    wishLength,
+    setWishLength,
+    ipAddress,
+  } = useAuth();
   // Showing all Fish in selected Category
   const hanldleNavigationForCategories = (id, type) => {
     if (id === "seeAll") {
@@ -32,6 +39,7 @@ export default function FishView({ navigation, item }) {
       id
     );
     if (response.success) {
+      setWishLength(wishLength + 1);
       alert("Add fish to wishlist successfully!");
     } else {
       alert("Add fish to wishlist failed! Fish already exists in wishlist");
@@ -41,6 +49,7 @@ export default function FishView({ navigation, item }) {
   const handleAddCart = async (id) => {
     const response = await addFishToCart(ipAddress, userInfo.ma_nguoi_dung, id);
     if (response.success) {
+      setCartLength(cartLength + 1);
       alert("Add fish to cart successfully!");
     } else {
       if (response.message === "Cá đã tồn tại trong giỏ hàng") {
