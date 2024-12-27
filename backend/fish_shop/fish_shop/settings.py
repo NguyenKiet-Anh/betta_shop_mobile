@@ -30,9 +30,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
-    "172.16.2.211",
-    "4fa7-1-52-116-147.ngrok-free.app",  # Let this line stay at last. DO NOT CHANGE ORDER
-]  # Get link from ngrok
+    "192.168.165.150",
+    "6da5-58-187-119-108.ngrok-free.app",  # Ngrok forwarding link (Let this line stay at last. DO NOT CHANGE ORDER)
+]
 
 
 # Application definition
