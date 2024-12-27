@@ -40,7 +40,14 @@ import { deleteFishFromCart } from "../routes/CartRoutes/CartRoutes";
 // Function main
 export default function StackNavigator({ navigation }) {
   // Variables for userId
-  const { userInfo, ipAddress } = useAuth();
+  const {
+    userInfo,
+    cartLength,
+    setCartLength,
+    wishLength,
+    setWishLength,
+    ipAddress,
+  } = useAuth();
   // Function add wishlist
   const handleAddFishToWishList = async (id) => {
     const response = await addFishToWishList(
@@ -49,6 +56,7 @@ export default function StackNavigator({ navigation }) {
       id
     );
     if (response.success) {
+      setWishLength(wishLength + 1);
       alert("Add fish to wishlist successfully!");
     } else {
       alert("Add fish to wishlist failed! Fish already exists in wishlist!");
@@ -58,6 +66,7 @@ export default function StackNavigator({ navigation }) {
   const handleDeleteWishList = async (navigation) => {
     const response = await deleteWishList(ipAddress, userInfo.ma_nguoi_dung);
     if (response.success) {
+      setWishLength(0);
       alert("Delete all fishes from wishlist successfully!");
       // Refresh wishlist page here
       navigation.navigate("Wishlist", { refreshWishlist: true });
@@ -72,6 +81,7 @@ export default function StackNavigator({ navigation }) {
       userInfo.ma_nguoi_dung
     );
     if (response.success) {
+      setCartLength(0);
       alert("Delete all fishes from cart successfully!");
       // Refresh wishlist page here
       navigation.navigate("Cart", { refreshCart: true });
@@ -177,75 +187,147 @@ export default function StackNavigator({ navigation }) {
         <Tab.Screen
           name="Cart"
           component={Cart}
-          options={{
-            headerRight: () => (
-              <TouchableOpacity
-                onPress={() => {
-                  handleDeleteCart(navigation);
-                }}
-                style={{ marginRight: 15 }}
-              >
-                <Octicons name="trash" size={25}></Octicons>
-              </TouchableOpacity>
-            ),
-            tabBarLabel: ({ focused }) =>
-              focused ? (
-                <Text style={styles.tabStyleFocused}>Cart</Text>
-              ) : (
-                <Text style={styles.tabStyle}>Cart</Text>
-              ),
-            tabBarIcon: ({ focused }) =>
-              focused ? (
-                <FontAwesome5
-                  name="shopping-cart"
-                  size={22}
-                  color={"#b141aa"}
-                ></FontAwesome5>
-              ) : (
-                <FontAwesome5
-                  name="shopping-cart"
-                  size={22}
-                  color={"#a6b9c8"}
-                ></FontAwesome5>
-              ),
-          }}
+          options={
+            cartLength > 0
+              ? {
+                  tabBarBadge: cartLength,
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleDeleteCart(navigation);
+                      }}
+                      style={{ marginRight: 15 }}
+                    >
+                      <Octicons name="trash" size={25}></Octicons>
+                    </TouchableOpacity>
+                  ),
+                  tabBarLabel: ({ focused }) =>
+                    focused ? (
+                      <Text style={styles.tabStyleFocused}>Cart</Text>
+                    ) : (
+                      <Text style={styles.tabStyle}>Cart</Text>
+                    ),
+                  tabBarIcon: ({ focused }) =>
+                    focused ? (
+                      <FontAwesome5
+                        name="shopping-cart"
+                        size={22}
+                        color={"#b141aa"}
+                      ></FontAwesome5>
+                    ) : (
+                      <FontAwesome5
+                        name="shopping-cart"
+                        size={22}
+                        color={"#a6b9c8"}
+                      ></FontAwesome5>
+                    ),
+                }
+              : {
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleDeleteCart(navigation);
+                      }}
+                      style={{ marginRight: 15 }}
+                    >
+                      <Octicons name="trash" size={25}></Octicons>
+                    </TouchableOpacity>
+                  ),
+                  tabBarLabel: ({ focused }) =>
+                    focused ? (
+                      <Text style={styles.tabStyleFocused}>Cart</Text>
+                    ) : (
+                      <Text style={styles.tabStyle}>Cart</Text>
+                    ),
+                  tabBarIcon: ({ focused }) =>
+                    focused ? (
+                      <FontAwesome5
+                        name="shopping-cart"
+                        size={22}
+                        color={"#b141aa"}
+                      ></FontAwesome5>
+                    ) : (
+                      <FontAwesome5
+                        name="shopping-cart"
+                        size={22}
+                        color={"#a6b9c8"}
+                      ></FontAwesome5>
+                    ),
+                }
+          }
         ></Tab.Screen>
         {/* Tab for Wishlist */}
         <Tab.Screen
           name="Wishlist"
           component={Wishlist}
-          options={{
-            headerRight: () => (
-              <TouchableOpacity
-                onPress={() => {
-                  handleDeleteWishList(navigation);
-                }}
-                style={{ marginRight: 15 }}
-              >
-                <Octicons name="trash" size={25}></Octicons>
-              </TouchableOpacity>
-            ),
-            tabBarLabel: ({ focused }) =>
-              focused ? (
-                <Text style={styles.tabStyleFocused}>Wishlist</Text>
-              ) : (
-                <Text style={styles.tabStyle}>Wishlist</Text>
-              ),
-            tabBarIcon: ({ focused }) =>
-              focused ? (
-                <MaterialIcons
-                  name="favorite"
-                  size={25}
-                  color={"#b141aa"}
-                ></MaterialIcons>
-              ) : (
-                <MaterialIcons
-                  name="favorite"
-                  size={25}
-                  color={"#a6b9c8"}
-                ></MaterialIcons>
-              ),
-          }}
+          options={
+            wishLength > 0
+              ? {
+                  tabBarBadge: wishLength,
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleDeleteWishList(navigation);
+                      }}
+                      style={{ marginRight: 15 }}
+                    >
+                      <Octicons name="trash" size={25}></Octicons>
+                    </TouchableOpacity>
+                  ),
+                  tabBarLabel: ({ focused }) =>
+                    focused ? (
+                      <Text style={styles.tabStyleFocused}>Wishlist</Text>
+                    ) : (
+                      <Text style={styles.tabStyle}>Wishlist</Text>
+                    ),
+                  tabBarIcon: ({ focused }) =>
+                    focused ? (
+                      <MaterialIcons
+                        name="favorite"
+                        size={25}
+                        color={"#b141aa"}
+                      ></MaterialIcons>
+                    ) : (
+                      <MaterialIcons
+                        name="favorite"
+                        size={25}
+                        color={"#a6b9c8"}
+                      ></MaterialIcons>
+                    ),
+                }
+              : {
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleDeleteWishList(navigation);
+                      }}
+                      style={{ marginRight: 15 }}
+                    >
+                      <Octicons name="trash" size={25}></Octicons>
+                    </TouchableOpacity>
+                  ),
+                  tabBarLabel: ({ focused }) =>
+                    focused ? (
+                      <Text style={styles.tabStyleFocused}>Wishlist</Text>
+                    ) : (
+                      <Text style={styles.tabStyle}>Wishlist</Text>
+                    ),
+                  tabBarIcon: ({ focused }) =>
+                    focused ? (
+                      <MaterialIcons
+                        name="favorite"
+                        size={25}
+                        color={"#b141aa"}
+                      ></MaterialIcons>
+                    ) : (
+                      <MaterialIcons
+                        name="favorite"
+                        size={25}
+                        color={"#a6b9c8"}
+                      ></MaterialIcons>
+                    ),
+                }
+          }
         ></Tab.Screen>
         {/* Tab for Chat with shop */}
         <Tab.Screen
