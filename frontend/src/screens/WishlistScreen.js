@@ -24,7 +24,14 @@ import { addFishToCart } from "../routes/CartRoutes/CartRoutes";
 // Main function
 export default function WishList({ navigation, route }) {
   // Variables here
-  const { userInfo, ipAddress } = useAuth();
+  const {
+    userInfo,
+    cartLength,
+    setCartLength,
+    wishLength,
+    setWishLength,
+    ipAddress,
+  } = useAuth();
   const [fishData, setFishData] = useState([]); // Store data fetched from server
   const [isLoading, setIsLoading] = useState(true);
   const isFocusedWishList = useIsFocused(); // For re-run useEffect
@@ -53,6 +60,7 @@ export default function WishList({ navigation, route }) {
     );
     if (response.success) {
       setFishData(fishData.filter((item) => item.MaMatHang !== id));
+      setWishLength(wishLength - 1);
       alert("Remove fish successfully!");
     } else {
       alert("Remove fish failed!");
@@ -62,6 +70,7 @@ export default function WishList({ navigation, route }) {
   const handleAddFishToCart = async (id) => {
     const response = await addFishToCart(ipAddress, userInfo.ma_nguoi_dung, id);
     if (response.success) {
+      setCartLength(cartLength + 1);
       alert("Add fish to cart successfully!");
     } else {
       if (response.message === "Cá đã tồn tại trong giỏ hàng") {

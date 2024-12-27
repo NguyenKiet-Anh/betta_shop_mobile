@@ -23,7 +23,7 @@ import { addFishToCart } from "../routes/CartRoutes/CartRoutes";
 export default function Detail({ route, navigation }) {
   // Variable for storing Fish'id
   const { itemId } = route.params;
-  const { userInfo, ipAddress } = useAuth();
+  const { userInfo, cartLength, setCartLength, ipAddress } = useAuth();
   // Variable for other stuff
   const { width } = Dimensions.get("window");
   const [fish, setFish] = useState([]); // Store data for fish
@@ -64,6 +64,7 @@ export default function Detail({ route, navigation }) {
   const handleAddFishToCart = async (id) => {
     const response = await addFishToCart(ipAddress, userInfo.ma_nguoi_dung, id);
     if (response.success) {
+      setCartLength(cartLength + 1);
       alert("Add fish to cart successfully!");
     } else {
       if (response.message === "Cá đã tồn tại trong giỏ hàng") {

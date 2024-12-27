@@ -27,7 +27,7 @@ import {
 // Main function
 export default function Cart({ navigation, route }) {
   // Variables here
-  const { userInfo, ipAddress } = useAuth();
+  const { userInfo, cartLength, setCartLength, ipAddress } = useAuth();
   const [fishData, setFishData] = useState([]); // Store fish data fetched from server
   const [amount, setAmount] = useState(0); // // Store total amount of item in cart
   const [totalPrice, setTotalPrice] = useState(0); // Store total price
@@ -145,6 +145,7 @@ export default function Cart({ navigation, route }) {
       });
       setTotalPrice(total);
       setFishData(fishData.filter((item) => item.MaMatHang !== id));
+      setCartLength(cartLength - 1);
       alert("Remove fish successfully!");
     } else {
       alert("Remove fish failed!");
@@ -194,7 +195,7 @@ export default function Cart({ navigation, route }) {
       console.log("WebSocket connection established.");
     };
 
-    socketRef.current.onmessage = (event) => {
+    socketRef.current.onmessage = async (event) => {
       const data = JSON.parse(event.data);
       const { status, message } = data;
       if (status === "success") {
@@ -206,13 +207,14 @@ export default function Cart({ navigation, route }) {
         setAmount(0);
         // Send api to server to remove all fish in cart
         //
-        const response = checkOutCart(ipAddress, userInfo.ma_nguoi_dung);
+        const response = await checkOutCart(ipAddress, userInfo.ma_nguoi_dung);
         if (response.success) {
-          console.log("Remove all carts");
+          setCartLength(0);
+          alert("Remove all items in carts");
           // Continue call api for notification
           // Way: call api -> send user_id, totalPrice, -> server get total price + time.datetime now() -> save to notification table -> send notification tables's data back to frontend react native app
         } else {
-          console.log("Remove all carts failed");
+          alert("Remove all items carts failed");
         }
       } else {
         alert("Payment failed: " + message);
