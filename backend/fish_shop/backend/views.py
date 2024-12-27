@@ -154,7 +154,7 @@ def send_otp(email: str):
 @api_view(["POST"])
 def signUp(request):
     username = request.data.get("username")
-    password = request.data.get("password")
+    password = request.data.get("password")        
     phone_number = request.data.get("phone")
     email = request.data.get("email")
     address = request.data.get("address")
@@ -175,12 +175,15 @@ def signUp(request):
             )
     except TaiKhoan.DoesNotExist:
         pass
-
+    
     # Send OTP using gmail
     otp, expired_time = send_otp(email)
     if otp == None and expired_time == None:
-        return Response({"success": False, "message": "Failed while sending email"})
-
+        return Response({
+            "success": False,
+            "message": "Failed while sending email"
+        })
+    
     # Create new user and account
     try:
         # Create new account
@@ -195,51 +198,54 @@ def signUp(request):
         new_account.save()
         # Create new user
         new_user = KhachHang.objects.create(
-            TenKhachHang=username, SoDienThoai=phone_number, Email=email
+            TenKhachHang=username,
+            SoDienThoai=phone_number,  
+            Email=email      
         )
         new_user.save()
         # Create new user address
         new_user_address = KhachHangDiaChi.objects.create(
-            MaKhachHang=new_user,
-            MaQuan=Quan.objects.get(MaQuan=1),
-            DiaChi=address,
-            KinhDo=0.000000,
-            ViDo=0.000000,
+            MaKhachHang = new_user,
+            MaQuan = Quan.objects.get(MaQuan=1),
+            DiaChi = address,
+            KinhDo = 0.000000,
+            ViDo = 0.000000
         )
         new_user_address.save()
-        # Link user to account
+        # Link user to account    
         user_account = TaiKhoanKhachHang.objects.create(
-            MaKhachHang=new_user, MaTaiKhoan=new_account
+            MaKhachHang = new_user,
+            MaTaiKhoan = new_account
         )
-        user_account.save()
+        user_account.save()    
     except Exception as e:
         print(e)
 
-    return Response(
-        {
-            "success": True,
-            "message": "Your account has been created, but has been not verified yet! Check your mail to verify your account",
-        }
-    )
-
+    return Response({
+        "success": True,
+        "message": "Your account has been created, but has been not verified yet! Check your mail to verify your account"
+    })
 
 @api_view(["POST"])
-def activate_account(request, email):
+def activate_account(request, email):    
     # Receive OTP
     otp = request.data.get("otp")
     # Get account and active account
-    khachhang = KhachHang.objects.get(Email=email)
+    khachhang = KhachHang.objects.get(Email=email)        
     taikhoankhachhang = TaiKhoanKhachHang.objects.get(MaKhachHang=khachhang)
     taikhoan = TaiKhoan.objects.get(MaTaiKhoan=taikhoankhachhang.MaTaiKhoan.MaTaiKhoan)
-
-    print(taikhoan.verification_token)
-    if taikhoan.verification_token == otp:
+    if (taikhoan.verification_token == otp):
         taikhoan.isActivated = True
-        taikhoan.save()
-
-        return Response({"success": True, "message": "Your account has been activated"})
+        taikhoan.save()        
+        return Response({
+            "success": True,
+            "message": "Your account has been activated"
+        })
+    return Response({
+        "success": False,
+        "message": "Your OTP sent to your email is incorrect!"
+    })
     # Send message to client
-
 
 # Get all categories
 @api_view(["GET"])
