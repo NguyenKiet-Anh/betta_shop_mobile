@@ -29,9 +29,9 @@ SECRET_KEY = "django-insecure-!w71yu$jfvs6r0_i^qbl67sb$ue3ai(739t5rc-knyk4#&@lm%
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "192.168.165.150",
-    "6da5-58-187-119-108.ngrok-free.app",  # Ngrok forwarding link (Let this line stay at last. DO NOT CHANGE ORDER)
+    "127.0.0.1",  # This is default
+    "192.168.137.1",  # Save the IP Address here
+    "bb5c-42-112-104-70.ngrok-free.app",  # Ngrok forwarding link (Let this line stay at last. DO NOT CHANGE ORDER)
 ]
 
 
@@ -98,7 +98,6 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "IE307.P11",
         "USER": "postgres",
-        # "PASSWORD": "027735",
         "PASSWORD": "Admin123",
         "HOST": "localhost",
         "PORT": "5432",

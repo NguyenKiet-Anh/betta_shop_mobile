@@ -13,7 +13,9 @@ urlpatterns = [
     path("getFishesPromotion/", getFish_promotion, name="get_fishes_promotion"),
     path("getFishesForAdmin/", get_fish_for_admin, name="get_fishes_for_admin"),
     path("getFishById/<int:id>/", get_fish_by_id, name="get_fish_by_id"),
-    path("deleteFishForAdmin/<int:ma_ca>/", delete_fish_admin, name="delete_fish_admin"),
+    path(
+        "deleteFishForAdmin/<int:ma_ca>/", delete_fish_admin, name="delete_fish_admin"
+    ),
     # For wishlist
     path("getWishList/<int:ma_khach_hang>/", get_wishList, name="get_wishList"),
     path("addWishList/", add_wishList, name="add_wishList"),
@@ -35,20 +37,29 @@ urlpatterns = [
         "removeCart/<int:ma_khach_hang>/<int:ma_ca>/", remove_cart, name="remove_cart"
     ),
     path("deleteCart/<int:ma_khach_hang>/", delete_cart, name="delete_cart"),
-     path('checkOut/<int:ma_khach_hang>/', check_out, name='check_out'),
+    path(
+        "checkOut/<int:ma_khach_hang>/<str:ma_don_hang>/<int:ma_thanh_toan>/",
+        check_out,
+        name="check_out",
+    ),
     # For payment link - for web
-    path('createPaymentLink/', create_payment_link, name='create_payment_link'),
-    path('transactionStatus/', transaction_status, name='transaction_status'),    
-    path('getNotification/', GetNotificationView.as_view(), name='get_notification'),
+    path("createPaymentLink/", create_payment_link, name="create_payment_link"),
+    path("transactionStatus/", transaction_status, name="transaction_status"),
+    path("getNotification/", GetNotificationView.as_view(), name="get_notification"),
     # For user
     path("getUser/<int:ma_khach_hang>/", get_user, name="get_user_info"),
+    path("getHistory/<int:ma_khach_hang>/", get_history, name="get_payment_history"),
     path("updateUser/<int:ma_khach_hang>/", update_user, name="update_user_info"),
     path(
         "changePassword/<int:ma_khach_hang>/", change_password, name="change_password"
     ),  # ma_khach_hang here refered to ma_tai_khoan
     path("updateAvatar/<int:ma_khach_hang>/", update_avatar, name="update_user_avatar"),
     path("getUsersForAdmin/", get_user_for_admin, name="get_users_for_admin"),
-    path("deleteUserForAdmin/<int:ma_khach_hang>/", delete_user_for_admin, name="delete_user_for_admin"),
+    path(
+        "deleteUserForAdmin/<int:ma_khach_hang>/",
+        delete_user_for_admin,
+        name="delete_user_for_admin",
+    ),
     # For district
     path("getAllDistricts/", get_all_districts, name="get_all_districts"),
     # For review
@@ -57,4 +68,3 @@ urlpatterns = [
     # For store location
     path("getStoreLocation/", get_store_locations, name="get_store_location"),
 ]
-
