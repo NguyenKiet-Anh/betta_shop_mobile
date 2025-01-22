@@ -49,7 +49,10 @@ export default function Review({ route }) {
 
   // Function to calculate the average rating
   const calculateAverageStar = () => {
-    const totalStars = review.reduce((sum, item) => sum + item.Sao, 0);
+    const totalStars = review.reduce(
+      (sum, item) => sum + parseInt(item.Sao),
+      0
+    );
     return (totalStars / 10 / review.length).toFixed(1);
   };
 

@@ -154,7 +154,6 @@ export default function Profile({ navigation }) {
           {/* Section for personal information */}
           <ScrollView style={styles.informationSection}>
             <View>
-              <Text style={styles.titleText}>Personal Information</Text>
               {/* For phone number */}
               <TextField
                 title={"Phone number"}
@@ -262,6 +261,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    paddingTop: 10,
   },
   // Style for Avatar Section
   avatarSection: {

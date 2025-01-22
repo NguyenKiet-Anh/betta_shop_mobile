@@ -1,6 +1,7 @@
 // Import react native elements
 import {
   View,
+  ScrollView,
   Text,
   TouchableOpacity,
   Image,
@@ -19,6 +20,7 @@ import { useAuth } from "../context/authContext";
 // Import api routes
 import { getFishById } from "../routes/DetailScreen/DetailRoutes";
 import { addFishToCart } from "../routes/CartRoutes/CartRoutes";
+
 // Function here
 export default function Detail({ route, navigation }) {
   // Variable for storing Fish'id
@@ -83,7 +85,10 @@ export default function Detail({ route, navigation }) {
       ) : (
         <>
           {fish.MaMatHang && fish.KhuyenMai && (
-            <View style={styles.container}>
+            <ScrollView
+              contentContainerStyle={styles.container}
+              keyboardShouldPersistTaps="handled"
+            >
               <View style={styles.headerImage}>
                 <View style={styles.carouselSection}>
                   <Carousel
@@ -91,6 +96,7 @@ export default function Detail({ route, navigation }) {
                     height={375}
                     loop
                     autoPlay={true}
+                    useScrollView
                     data={fishImages}
                     scrollAnimationDuration={2500}
                     onSnapToItem={(index) => setCurrentIndex(index)}
@@ -102,7 +108,9 @@ export default function Detail({ route, navigation }) {
                         }}
                       >
                         <Image
-                          source={{ uri: `data:image/jpeg;base64,${item.img}` }}
+                          source={{
+                            uri: `data:image/jpeg;base64,${item.img}`,
+                          }}
                           style={styles.image}
                         ></Image>
                       </View>
@@ -126,7 +134,6 @@ export default function Detail({ route, navigation }) {
                   {fish.ma_loai_ca_info.TenLoaiMatHang}
                 </Text>
                 <Text style={styles.fishTitle}>{fish.TenMatHang}</Text>
-                {/* <FontAwesome name="transgender" size={25}></FontAwesome> */}
                 {fish.Gioitinh === "M" ? (
                   <View style={styles.genderSection}>
                     <Ionicons size={22} name="male"></Ionicons>
@@ -138,6 +145,7 @@ export default function Detail({ route, navigation }) {
                     <Text style={styles.fishGender}>Female</Text>
                   </View>
                 )}
+
                 <View style={styles.priceInfo}>
                   <View style={styles.newPriceSection}>
                     <Fontisto
@@ -182,10 +190,13 @@ export default function Detail({ route, navigation }) {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </ScrollView>
           )}
           {fish.MaMatHang && !fish.KhuyenMai && (
-            <View style={styles.container}>
+            <ScrollView
+              contentContainerStyle={styles.container}
+              keyboardShouldPersistTaps="handled"
+            >
               <View style={styles.headerImage}>
                 <View style={styles.carouselSection}>
                   <Carousel
@@ -204,7 +215,9 @@ export default function Detail({ route, navigation }) {
                         }}
                       >
                         <Image
-                          source={{ uri: `data:image/jpeg;base64,${item.img}` }}
+                          source={{
+                            uri: `data:image/jpeg;base64,${item.img}`,
+                          }}
                           style={styles.image}
                         ></Image>
                       </View>
@@ -239,6 +252,7 @@ export default function Detail({ route, navigation }) {
                     <Text style={styles.fishGender}>Female</Text>
                   </View>
                 )}
+
                 <View style={styles.priceInfo}>
                   <View style={styles.newPriceSection}>
                     <Fontisto
@@ -282,7 +296,7 @@ export default function Detail({ route, navigation }) {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </ScrollView>
           )}
         </>
       )}
@@ -326,12 +340,10 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 35,
     borderBottomRightRadius: 35,
   },
-
   content: {
     width: "90%",
-    height: "10%",
+    height: "100%",
     flexDirection: "column",
-    justifyContent: "space-between",
   },
   fishTitle: {
     fontSize: 20,

@@ -11,8 +11,6 @@ import {
 import { FlatList, ScrollView, TextInput } from "react-native-gesture-handler";
 import Carousel from "react-native-reanimated-carousel";
 // Import icon
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
 // Import custom components
 import { CategoryList } from "../components/HomeScreen/ListOfCategory";

@@ -206,8 +206,12 @@ export default function Cart({ navigation, route }) {
         setTotalPrice(0);
         setAmount(0);
         // Send api to server to remove all fish in cart
-        //
-        const response = await checkOutCart(ipAddress, userInfo.ma_nguoi_dung);
+        const response = await checkOutCart(
+          ipAddress,
+          userInfo.ma_nguoi_dung,
+          orderId,
+          1
+        );
         if (response.success) {
           setCartLength(0);
           alert("Remove all items in carts");
@@ -447,7 +451,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   listContainer: {
-    height: "90%",
+    height: "87%",
   },
   listCell: {
     flexDirection: "row",
