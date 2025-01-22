@@ -15,6 +15,23 @@ export const getUserInfo = async (ipAddress, userId) => {
     console.error("Error fetching user info: ", error);
   }
 };
+// For getting user's payment history
+export const getHistory = async (ipAddress, userId) => {
+  try {
+    return await fetch(`http://${ipAddress}:8000/getHistory/${userId}/`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network working failed");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      });
+  } catch (error) {
+    console.error("Error fetching user info: ", error);
+  }
+};
 // For updating avatar
 export const updateUserAvatar = async (ipAddress, userId, item) => {
   try {

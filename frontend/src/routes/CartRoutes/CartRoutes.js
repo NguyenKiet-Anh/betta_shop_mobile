@@ -130,12 +130,15 @@ export const deleteFishFromCart = async (ipAddress, userId) => {
 };
 
 // For checking out cart - POST method
-export const checkOutCart = async (ipAddress, userId) => {
+export const checkOutCart = async (ipAddress, userId, orderId, payment) => {
   try {
     console.log(userId);
-    return await fetch(`http://${ipAddress}:8000/checkOut/${userId}/`, {
-      method: "DELETE",
-    })
+    return await fetch(
+      `http://${ipAddress}:8000/checkOut/${userId}/${orderId}/${payment}/`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network working failed");

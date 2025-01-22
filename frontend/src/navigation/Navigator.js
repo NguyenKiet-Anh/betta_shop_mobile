@@ -2,6 +2,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 // Import hooks for navigation
 import { createStackNavigator } from "@react-navigation/stack";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
@@ -17,6 +18,8 @@ import Cart from "../screens/CartScreen";
 import Notification from "../screens/NotificationScreen";
 import Review from "../screens/ReviewScreen";
 import Profile from "../screens/ProfileScreen";
+import History from "../screens/PaymentHistoryScreen";
+import DetailHistory from "../screens/DetailHistoryScreen";
 import EditProfile from "../screens/ProfileEditScreen";
 import ChangePassword from "../screens/ProfileChangePasswordScreen";
 import AboutUs from "../screens/AboutUsScreen";
@@ -37,6 +40,7 @@ import {
   deleteWishList,
 } from "../routes/WishListRoutes/WishListRoutes";
 import { deleteFishFromCart } from "../routes/CartRoutes/CartRoutes";
+
 // Function main
 export default function StackNavigator({ navigation }) {
   // Variables for userId
@@ -91,7 +95,8 @@ export default function StackNavigator({ navigation }) {
   };
   // Create StackNavigator & BottomNavigator here
   const RootStack = createStackNavigator();
-  const Tab = createBottomTabNavigator();
+  const TopTab = createMaterialTopTabNavigator();
+  const BottomTab = createBottomTabNavigator();
   const Drawer = createDrawerNavigator();
   // Get all fish in wishlist before rendering
   // Drawer Navigator here
@@ -151,12 +156,39 @@ export default function StackNavigator({ navigation }) {
       </Drawer.Navigator>
     );
   }
-  // Tab Navigator here
+  // Top Tabs Navigator here
+  function ProfileTabs() {
+    return (
+      <TopTab.Navigator
+        initialRouteName="PersonalInformation"
+        screenOptions={{
+          tabBarLabelStyle: {
+            fontSize: 14,
+            fontWeight: "bold",
+          },
+          tabBarActiveTintColor: "#418FF5",
+          tabBarInactiveTintColor: "gray",
+        }}
+      >
+        <TopTab.Screen
+          name="PersonalInformation"
+          component={Profile}
+          options={{ title: "Personal Information" }}
+        ></TopTab.Screen>
+        <TopTab.Screen
+          name="PaymentHistory"
+          component={History}
+          options={{ title: "Payment History" }}
+        ></TopTab.Screen>
+      </TopTab.Navigator>
+    );
+  }
+  // Bottom Tabs Navigator here
   function HomeTabs({ navigation }) {
     return (
-      <Tab.Navigator>
+      <BottomTab.Navigator>
         {/* Tab for Home */}
-        <Tab.Screen
+        <BottomTab.Screen
           name="HomeTab"
           component={DrawerMenu}
           options={{
@@ -182,9 +214,9 @@ export default function StackNavigator({ navigation }) {
                 ></FontAwesome6>
               ),
           }}
-        ></Tab.Screen>
+        ></BottomTab.Screen>
         {/* Tab for Cart */}
-        <Tab.Screen
+        <BottomTab.Screen
           name="Cart"
           component={Cart}
           options={
@@ -255,9 +287,9 @@ export default function StackNavigator({ navigation }) {
                     ),
                 }
           }
-        ></Tab.Screen>
+        ></BottomTab.Screen>
         {/* Tab for Wishlist */}
-        <Tab.Screen
+        <BottomTab.Screen
           name="Wishlist"
           component={Wishlist}
           options={
@@ -328,11 +360,11 @@ export default function StackNavigator({ navigation }) {
                     ),
                 }
           }
-        ></Tab.Screen>
+        ></BottomTab.Screen>
         {/* Tab for Chat with shop */}
-        <Tab.Screen
+        <BottomTab.Screen
           name="Profile"
-          component={Profile}
+          component={ProfileTabs}
           options={{
             tabBarLabel: ({ focused }) =>
               focused ? (
@@ -355,8 +387,8 @@ export default function StackNavigator({ navigation }) {
                 ></FontAwesome>
               ),
           }}
-        ></Tab.Screen>
-      </Tab.Navigator>
+        ></BottomTab.Screen>
+      </BottomTab.Navigator>
     );
   }
   // Return Stack Navigator here
@@ -425,6 +457,12 @@ export default function StackNavigator({ navigation }) {
           name="Review"
           component={Review}
           options={({ route }) => ({})}
+        ></RootStack.Screen>
+        {/* Route for Detail Payment History */}
+        <RootStack.Screen
+          name="DetailHistory"
+          component={DetailHistory}
+          options={{ title: "Purchased Fishes" }}
         ></RootStack.Screen>
         {/* Route for Profile Edit */}
         <RootStack.Screen
