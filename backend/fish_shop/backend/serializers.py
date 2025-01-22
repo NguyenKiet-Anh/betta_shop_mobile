@@ -145,10 +145,38 @@ class KHACHHANG_THANHTOAN_ADMIN_Serializer(ModelSerializer):
 
 # Serializer 19
 class KHACHHANG_ADMIN_Serializer(ModelSerializer):
-    diachi = KHACHHANG_DIACHI_ADMIN_Serializer(source="khachhangdiachi_set", many=True, read_only=True)
+    diachi = KHACHHANG_DIACHI_ADMIN_Serializer(
+        source="khachhangdiachi_set", many=True, read_only=True
+    )
     danhgia = DANHGIA_ADMIN_Serializer(source="danhgia_set", many=True, read_only=True)
-    thanhtoan = KHACHHANG_THANHTOAN_ADMIN_Serializer(source="lichsuthanhtoan_set", many=True, read_only=True)
-    
+    thanhtoan = KHACHHANG_THANHTOAN_ADMIN_Serializer(
+        source="lichsuthanhtoan_set", many=True, read_only=True
+    )
+
     class Meta:
         model = KhachHang
+        fields = "__all__"
+
+
+# Serializer 20
+class LimitedMATHANG_Serializer(ModelSerializer):
+    class Meta:
+        model = MatHang
+        fields = ["TenMatHang", "HinhAnh1"]
+
+
+# Serializer 21
+class LICHSU_THANHTOAN_Serializer(ModelSerializer):
+
+    class Meta:
+        model = LichSuThanhToan
+        fields = ["MaDonHang", "MaPhuongThuc", "ThoiDiem"]
+
+
+# Serializer 22
+class CHITIET_THANHTOAN_Serializer(ModelSerializer):
+    MaMatHang = LimitedMATHANG_Serializer()
+
+    class Meta:
+        model = ChiTietThanhToan
         fields = "__all__"

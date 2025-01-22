@@ -106,7 +106,7 @@ def generate_otp():
 
 
 # Function for sending OTP via email
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 # Settings for sending email
 import smtplib
@@ -114,7 +114,7 @@ import random
 import string
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 # Configure server for sending email
 SMTP_SERVER = "smtp.gmail.com"
@@ -125,7 +125,7 @@ SENDER_PASSWORD = "qahd zxob ldon jmxs"
 
 def send_otp(email: str):
     otp = generate_otp()
-    expires_at = datetime.utcnow() + timedelta(minutes=2)
+    expires_at = datetime.datetime.now() + timedelta(minutes=2)
 
     subject = "Mã OTP của bạn"
     body = f"Chào bạn chúng tôi là BettaShop,\n\nMã OTP của bạn là: {otp}\n\nCảm ơn bạn đã sử dụng dịch vụ của chúng tôi."
@@ -154,7 +154,7 @@ def send_otp(email: str):
 @api_view(["POST"])
 def signUp(request):
     username = request.data.get("username")
-    password = request.data.get("password")        
+    password = request.data.get("password")
     phone_number = request.data.get("phone")
     email = request.data.get("email")
     address = request.data.get("address")
@@ -175,15 +175,12 @@ def signUp(request):
             )
     except TaiKhoan.DoesNotExist:
         pass
-    
+
     # Send OTP using gmail
     otp, expired_time = send_otp(email)
     if otp == None and expired_time == None:
-        return Response({
-            "success": False,
-            "message": "Failed while sending email"
-        })
-    
+        return Response({"success": False, "message": "Failed while sending email"})
+
     # Create new user and account
     try:
         # Create new account
@@ -198,54 +195,55 @@ def signUp(request):
         new_account.save()
         # Create new user
         new_user = KhachHang.objects.create(
-            TenKhachHang=username,
-            SoDienThoai=phone_number,  
-            Email=email      
+            TenKhachHang=username, SoDienThoai=phone_number, Email=email
         )
         new_user.save()
         # Create new user address
         new_user_address = KhachHangDiaChi.objects.create(
-            MaKhachHang = new_user,
-            MaQuan = Quan.objects.get(MaQuan=1),
-            DiaChi = address,
-            KinhDo = 0.000000,
-            ViDo = 0.000000
+            MaKhachHang=new_user,
+            MaQuan=Quan.objects.get(MaQuan=1),
+            DiaChi=address,
+            KinhDo=0.000000,
+            ViDo=0.000000,
         )
         new_user_address.save()
-        # Link user to account    
+        # Link user to account
         user_account = TaiKhoanKhachHang.objects.create(
-            MaKhachHang = new_user,
-            MaTaiKhoan = new_account
+            MaKhachHang=new_user, MaTaiKhoan=new_account
         )
-        user_account.save()    
+        user_account.save()
+        # Create new cart and link to new user
+        user_cart = GioHang.objects.create(MaKhachHang=new_user)
+        user_cart.save()
+
     except Exception as e:
         print(e)
 
-    return Response({
-        "success": True,
-        "message": "Your account has been created, but has been not verified yet! Check your mail to verify your account"
-    })
+    return Response(
+        {
+            "success": True,
+            "message": "Your account has been created, but has been not verified yet! Check your mail to verify your account",
+        }
+    )
+
 
 @api_view(["POST"])
-def activate_account(request, email):    
+def activate_account(request, email):
     # Receive OTP
     otp = request.data.get("otp")
     # Get account and active account
-    khachhang = KhachHang.objects.get(Email=email)        
+    khachhang = KhachHang.objects.get(Email=email)
     taikhoankhachhang = TaiKhoanKhachHang.objects.get(MaKhachHang=khachhang)
     taikhoan = TaiKhoan.objects.get(MaTaiKhoan=taikhoankhachhang.MaTaiKhoan.MaTaiKhoan)
-    if (taikhoan.verification_token == otp):
+    if taikhoan.verification_token == otp:
         taikhoan.isActivated = True
-        taikhoan.save()        
-        return Response({
-            "success": True,
-            "message": "Your account has been activated"
-        })
-    return Response({
-        "success": False,
-        "message": "Your OTP sent to your email is incorrect!"
-    })
+        taikhoan.save()
+        return Response({"success": True, "message": "Your account has been activated"})
+    return Response(
+        {"success": False, "message": "Your OTP sent to your email is incorrect!"}
+    )
     # Send message to client
+
 
 # Get all categories
 @api_view(["GET"])
@@ -726,6 +724,7 @@ def delete_cart(request, ma_khach_hang):
     try:
         # Get cart table
         giohang = GioHang.objects.filter(MaKhachHang=ma_khach_hang)
+        # Get cart detail
         chitiet = ChiTietGioHang.objects.filter(MaGioHang__in=giohang)
         chitiet.delete()
         return Response(
@@ -739,13 +738,30 @@ def delete_cart(request, ma_khach_hang):
 
 # Check out cart
 @api_view(["DELETE"])
-def check_out(request, ma_khach_hang):
+def check_out(request, ma_khach_hang, ma_don_hang, ma_thanh_toan):
     try:
         # Get ma_khach_hang
         khachhang = TaiKhoanKhachHang.objects.filter(MaTaiKhoan=ma_khach_hang).first()
         # Get all chitietgiohang
         giohang = GioHang.objects.filter(MaKhachHang=khachhang.MaKhachHang).first()
         chitiet = ChiTietGioHang.objects.filter(MaGioHang=giohang.MaGioHang)
+
+        # Create a payment history record
+        lich_su_thanh_toan = LichSuThanhToan.objects.create(
+            MaKhachHang=khachhang.MaKhachHang,
+            MaDonHang=ma_don_hang,
+            MaPhuongThuc_id=ma_thanh_toan,
+        )
+
+        # Save cart detail to payment history
+        for item in chitiet:
+            ChiTietThanhToan.objects.create(
+                MaDonHang=lich_su_thanh_toan,
+                MaMatHang=item.MaMatHang,
+                SoLuong=item.SoLuong,
+                ThanhTien=item.ThanhTien,
+            )
+
         chitiet.delete()
         # Update TongTien in giohang
         giohang.TongTien = 0
@@ -1000,6 +1016,47 @@ def get_user(request, ma_khach_hang):
     )
 
 
+@api_view(["GET"])
+def get_history(request, ma_khach_hang):
+    try:
+        # Get history information
+        history = LichSuThanhToan.objects.filter(MaKhachHang=ma_khach_hang)
+        # Serializing data
+        serializers = LICHSU_THANHTOAN_Serializer(history, many=True)
+
+        for item in serializers.data:
+            if item["MaDonHang"]:
+                # Get the related ChiTietThanhToan records
+                payment_details = ChiTietThanhToan.objects.filter(
+                    MaDonHang__MaDonHang=item["MaDonHang"]
+                )
+
+                # Serialize the details
+                payment_details_serialized = CHITIET_THANHTOAN_Serializer(
+                    payment_details, many=True
+                )
+
+                # Encode fish image before sending
+                for record in payment_details_serialized.data:
+                    if record["MaMatHang"]["HinhAnh1"]:
+                        record["MaMatHang"]["HinhAnh1"] = get_path_for_image(
+                            Path(record["MaMatHang"]["HinhAnh1"])
+                        )
+                        with open(record["MaMatHang"]["HinhAnh1"], "rb") as file:
+                            data_img = file.read()
+                            base64_encoded_data = base64.b64encode(data_img).decode(
+                                "utf-8"
+                            )
+                            record["MaMatHang"]["HinhAnh1"] = base64_encoded_data
+
+            item["ChiTiet"] = payment_details_serialized.data
+        # Return as JSON format
+        return Response({"success": True, "history": serializers.data})
+    except Exception as e:
+        print(e)
+        return Response({"success": False, "history": "There is no history"})
+
+
 # Update profile
 @api_view(["PUT"])
 def update_user(request, ma_khach_hang):
@@ -1124,11 +1181,14 @@ def get_user_for_admin(request):
     serializers = KHACHHANG_ADMIN_Serializer(khachhangs, many=True)
     # Encode avatar before sending
     for item in serializers.data:
-        item["HinhAnh"] = get_path_for_image(Path(item["HinhAnh"]))
-        with open(item["HinhAnh"], "rb") as file:
-            data_img = file.read()
-            base64_encoded_data = base64.b64encode(data_img).decode("utf-8")
-            item["HinhAnh"] = base64_encoded_data
+        if item["HinhAnh"]:
+            item["HinhAnh"] = get_path_for_image(Path(item["HinhAnh"]))
+            with open(item["HinhAnh"], "rb") as file:
+                data_img = file.read()
+                base64_encoded_data = base64.b64encode(data_img).decode("utf-8")
+                item["HinhAnh"] = base64_encoded_data
+        else:
+            item["HinhAnh"] = None
     # Get address
     serializers2 = NGUOIDUNG_DIACHI_Serializer
     # Get exactl fields for returning
@@ -1175,7 +1235,6 @@ def get_review_by_fish_id(request, id):
     for item in serializers.data:
         # Customer avatar
         customer_info = item.get("khachhang_info", {})
-        print(customer_info)
         if customer_info.get("HinhAnh"):
             customer_info["HinhAnh"] = get_path_for_image(
                 Path(customer_info["HinhAnh"])

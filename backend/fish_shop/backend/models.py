@@ -112,7 +112,7 @@ class TaiKhoanKhachHang(models.Model):
 
     class Meta:
         db_table = "TAIKHOAN_KHACHHANG"
-        unique_together = ("MaKhachHang", "MaTaiKhoan")  # Composite Primary Key
+        unique_together = ("MaKhachHang", "MaTaiKhoan")
 
 
 # Table 9
@@ -219,23 +219,25 @@ class PhuongThucGiaoDich(models.Model):
         db_table = "PHUONGTHUC_GIAODICH"
 
 
-# # Table 18 - no need anymore
-# class KhachHangPhuongThuc(models.Model):
-#     MaKhachHang = models.ForeignKey("KhachHang", on_delete=models.CASCADE)
-#     MaPhuongThuc = models.ForeignKey("PhuongThucGiaoDich", on_delete=models.CASCADE)
-
-#     class Meta:
-#         db_table = "KHACHHANG_PHUONGTHUC"
-#         unique_together = ("MaKhachHang", "MaPhuongThuc")
-
-
-# Table 19
+# Table 18
 class LichSuThanhToan(models.Model):
-    MaGioHang = models.ForeignKey("GioHang", on_delete=models.CASCADE)
     MaKhachHang = models.ForeignKey("KhachHang", on_delete=models.CASCADE)
+    MaDonHang = models.CharField(max_length=200)
     MaPhuongThuc = models.ForeignKey("PhuongThucGiaoDich", on_delete=models.CASCADE)
     ThoiDiem = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = "LICHSU_THANHTOAN"
-        unique_together = ("MaGioHang", "MaKhachHang", "MaPhuongThuc", "ThoiDiem")
+        unique_together = ("MaKhachHang", "MaPhuongThuc", "ThoiDiem")
+
+
+# Table 19
+class ChiTietThanhToan(models.Model):
+    MaDonHang = models.ForeignKey("LichSuThanhToan", on_delete=models.CASCADE)
+    MaMatHang = models.ForeignKey("MatHang", on_delete=models.CASCADE)
+    SoLuong = models.IntegerField(default=0)
+    ThanhTien = models.DecimalField(max_digits=12, decimal_places=4, default=0.0000)
+
+    class Meta:
+        db_table = "CHITIET_THANHTOAN"
+        unique_together = ("MaDonHang", "MaMatHang")
