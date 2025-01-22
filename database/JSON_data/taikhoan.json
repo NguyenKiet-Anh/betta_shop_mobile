@@ -8,7 +8,7 @@
       "TenTaiKhoan": "nva",
       "MatKhau": "123456",
       "isActivated": true,
-      "verification_token": null
+      "verification_token": "1111"
     }
   },
   {
@@ -20,7 +20,7 @@
       "TenTaiKhoan": "nvb",
       "MatKhau": "123",
       "isActivated": true,
-      "verification_token": null
+      "verification_token": "2222"
     }
   },
   {
@@ -32,7 +32,7 @@
       "TenTaiKhoan": "nvc",
       "MatKhau": "027735",
       "isActivated": true,
-      "verification_token": null
+      "verification_token": "3333"
     }
   },
   {
@@ -44,7 +44,7 @@
       "TenTaiKhoan": "nvd",
       "MatKhau": "027735",
       "isActivated": true,
-      "verification_token": null
+      "verification_token": "4444"
     }
   },
   {
@@ -56,7 +56,7 @@
       "TenTaiKhoan": "nve",
       "MatKhau": "027735",
       "isActivated": true,
-      "verification_token": null
+      "verification_token": "5555"
     }
   },
   {
@@ -68,7 +68,7 @@
       "TenTaiKhoan": "nvf",
       "MatKhau": "027735",
       "isActivated": true,
-      "verification_token": null
+      "verification_token": "6666"
     }
   }
 ]
