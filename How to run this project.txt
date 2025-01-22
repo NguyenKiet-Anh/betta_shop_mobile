@@ -1,0 +1,64 @@
+- Database:
+    This project using PostgreSQL as database. 
+
+    The only thing to do here is create a database name: `IE307.P11` with password of postgres user (this password is set when installing PostgreSQL).
+
+
+- Back-end:
+    0. Check current IP Address => save to ALLOWED_HOSTS in `setting.py` (located at "../backend/fish_shop/fish_shop/settings.py")
+
+    1. Open terminal in backend project
+
+    ********** NOTE **********
+
+    If this is the first time running this project, following these steps. If not, skip this NOTE:
+
+	1. Run: `python -m venv venv`
+
+	2. Run: `venv\scripts\activate` (press `r` if there is a question appear)
+
+	3. Run: `pip install -r requirements.txt`
+
+	4. Run: `python manage.py makemigrations backend`
+
+	5. Run: `python manage.py migrate`
+
+	6. Setup ngrok (following steps in this reference: https://download.ngrok.com/windows)
+
+    **************************
+
+    2. Run: `ngrok http ip_address:port` (run on OS terminal with port:8000)
+ 
+    3. Save ngrok forwarding link (remove `https://` prefix) to ALLOWED_HOSTS in `setting.py`
+
+    4. Run: `uvicorn fish_shop.asgi:application --host your_ip_address --port 8000` (run on backend project terminal)
+
+    + For importing each table data in database:
+    1. Run: `python manage.py loaddata <file_name or absolute_path_to_file_name>.json`
+
+    + For exporting data in database:
+    1. Export database data, Run: `python -Xutf8 manage.py dumpdata -o data.json`
+
+    + Or exporting table data in database:
+    1. Export database table data, Run: `python -Xutf8 manage.py dumpdata backend.<table name> -o data.json`
+
+
+
+- Front-end:
+    0. Check current IP Address => save to ipAddress in `authContext.js` (located at "../frontend/src/context/authContext.js")
+
+    1. Open terminal in frontend project
+
+    ********** NOTE **********
+
+    If this is the first time running this project, following these steps. If not, skip this NOTE:
+
+	1. Run: `npm install` (add `--force` if `npm install` not working)
+
+	2. Run: `npx expo install react-native-reanimated`
+
+    **************************
+
+    2. Run: `npx expo start`
+
+    3. Press `a` to open on android
