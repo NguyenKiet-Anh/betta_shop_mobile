@@ -8,8 +8,10 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  Modal,
 } from "react-native";
+import { RadioButton } from "react-native-paper";
 // Import Hook
 import { useEffect, useState } from "react";
 // Import icons
@@ -47,8 +49,10 @@ export default function Category({ route, navigation }) {
   const [searchTerm, setSearchTerm] = useState(""); // This variable is used to store input from user keyboard
   const [searchResults, setSearchResults] = useState([]); // This variable is used to store results of searching
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false); // For modal visibility
+  const [sortOption, setSortOption] = useState(null);
+  const [isPromotionChecked, setIsPromotionChecked] = useState("All"); // Promotion filter state
   const isFocusedCategory = useIsFocused();
-  console.log(isFocusedCategory);
   // Declare function here
   // Get all categories from server
   const fetchCategories = async () => {
@@ -87,6 +91,30 @@ export default function Category({ route, navigation }) {
       setData(filteredData);
     }
   };
+  // Apply sorting and filtering to the data
+  const applySortingAndFiltering = (items) => {
+    let filteredItems = [...items];
+
+    // Apply promotion filter
+    if (isPromotionChecked === "Promotion") {
+      filteredItems = filteredItems.filter((item) => item.KhuyenMai);
+    } else if (isPromotionChecked === "No-Promotion") {
+      filteredItems = filteredItems.filter((item) => !item.KhuyenMai);
+    }
+
+    // Apply sorting
+    if (sortOption === "name-asc") {
+      filteredItems.sort((a, b) => a.TenMatHang.localeCompare(b.TenMatHang));
+    } else if (sortOption === "name-desc") {
+      filteredItems.sort((a, b) => b.TenMatHang.localeCompare(a.TenMatHang));
+    } else if (sortOption === "price-asc") {
+      filteredItems.sort((a, b) => a.Dongia - b.Dongia);
+    } else if (sortOption === "price-desc") {
+      filteredItems.sort((a, b) => b.Dongia - a.Dongia);
+    }
+
+    return filteredItems;
+  };
   // useEffect for getting data in first time page has been accessed
   useEffect(() => {
     if (isFocusedCategory) {
@@ -96,6 +124,7 @@ export default function Category({ route, navigation }) {
       setIsLoading(false);
     }
   }, [isFocusedCategory]);
+
   //  Navigate to selected fish
   const hanldleNavigationForCategories = (id, type) => {
     if (id === "seeAll") {
@@ -169,8 +198,8 @@ export default function Category({ route, navigation }) {
       }
     }
   };
-  // Variable for showing filtered items
-  const items = searchTerm ? searchResults : data;
+  // Variable for showing filtered and sorted items
+  const items = applySortingAndFiltering(searchTerm ? searchResults : data);
   // Show list of categories
   const renderCategory = ({ item }) => {
     return (
@@ -267,8 +296,9 @@ export default function Category({ route, navigation }) {
   return (
     <>
       {isLoading ? (
-        <View style={[styles.container, {justifyContent: 'center'}]}>
-          <ActivityIndicator color={'purple'} size={'large'}/>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#b141aa" />
+          <Text style={styles.loadingText}>Loading...</Text>
         </View>
       ) : (
         <SafeAreaView style={styles.container}>
@@ -298,7 +328,9 @@ export default function Category({ route, navigation }) {
                   onChangeText={(e) => setSearchTerm(e)}
                 ></TextInput>
               </View>
-              <AntDesign name="filter" size={24}></AntDesign>
+              <TouchableOpacity onPress={() => setIsModalVisible(true)}>
+                <AntDesign name="filter" size={24} />
+              </TouchableOpacity>
             </View>
             <View style={styles.bodySection}>
               <View style={{ marginVertical: 15 }}>
@@ -340,6 +372,61 @@ export default function Category({ route, navigation }) {
               </View>
             </View>
           </View>
+          {isModalVisible && (
+            <Modal
+              transparent={true}
+              animationType="slide"
+              visible={isModalVisible}
+              onRequestClose={() => setIsModalVisible(false)}
+            >
+              <View style={styles.modalOverlay}>
+                <View style={styles.modalContent}>
+                  <Text style={styles.modalTitle}>Sorting</Text>
+                  <RadioButton.Group
+                    onValueChange={(value) => setSortOption(value)}
+                    value={sortOption}
+                  >
+                    <RadioButton.Item
+                      label="Fish's name: A-Z"
+                      value="name-asc"
+                    />
+                    <RadioButton.Item
+                      label="Fish's name: Z-A"
+                      value="name-desc"
+                    />
+                    <RadioButton.Item
+                      label="Fish's price: ascending"
+                      value="price-asc"
+                    />
+                    <RadioButton.Item
+                      label="Fish's price: descending"
+                      value="price-desc"
+                    />
+                  </RadioButton.Group>
+
+                  <Text style={styles.modalTitle}>Filtering</Text>
+                  <RadioButton.Group
+                    onValueChange={(value) => setIsPromotionChecked(value)}
+                    value={isPromotionChecked}
+                  >
+                    <RadioButton.Item label="All" value="All" />
+                    <RadioButton.Item label="Promotion" value="Promotion" />
+                    <RadioButton.Item
+                      label="No-Promotion"
+                      value="No-Promotion"
+                    />
+                  </RadioButton.Group>
+
+                  <TouchableOpacity
+                    style={styles.modalCloseButton}
+                    onPress={() => setIsModalVisible(false)}
+                  >
+                    <Text style={styles.modalCloseButtonText}>Close</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+          )}
         </SafeAreaView>
       )}
     </>
@@ -355,13 +442,24 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 20,
   },
-
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#555",
+  },
   headerSection: {
     marginVertical: 20,
     marginHorizontal: 20,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    gap: 15,
   },
 
   bodySection: {
@@ -422,5 +520,39 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "350",
     color: "#b141aa",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    width: "90%",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  modalCloseButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#b141aa",
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  modalCloseButtonText: {
+    fontSize: 16,
+    color: "#fff",
+    fontWeight: "bold",
   },
 });
