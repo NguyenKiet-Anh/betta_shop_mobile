@@ -83,7 +83,7 @@ const PaymentHistoryScreen = ({ navigation }) => {
         <Text style={styles.emptyText}>No payment history found.</Text>
         <TouchableOpacity
           style={styles.buyButton}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("HomeTab")}
         >
           <Text style={styles.buyButtonText}>Buy Fish Now!</Text>
         </TouchableOpacity>
