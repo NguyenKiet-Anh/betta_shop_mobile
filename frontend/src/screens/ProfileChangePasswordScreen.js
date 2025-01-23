@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, SafeAreaView, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  ActivityIndicator,
+} from "react-native";
 // Import components
 import { SubmitButton } from "../components/SubmitButton";
 import { InputField } from "../components/Profile/InputField";
@@ -57,8 +63,9 @@ export default function ChangePassword({ route, navigation }) {
   return (
     <>
       {isLoading ? (
-        <View style={[styles.container, {justifyContent: 'center'}]}>
-          <ActivityIndicator color={'purple'} size={'large'}/>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#b141aa" />
+          <Text style={styles.loadingText}>Loading...</Text>
         </View>
       ) : (
         <SafeAreaView style={styles.container}>
@@ -101,5 +108,16 @@ const styles = StyleSheet.create({
   },
   submitSection: {
     marginTop: 15,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#555",
   },
 });

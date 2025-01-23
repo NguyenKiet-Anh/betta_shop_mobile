@@ -6,7 +6,7 @@ import {
   Image,
   StyleSheet,
   SafeAreaView,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 // Import icons
 import Feather from "react-native-vector-icons/Feather";
@@ -173,40 +173,41 @@ export default function WishList({ navigation, route }) {
   return (
     <>
       {isLoading ? (
-        <View style={[styles.container, {justifyContent: 'center'}]}>
-          <ActivityIndicator color={'purple'} size={'large'}/>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#b141aa" />
+          <Text style={styles.loadingText}>Loading...</Text>
         </View>
       ) : (
         <>
-          {
-            fishData.length == 0 ? (
-              <View style={[styles.container, {justifyContent: 'center'}]}>
-                <LottieView
-                  source={require('../assets/animations/Add Bookmark.json')}
-                  autoPlay
-                  loop
-                  style={styles.lottieAnimation}
-                />
-                <Text style={styles.emptyCartText}>Your WishList is empty</Text>
-                <TouchableOpacity
-                  onPress={() => {navigation.navigate("HomeTab");}}
-                  style={styles.goShoppingStyle}
-                >
-                  <Text style={styles.shoppingText}>Explore Now!</Text>
-                </TouchableOpacity>
+          {fishData.length == 0 ? (
+            <View style={[styles.container, { justifyContent: "center" }]}>
+              <LottieView
+                source={require("../assets/animations/Add Bookmark.json")}
+                autoPlay
+                loop
+                style={styles.lottieAnimation}
+              />
+              <Text style={styles.emptyCartText}>Your WishList is empty</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("HomeTab");
+                }}
+                style={styles.goShoppingStyle}
+              >
+                <Text style={styles.shoppingText}>Explore Now!</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <SafeAreaView style={styles.container}>
+              <View style={styles.listContainer}>
+                <FlatList
+                  data={fishData}
+                  keyExtractor={(item) => item.MaMatHang}
+                  renderItem={itemView}
+                ></FlatList>
               </View>
-            ) : (
-              <SafeAreaView style={styles.container}>
-                <View style={styles.listContainer}>
-                  <FlatList
-                    data={fishData}
-                    keyExtractor={(item) => item.MaMatHang}
-                    renderItem={itemView}
-                  ></FlatList>
-                </View>
-              </SafeAreaView>
-            )
-          }
+            </SafeAreaView>
+          )}
         </>
       )}
     </>
@@ -217,6 +218,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#555",
   },
   listContainer: {
     height: "100%",
@@ -278,35 +290,35 @@ const styles = StyleSheet.create({
 
   // Lottie
   lottieAnimation: {
-    width: '100%',
+    width: "100%",
     height: 400,
-    justifyContent: 'center'
+    justifyContent: "center",
   },
-  emptyCartText: {    
+  emptyCartText: {
     fontSize: 22,
-    fontWeight: '600',
-    color: 'black',
+    fontWeight: "600",
+    color: "black",
     marginTop: 20,
-    textAlign: 'center'
+    textAlign: "center",
   },
-  goShoppingStyle :{
-    width: '80%',
-    backgroundColor: '#b141aa',
+  goShoppingStyle: {
+    width: "80%",
+    backgroundColor: "#b141aa",
     padding: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 5,
     marginTop: 40,
-    marginHorizontal: '10%',
+    marginHorizontal: "10%",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
-    elevation: 3
+    elevation: 3,
   },
   shoppingText: {
     fontSize: 19,
-    color: "white"
-  }
+    color: "white",
+  },
 });

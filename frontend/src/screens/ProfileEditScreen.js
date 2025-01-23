@@ -1,4 +1,10 @@
-import { View, Text, SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 // Import components
 import { InputField } from "../components/Profile/InputField";
 import { SubmitButton } from "../components/SubmitButton";
@@ -116,8 +122,9 @@ export default function EditProfile({ navigation }) {
   return (
     <>
       {isLoading ? (
-        <View style={[styles.container, {justifyContent: 'center'}]}>
-          <ActivityIndicator color={'purple'} size={'large'}/>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#b141aa" />
+          <Text style={styles.loadingText}>Loading...</Text>
         </View>
       ) : (
         <SafeAreaView style={styles.container}>
@@ -190,6 +197,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#555",
   },
   districtNameSection: {
     marginVertical: 10,

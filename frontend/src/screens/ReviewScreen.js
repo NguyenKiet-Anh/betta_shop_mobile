@@ -8,8 +8,8 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  ScrollView,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from "react-native";
 
 // Import Contexts Here
@@ -149,6 +149,15 @@ export default function Review({ route }) {
     </View>
   );
 
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#b141aa" />
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.content}>
@@ -273,6 +282,17 @@ export default function Review({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#555",
   },
   content: {
     flex: 1,
