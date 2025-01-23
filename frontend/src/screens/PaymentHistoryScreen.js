@@ -22,7 +22,6 @@ const PaymentHistoryScreen = ({ navigation }) => {
   const { userInfo, ipAddress } = useAuth();
   const [paymentHistory, setPaymentHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     const fetchPaymentHistory = async () => {
       setIsLoading(true);

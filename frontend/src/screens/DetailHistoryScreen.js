@@ -1,12 +1,24 @@
 import React from "react";
-import { View, Text, FlatList, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 
-const DetailHistoryScreen = ({ route }) => {
+const DetailHistoryScreen = ({ navigation, route }) => {
   const { detail } = route.params;
 
   const renderItem = ({ item }) => {
     return (
-      <View style={styles.itemContainer}>
+      <TouchableOpacity
+        style={styles.itemContainer}
+        onPress={() =>
+          navigation.navigate("Detail", { itemId: item.MaMatHang.MaMatHang })
+        }
+      >
         <View style={styles.leftColumn}>
           <Image
             source={{
@@ -24,7 +36,7 @@ const DetailHistoryScreen = ({ route }) => {
             </Text>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
