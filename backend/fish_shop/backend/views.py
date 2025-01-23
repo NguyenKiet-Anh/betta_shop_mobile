@@ -1273,8 +1273,11 @@ def add_review(request):
         serializers = NGUOIDUNG_Serializer(current_user)
         data = serializers.data
 
-        # Customer avatar
+        # Customer avatar        
         if data["HinhAnh"]:
+            data["HinhAnh"] = get_path_for_image(
+                Path(data["HinhAnh"])
+            )
             with open(data["HinhAnh"], "rb") as file:
                 avatar = file.read()
                 base64_encoded_data = base64.b64encode(avatar).decode("utf-8")
