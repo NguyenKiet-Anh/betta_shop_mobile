@@ -1,4 +1,10 @@
-import { View, FlatList, Text, StyleSheet } from "react-native";
+import {
+  View,
+  FlatList,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 // Import Hook
 import { useState, useEffect } from "react";
 
@@ -38,7 +44,10 @@ export default function CustomerManagement({ navigation }) {
   return (
     <>
       {isLoading ? (
-        <Text>Loading...</Text>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#b141aa" />
+          <Text style={styles.loadingText}>Loading...</Text>
+        </View>
       ) : (
         <View>
           <FlatList
@@ -65,5 +74,16 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 15,
     backgroundColor: "red",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#555",
   },
 });

@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   Modal,
   Linking,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { RadioButton } from "react-native-paper";
 // Expo-notification
@@ -35,12 +35,12 @@ import {
 // Function for showing notification
 const scheduleNotification = (seconds = 1, title, message) => {
   Notifications.scheduleNotificationAsync({
-      content: {
-          title: title,
-          body: message,
-      },
-      trigger: seconds === undefined ? null : { seconds },
-  })
+    content: {
+      title: title,
+      body: message,
+    },
+    trigger: seconds === undefined ? null : { seconds },
+  });
 };
 // Main function
 export default function Cart({ navigation, route }) {
@@ -53,7 +53,7 @@ export default function Cart({ navigation, route }) {
   const [isLoading, setIsLoading] = useState(true); // For controlling render event
   const isFocusedCart = useIsFocused(); // For re-run useEffect
   // For Confirmation modal
-  const [selectedValue, setSelectedValue] = useState('option1');
+  const [selectedValue, setSelectedValue] = useState("option1");
   // For MOMO integated
   const [orderId, setOrderId] = useState("");
   const [paymentURL, setPaymentURL] = useState("");
@@ -172,7 +172,7 @@ export default function Cart({ navigation, route }) {
     }
   };
   // Function for payment
-  const handlePayment = async (option) => {    
+  const handlePayment = async (option) => {
     try {
       const response = await fetch(
         `http://${ipAddress}:8000/createPaymentLink/`,
@@ -193,7 +193,7 @@ export default function Cart({ navigation, route }) {
         setOrderId(data.result.orderId);
         setPaymentURL(data.result.payUrl);
         // Payement using COD method
-        if (option === 'option1') {          
+        if (option === "option1") {
           // Send request to server
           try {
             const response = await checkOutCart(
@@ -209,15 +209,24 @@ export default function Cart({ navigation, route }) {
               setTotalPrice(0);
               setAmount(0);
               setCartLength(0);
-              scheduleNotification(seconds=1, title="Checkout successfully!", message="Your order has been added to history log.\nPlease pay when receive product!");
+              scheduleNotification(
+                (seconds = 1),
+                (title = "Checkout successfully!"),
+                (message =
+                  "Your order has been added to history log.\nPlease pay when receive product!")
+              );
               // alert("Your order has been added to history log.\nPlease pay when receive product!");
             } else {
               alert("Process failed");
-            }        
+            }
           } catch (error) {
-            console.error("Error while solving your order!\nTry later: ", error);
-          };
-        } else if (option === 'option2') { // Payment using MOMO method
+            console.error(
+              "Error while solving your order!\nTry later: ",
+              error
+            );
+          }
+        } else if (option === "option2") {
+          // Payment using MOMO method
           // Connect to websocket
           connectWebSocket(data.result.orderId);
           // Open Modal
@@ -229,7 +238,7 @@ export default function Cart({ navigation, route }) {
     } catch (error) {
       console.error("Error:", error);
       alert("Error happened while processing");
-    };
+    }
   };
   // Section for socket connection
   const socketRef = useRef(null);
@@ -261,7 +270,11 @@ export default function Cart({ navigation, route }) {
         );
         if (response.success) {
           setCartLength(0);
-          scheduleNotification(seconds=1, title="Checkout successfully!", message="Your order has been added to history log!");
+          scheduleNotification(
+            (seconds = 1),
+            (title = "Checkout successfully!"),
+            (message = "Your order has been added to history log!")
+          );
           // alert("Remove all items in carts");
           // Continue call api for notification
           // Way: call api -> send user_id, totalPrice, -> server get total price + time.datetime now() -> save to notification table -> send notification tables's data back to frontend react native app
@@ -399,28 +412,30 @@ export default function Cart({ navigation, route }) {
       </TouchableOpacity>
     );
   };
-  
+
   // Return render here
   return (
     <>
       {isLoading ? (
-        <View style={[styles.container, {justifyContent: 'center'}]}>
-          <ActivityIndicator color={'purple'} size={'large'}/>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#b141aa" />
+          <Text style={styles.loadingText}>Loading...</Text>
         </View>
       ) : (
         <>
-        {
-          amount == 0 ? (
-            <View style={[styles.container, {justifyContent: 'center'}]}>
+          {amount == 0 ? (
+            <View style={[styles.container, { justifyContent: "center" }]}>
               <LottieView
-                source={require('../assets/animations/Empty Cart Animation.json')}
+                source={require("../assets/animations/Empty Cart Animation.json")}
                 autoPlay
                 loop
                 style={styles.lottieAnimation}
               />
               <Text style={styles.emptyCartText}>Your cart is empty</Text>
               <TouchableOpacity
-                onPress={() => {navigation.navigate("HomeTab");}}
+                onPress={() => {
+                  navigation.navigate("HomeTab");
+                }}
                 style={styles.goShoppingStyle}
               >
                 <Text style={styles.shoppingText}>Buy Fish Now!</Text>
@@ -448,7 +463,10 @@ export default function Cart({ navigation, route }) {
                   </View>
                 </View>
 
-                <TouchableOpacity onPress={toggleModal} style={styles.payButton}>
+                <TouchableOpacity
+                  onPress={toggleModal}
+                  style={styles.payButton}
+                >
                   <Text
                     style={{
                       fontSize: 17,
@@ -471,7 +489,11 @@ export default function Cart({ navigation, route }) {
                     }}
                   >
                     <Text
-                      style={{ fontSize: 17, fontWeight: "600", color: "#b141aa" }}
+                      style={{
+                        fontSize: 17,
+                        fontWeight: "600",
+                        color: "#b141aa",
+                      }}
                     >
                       {amount}
                     </Text>
@@ -491,42 +513,55 @@ export default function Cart({ navigation, route }) {
                       Are you sure you want to buy all items in cart?
                     </Text>
                     <Text style={styles.modalInfo}>Total items: {amount}</Text>
-                    <Text style={styles.modalInfo}>Total price: {totalPrice}</Text>
+                    <Text style={styles.modalInfo}>
+                      Total price: {totalPrice}
+                    </Text>
                     <View style={styles.optionsSection}>
                       <View style={styles.optionButton}>
                         <RadioButton.Android
-                            value="option1"
-                            status={selectedValue === 'option1' ? 
-                                    'checked' : 'unchecked'}
-                            onPress={() => setSelectedValue('option1')}
-                            color="#007BFF"
+                          value="option1"
+                          status={
+                            selectedValue === "option1"
+                              ? "checked"
+                              : "unchecked"
+                          }
+                          onPress={() => setSelectedValue("option1")}
+                          color="#007BFF"
                         />
                         <Text style={styles.radioLabel}>
-                            Thanh toán khi nhận hàng
+                          Thanh toán khi nhận hàng
                         </Text>
                       </View>
                       <View style={styles.optionButton}>
                         <RadioButton.Android
-                            value="option2"
-                            status={selectedValue === 'option2' ? 
-                                    'checked' : 'unchecked'}
-                            onPress={() => setSelectedValue('option2')}
-                            color="#007BFF"
+                          value="option2"
+                          status={
+                            selectedValue === "option2"
+                              ? "checked"
+                              : "unchecked"
+                          }
+                          onPress={() => setSelectedValue("option2")}
+                          color="#007BFF"
                         />
                         <Text style={styles.radioLabel}>
-                            Thanh toán với MOMO
+                          Thanh toán với MOMO
                         </Text>
-                      </View>                      
+                      </View>
                     </View>
                     <View style={styles.modalActions}>
                       <TouchableOpacity
                         onPress={toggleModal}
-                        style={[styles.modalButton, { backgroundColor: "#ff5863" }]}
+                        style={[
+                          styles.modalButton,
+                          { backgroundColor: "#ff5863" },
+                        ]}
                       >
                         <Text style={styles.modalButtonText}>Cancel</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        onPress={() => {handlePayment(selectedValue);}}
+                        onPress={() => {
+                          handlePayment(selectedValue);
+                        }}
                         style={styles.modalButton}
                       >
                         <Text style={styles.modalButtonText}>Checkout</Text>
@@ -536,9 +571,8 @@ export default function Cart({ navigation, route }) {
                 </View>
               </Modal>
             </SafeAreaView>
-          )
-        }
-        </>                
+          )}
+        </>
       )}
     </>
   );
@@ -551,6 +585,17 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     height: "87%",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#555",
   },
   listCell: {
     flexDirection: "row",
@@ -696,48 +741,48 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
-  optionsSection: {    
-    width: '100%', 
-    marginVertical: 10
+  optionsSection: {
+    width: "100%",
+    marginVertical: 10,
   },
   optionButton: {
-    flexDirection: 'row', 
-    alignItems: 'center'
+    flexDirection: "row",
+    alignItems: "center",
   },
   radioLabel: {
     fontSize: 14,
   },
   // Lottie
   lottieAnimation: {
-    width: '100%',
+    width: "100%",
     height: 400,
-    justifyContent: 'center'
+    justifyContent: "center",
   },
-  emptyCartText: {    
+  emptyCartText: {
     fontSize: 22,
-    fontWeight: '600',
-    color: 'black',
+    fontWeight: "600",
+    color: "black",
     marginTop: 20,
-    textAlign: 'center'
+    textAlign: "center",
   },
-  goShoppingStyle :{
-    width: '80%',
-    backgroundColor: '#b141aa',
+  goShoppingStyle: {
+    width: "80%",
+    backgroundColor: "#b141aa",
     padding: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 5,
     marginTop: 40,
-    marginHorizontal: '10%',
+    marginHorizontal: "10%",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
-    elevation: 3
+    elevation: 3,
   },
   shoppingText: {
     fontSize: 19,
-    color: "white"
-  }
+    color: "white",
+  },
 });

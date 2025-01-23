@@ -7,7 +7,7 @@ import {
   Image,
   Dimensions,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 // Import Icon
@@ -82,16 +82,14 @@ export default function Detail({ route, navigation }) {
   return (
     <>
       {isLoading ? (
-        <View style={[styles.container, {justifyContent: 'center'}]}>
-          <ActivityIndicator color={'purple'} size={'large'}/>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#b141aa" />
+          <Text style={styles.loadingText}>Loading...</Text>
         </View>
       ) : (
         <>
           {fish.MaMatHang && fish.KhuyenMai && (
-            <ScrollView
-              contentContainerStyle={styles.container}
-              keyboardShouldPersistTaps="handled"
-            >
+            <ScrollView style={styles.container}>
               <View style={styles.headerImage}>
                 <View style={styles.carouselSection}>
                   <Carousel
@@ -196,10 +194,7 @@ export default function Detail({ route, navigation }) {
             </ScrollView>
           )}
           {fish.MaMatHang && !fish.KhuyenMai && (
-            <ScrollView
-              contentContainerStyle={styles.container}
-              keyboardShouldPersistTaps="handled"
-            >
+            <ScrollView style={styles.container}>
               <View style={styles.headerImage}>
                 <View style={styles.carouselSection}>
                   <Carousel
@@ -310,10 +305,19 @@ export default function Detail({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
+    marginHorizontal: 5,
   },
-
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#555",
+  },
   carouselSection: {
     height: 375,
   },
@@ -333,7 +337,6 @@ const styles = StyleSheet.create({
   activeDot: {
     backgroundColor: "#b141aa", // Active dot color
   },
-
   headerImage: {
     width: "100%",
   },
@@ -344,8 +347,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 35,
   },
   content: {
-    width: "90%",
-    height: "100%",
     flexDirection: "column",
   },
   fishTitle: {
@@ -388,8 +389,9 @@ const styles = StyleSheet.create({
   },
   buttonSection: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     marginVertical: 15,
+    alignItems: "center",
   },
   seeComment: {
     width: "30%",
@@ -401,14 +403,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   addCartButton: {
-    width: "60%",
-    height: 60,
     flexDirection: "row",
     backgroundColor: "#b141aa",
     flexDirection: "row",
+    gap: 10,
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
     borderRadius: 5,
   },
 });

@@ -8,7 +8,7 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 // Import Hook
 import { useEffect, useState } from "react";
@@ -160,8 +160,9 @@ export default function AllPromotion({ navigation }) {
   return (
     <>
       {isLoading ? (
-        <View style={[styles.container, {justifyContent: 'center'}]}>
-          <ActivityIndicator color={'purple'} size={'large'}/>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#b141aa" />
+          <Text style={styles.loadingText}>Loading...</Text>
         </View>
       ) : (
         <SafeAreaView style={styles.container}>
@@ -239,7 +240,17 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 20,
   },
-
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#555",
+  },
   headerSection: {
     marginVertical: 20,
     marginHorizontal: 20,
