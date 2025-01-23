@@ -11,6 +11,10 @@ import {
   ActivityIndicator
 } from "react-native";
 import { RadioButton } from "react-native-paper";
+// Expo-notification
+import * as Notifications from "expo-notifications";
+import { initializeNotifications } from "../components/Notification/notification";
+initializeNotifications();
 // Import Hook
 import { useState, useEffect, useRef } from "react";
 import { useIsFocused } from "@react-navigation/native";
@@ -28,6 +32,16 @@ import {
   getCartById,
   removeFishFromCart,
 } from "../routes/CartRoutes/CartRoutes";
+// Function for showing notification
+const scheduleNotification = (seconds = 1, title, message) => {
+  Notifications.scheduleNotificationAsync({
+      content: {
+          title: title,
+          body: message,
+      },
+      trigger: seconds === undefined ? null : { seconds },
+  })
+};
 // Main function
 export default function Cart({ navigation, route }) {
   // Variables here
@@ -195,12 +209,13 @@ export default function Cart({ navigation, route }) {
               setTotalPrice(0);
               setAmount(0);
               setCartLength(0);
-              alert("Your order has been added to history log.\nPlease pay when receive product!");          
+              scheduleNotification(seconds=1, title="Checkout successfully!", message="Your order has been added to history log.\nPlease pay when receive product!");
+              // alert("Your order has been added to history log.\nPlease pay when receive product!");
             } else {
               alert("Process failed");
             }        
           } catch (error) {
-            console.error("Error while solving your order!\nTry later");
+            console.error("Error while solving your order!\nTry later: ", error);
           };
         } else if (option === 'option2') { // Payment using MOMO method
           // Connect to websocket
@@ -246,7 +261,8 @@ export default function Cart({ navigation, route }) {
         );
         if (response.success) {
           setCartLength(0);
-          alert("Remove all items in carts");
+          scheduleNotification(seconds=1, title="Checkout successfully!", message="Your order has been added to history log!");
+          // alert("Remove all items in carts");
           // Continue call api for notification
           // Way: call api -> send user_id, totalPrice, -> server get total price + time.datetime now() -> save to notification table -> send notification tables's data back to frontend react native app
         } else {
