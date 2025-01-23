@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
         height: '50%'  
     },
     imageStyle: {
+        marginTop: 10,
         width: 'full',
         height: 350
     },
