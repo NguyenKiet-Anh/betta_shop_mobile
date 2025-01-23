@@ -10,6 +10,7 @@ import {
   Linking,
   ActivityIndicator
 } from "react-native";
+import { RadioButton } from "react-native-paper";
 // Import Hook
 import { useState, useEffect, useRef } from "react";
 import { useIsFocused } from "@react-navigation/native";
@@ -37,6 +38,8 @@ export default function Cart({ navigation, route }) {
   const [isModalVisible, setIsModalVisible] = useState(false); // For controlling modal
   const [isLoading, setIsLoading] = useState(true); // For controlling render event
   const isFocusedCart = useIsFocused(); // For re-run useEffect
+  // For Confirmation modal
+  const [selectedValue, setSelectedValue] = useState('option1');
   // For MOMO integated
   const [orderId, setOrderId] = useState("");
   const [paymentURL, setPaymentURL] = useState("");
@@ -155,7 +158,7 @@ export default function Cart({ navigation, route }) {
     }
   };
   // Function for payment
-  const handlePayment = async () => {
+  const handlePayment = async (option) => {    
     try {
       const response = await fetch(
         `http://${ipAddress}:8000/createPaymentLink/`,
@@ -175,17 +178,43 @@ export default function Cart({ navigation, route }) {
         // Save orderID and URL link for payment
         setOrderId(data.result.orderId);
         setPaymentURL(data.result.payUrl);
-        // Connect to websocket
-        connectWebSocket(data.result.orderId);
-        // Open Modal
-        await Linking.openURL(data.result.payUrl);
+        // Payement using COD method
+        if (option === 'option1') {          
+          // Send request to server
+          try {
+            const response = await checkOutCart(
+              ipAddress,
+              userInfo.ma_nguoi_dung,
+              data.result.orderId,
+              2
+            );
+            if (response.success) {
+              // Clear cart and turn off modal
+              toggleModal();
+              setFishData([]);
+              setTotalPrice(0);
+              setAmount(0);
+              setCartLength(0);
+              alert("Your order has been added to history log.\nPlease pay when receive product!");          
+            } else {
+              alert("Process failed");
+            }        
+          } catch (error) {
+            console.error("Error while solving your order!\nTry later");
+          };
+        } else if (option === 'option2') { // Payment using MOMO method
+          // Connect to websocket
+          connectWebSocket(data.result.orderId);
+          // Open Modal
+          await Linking.openURL(data.result.payUrl);
+        }
       } else {
         alert("Error while trying to create payment link");
       }
     } catch (error) {
       console.error("Error:", error);
       alert("Error happened while processing");
-    }
+    };
   };
   // Section for socket connection
   const socketRef = useRef(null);
@@ -447,6 +476,32 @@ export default function Cart({ navigation, route }) {
                     </Text>
                     <Text style={styles.modalInfo}>Total items: {amount}</Text>
                     <Text style={styles.modalInfo}>Total price: {totalPrice}</Text>
+                    <View style={styles.optionsSection}>
+                      <View style={styles.optionButton}>
+                        <RadioButton.Android
+                            value="option1"
+                            status={selectedValue === 'option1' ? 
+                                    'checked' : 'unchecked'}
+                            onPress={() => setSelectedValue('option1')}
+                            color="#007BFF"
+                        />
+                        <Text style={styles.radioLabel}>
+                            Thanh toán khi nhận hàng
+                        </Text>
+                      </View>
+                      <View style={styles.optionButton}>
+                        <RadioButton.Android
+                            value="option2"
+                            status={selectedValue === 'option2' ? 
+                                    'checked' : 'unchecked'}
+                            onPress={() => setSelectedValue('option2')}
+                            color="#007BFF"
+                        />
+                        <Text style={styles.radioLabel}>
+                            Thanh toán với MOMO
+                        </Text>
+                      </View>                      
+                    </View>
                     <View style={styles.modalActions}>
                       <TouchableOpacity
                         onPress={toggleModal}
@@ -455,7 +510,7 @@ export default function Cart({ navigation, route }) {
                         <Text style={styles.modalButtonText}>Cancel</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        onPress={handlePayment}
+                        onPress={() => {handlePayment(selectedValue);}}
                         style={styles.modalButton}
                       >
                         <Text style={styles.modalButtonText}>Checkout</Text>
@@ -595,7 +650,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: "white",
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 5,
     width: 300,
     alignItems: "center",
   },
@@ -617,7 +672,7 @@ const styles = StyleSheet.create({
   modalButton: {
     backgroundColor: "#b141aa",
     padding: 10,
-    marginHorizontal: 5,
+    marginHorizontal: 15,
     borderRadius: 5,
   },
   modalButtonText: {
@@ -625,7 +680,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
-
+  optionsSection: {    
+    width: '100%', 
+    marginVertical: 10
+  },
+  optionButton: {
+    flexDirection: 'row', 
+    alignItems: 'center'
+  },
+  radioLabel: {
+    fontSize: 14,
+  },
   // Lottie
   lottieAnimation: {
     width: '100%',

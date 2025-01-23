@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 // Import icons
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 
 // Import lottie
 import LottieView from "lottie-react-native";
@@ -38,8 +38,7 @@ const PaymentHistoryScreen = ({ navigation }) => {
       }
     };
     fetchPaymentHistory();
-  }, [ipAddress, userInfo]);
-
+  }, [ipAddress, userInfo]);  
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
@@ -49,14 +48,34 @@ const PaymentHistoryScreen = ({ navigation }) => {
         }
       >
         <View style={styles.leftColumn}>
-          <FontAwesome name="check-circle" size={30} color="green" />
+          {
+            item.MaPhuongThuc === 1 ? (
+              <FontAwesome name="check-circle" size={30} color="green" />
+            ) : (
+              <FontAwesome5 name="clock" size={30} color="orange" />
+            )
+          }            
         </View>
         <View style={styles.rightColumn}>
-          <Text style={styles.title}>
-            Đơn hàng {item.MaDonHang} thanh toán thành công
-          </Text>
+        {
+          item.MaPhuongThuc === 1 ? (
+            <Text style={styles.title}>
+              Đơn hàng {item.MaDonHang} thanh toán thành công
+            </Text>
+          ) : (
+            <Text style={styles.title}>
+              Đơn hàng {item.MaDonHang} đang trong quá trình giao hàng
+            </Text>
+          )
+        }          
           <View style={styles.detailRow}>
-            <Text style={styles.detailText}>Thời gian: {item.ThoiDiem}</Text>
+          {
+            item.MaPhuongThuc === 1 ? (
+              <Text style={styles.detailText}>Thời gian: {item.ThoiDiem}</Text>
+            ) : (
+              <Text style={styles.detailText}>Thời gian đặt hàng: {item.ThoiDiem}</Text>
+            )
+          }            
           </View>
         </View>
       </TouchableOpacity>

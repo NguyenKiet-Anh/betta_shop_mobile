@@ -131,8 +131,7 @@ export const deleteFishFromCart = async (ipAddress, userId) => {
 
 // For checking out cart - POST method
 export const checkOutCart = async (ipAddress, userId, orderId, payment) => {
-  try {
-    console.log(userId);
+  try {    
     return await fetch(
       `http://${ipAddress}:8000/checkOut/${userId}/${orderId}/${payment}/`,
       {
