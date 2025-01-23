@@ -7,9 +7,16 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from "react-native";
+
+// Import icons
+import { FontAwesome } from "@expo/vector-icons";
+
+// Import lottie
+import LottieView from "lottie-react-native";
+
+// Import Hook
 import { useAuth } from "../context/authContext";
 import { getHistory } from "../routes/ProfileRoutes/ProfileRoutes";
-import { FontAwesome } from "@expo/vector-icons";
 
 const PaymentHistoryScreen = ({ navigation }) => {
   const { userInfo, ipAddress } = useAuth();
@@ -60,7 +67,6 @@ const PaymentHistoryScreen = ({ navigation }) => {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#b141aa" />
-        <Text style={styles.loadingText}>Loading...</Text>
       </View>
     );
   }
@@ -68,6 +74,12 @@ const PaymentHistoryScreen = ({ navigation }) => {
   if (paymentHistory.length === 0) {
     return (
       <View style={styles.emptyContainer}>
+        <LottieView
+          source={require('../assets/animations/Empty Log.json')}
+          autoPlay
+          loop
+          style={styles.lottieAnimation}
+        />
         <Text style={styles.emptyText}>No payment history found.</Text>
         <TouchableOpacity
           style={styles.buyButton}
@@ -135,12 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f9f9f9",
-  },
-  loadingText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: "#555",
-  },
+  },  
   emptyContainer: {
     flex: 1,
     justifyContent: "center",
@@ -153,11 +160,12 @@ const styles = StyleSheet.create({
     color: "#888",
     marginBottom: 20,
   },
-  buyButton: {
+  buyButton: {    
     backgroundColor: "#b141aa",
     paddingHorizontal: 30,
     paddingVertical: 15,
-    borderRadius: 10,
+    marginTop: 20,
+    borderRadius: 5,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
@@ -169,6 +177,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  // Lottie
+  lottieAnimation: {
+    width: '100%',
+    height: 400,
+    justifyContent: 'center'
+  }
 });
 
 export default PaymentHistoryScreen;

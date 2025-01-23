@@ -8,6 +8,7 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 // Import Hook
 import { useEffect, useState } from "react";
@@ -266,7 +267,9 @@ export default function Category({ route, navigation }) {
   return (
     <>
       {isLoading ? (
-        <Text>Loading ...</Text>
+        <View style={[styles.container, {justifyContent: 'center'}]}>
+          <ActivityIndicator color={'purple'} size={'large'}/>
+        </View>
       ) : (
         <SafeAreaView style={styles.container}>
           <View style={styles.sContainer}>

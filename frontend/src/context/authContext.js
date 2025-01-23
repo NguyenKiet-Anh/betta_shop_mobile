@@ -13,7 +13,8 @@ export const AuthProvider = ({ children }) => {
   const [cartLength, setCartLength] = useState(0);
   const [wishLength, setWishLength] = useState(0);
 
-  const ipAddress = "192.168.137.1";
+  // const ipAddress = "192.168.137.1";
+  const ipAddress = "192.168.1.9";
 
   // Get User Cart Length
   const getCartLength = async (id) => {

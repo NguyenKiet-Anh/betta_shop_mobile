@@ -7,6 +7,7 @@ import {
   ScrollView,
   TextInput,
   Alert,
+  ActivityIndicator
 } from "react-native";
 // Import component
 import { TextField } from "../components/Profile/TextField";
@@ -117,7 +118,9 @@ export default function Profile({ navigation }) {
   return (
     <>
       {isLoading ? (
-        <Text>Loading ...</Text>
+        <View style={[styles.container, {justifyContent: 'center'}]}>
+          <ActivityIndicator color={'purple'} size={'large'}/>
+        </View>
       ) : (
         <View style={styles.container}>
           {/* Section for Avatar */}

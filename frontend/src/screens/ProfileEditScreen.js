@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import { View, Text, SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
 // Import components
 import { InputField } from "../components/Profile/InputField";
 import { SubmitButton } from "../components/SubmitButton";
@@ -116,7 +116,9 @@ export default function EditProfile({ navigation }) {
   return (
     <>
       {isLoading ? (
-        <Text>Loading ...</Text>
+        <View style={[styles.container, {justifyContent: 'center'}]}>
+          <ActivityIndicator color={'purple'} size={'large'}/>
+        </View>
       ) : (
         <SafeAreaView style={styles.container}>
           <View style={styles.inputSection}>

@@ -7,6 +7,7 @@ import {
   Image,
   Dimensions,
   StyleSheet,
+  ActivityIndicator
 } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 // Import Icon
@@ -81,7 +82,9 @@ export default function Detail({ route, navigation }) {
   return (
     <>
       {isLoading ? (
-        <Text>Loading ...</Text>
+        <View style={[styles.container, {justifyContent: 'center'}]}>
+          <ActivityIndicator color={'purple'} size={'large'}/>
+        </View>
       ) : (
         <>
           {fish.MaMatHang && fish.KhuyenMai && (

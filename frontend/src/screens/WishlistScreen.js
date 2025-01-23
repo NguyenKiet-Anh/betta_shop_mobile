@@ -6,10 +6,13 @@ import {
   Image,
   StyleSheet,
   SafeAreaView,
+  ActivityIndicator
 } from "react-native";
 // Import icons
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
+// Import Lottie
+import LottieView from "lottie-react-native";
 // Import Hook
 import { useIsFocused, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
@@ -170,17 +173,41 @@ export default function WishList({ navigation, route }) {
   return (
     <>
       {isLoading ? (
-        <Text>Loading ...</Text>
+        <View style={[styles.container, {justifyContent: 'center'}]}>
+          <ActivityIndicator color={'purple'} size={'large'}/>
+        </View>
       ) : (
-        <SafeAreaView style={styles.container}>
-          <View style={styles.listContainer}>
-            <FlatList
-              data={fishData}
-              keyExtractor={(item) => item.MaMatHang}
-              renderItem={itemView}
-            ></FlatList>
-          </View>
-        </SafeAreaView>
+        <>
+          {
+            fishData.length == 0 ? (
+              <View style={[styles.container, {justifyContent: 'center'}]}>
+                <LottieView
+                  source={require('../assets/animations/Add Bookmark.json')}
+                  autoPlay
+                  loop
+                  style={styles.lottieAnimation}
+                />
+                <Text style={styles.emptyCartText}>Your WishList is empty</Text>
+                <TouchableOpacity
+                  onPress={() => {navigation.navigate("HomeTab");}}
+                  style={styles.goShoppingStyle}
+                >
+                  <Text style={styles.shoppingText}>Explore Now!</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <SafeAreaView style={styles.container}>
+                <View style={styles.listContainer}>
+                  <FlatList
+                    data={fishData}
+                    keyExtractor={(item) => item.MaMatHang}
+                    renderItem={itemView}
+                  ></FlatList>
+                </View>
+              </SafeAreaView>
+            )
+          }
+        </>
       )}
     </>
   );
@@ -248,4 +275,38 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     borderRadius: 10,
   },
+
+  // Lottie
+  lottieAnimation: {
+    width: '100%',
+    height: 400,
+    justifyContent: 'center'
+  },
+  emptyCartText: {    
+    fontSize: 22,
+    fontWeight: '600',
+    color: 'black',
+    marginTop: 20,
+    textAlign: 'center'
+  },
+  goShoppingStyle :{
+    width: '80%',
+    backgroundColor: '#b141aa',
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    marginTop: 40,
+    marginHorizontal: '10%',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3
+  },
+  shoppingText: {
+    fontSize: 19,
+    color: "white"
+  }
 });

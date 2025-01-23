@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, ActivityIndicator } from "react-native";
 // Import components
 import { SubmitButton } from "../components/SubmitButton";
 import { InputField } from "../components/Profile/InputField";
@@ -57,7 +57,9 @@ export default function ChangePassword({ route, navigation }) {
   return (
     <>
       {isLoading ? (
-        <Text>Loading ...</Text>
+        <View style={[styles.container, {justifyContent: 'center'}]}>
+          <ActivityIndicator color={'purple'} size={'large'}/>
+        </View>
       ) : (
         <SafeAreaView style={styles.container}>
           {/* For current password */}

@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   Modal,
   Linking,
+  ActivityIndicator
 } from "react-native";
 // Import Hook
 import { useState, useEffect, useRef } from "react";
@@ -15,6 +16,8 @@ import { useIsFocused } from "@react-navigation/native";
 // Import icons
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
+// Import Lottie
+import LottieView from "lottie-react-native";
 // Import context
 import { useAuth } from "../context/authContext";
 // Import api routes
@@ -351,95 +354,120 @@ export default function Cart({ navigation, route }) {
       </TouchableOpacity>
     );
   };
+  
   // Return render here
   return (
     <>
       {isLoading ? (
-        <Text>Loading ...</Text>
+        <View style={[styles.container, {justifyContent: 'center'}]}>
+          <ActivityIndicator color={'purple'} size={'large'}/>
+        </View>
       ) : (
-        <SafeAreaView style={styles.container}>
-          <View style={styles.listContainer}>
-            <FlatList
-              data={fishData}
-              keyExtractor={(item) => item.MaMatHang}
-              renderItem={itemView}
-            ></FlatList>
-          </View>
-          <View style={styles.paymentContainer}>
-            <View>
-              <Text style={{ fontSize: 16, fontWeight: "200" }}>
-                Amount Price
-              </Text>
-              <View style={styles.priceSection}>
-                <Feather name="dollar-sign" size={15}></Feather>
-                <Text style={{ fontSize: 25, fontWeight: "500" }}>
-                  {parseInt(totalPrice)}
-                </Text>
-              </View>
+        <>
+        {
+          amount == 0 ? (
+            <View style={[styles.container, {justifyContent: 'center'}]}>
+              <LottieView
+                source={require('../assets/animations/Empty Cart Animation.json')}
+                autoPlay
+                loop
+                style={styles.lottieAnimation}
+              />
+              <Text style={styles.emptyCartText}>Your cart is empty</Text>
+              <TouchableOpacity
+                onPress={() => {navigation.navigate("HomeTab");}}
+                style={styles.goShoppingStyle}
+              >
+                <Text style={styles.shoppingText}>Buy Fish Now!</Text>
+              </TouchableOpacity>
             </View>
-
-            <TouchableOpacity onPress={toggleModal} style={styles.payButton}>
-              <Text
-                style={{
-                  fontSize: 17,
-                  fontWeight: "600",
-                  color: "white",
-                  marginRight: 10,
-                }}
-              >
-                Checkout
-              </Text>
-              <View
-                style={{
-                  width: 30,
-                  height: 30,
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: 20,
-                  backgroundColor: "white",
-                }}
-              >
-                <Text
-                  style={{ fontSize: 17, fontWeight: "600", color: "#b141aa" }}
-                >
-                  {amount}
-                </Text>
+          ) : (
+            <SafeAreaView style={styles.container}>
+              <View style={styles.listContainer}>
+                <FlatList
+                  data={fishData}
+                  keyExtractor={(item) => item.MaMatHang}
+                  renderItem={itemView}
+                ></FlatList>
               </View>
-            </TouchableOpacity>
-          </View>
-          {/* Modal for confirmation */}
-          <Modal
-            visible={isModalVisible}
-            transparent={true}
-            animationType="fade"
-            onRequestClose={toggleModal}
-          >
-            <View style={styles.modalBackground}>
-              <View style={styles.modalContainer}>
-                <Text style={styles.modalTitle}>
-                  Are you sure you want to buy all items in cart?
-                </Text>
-                <Text style={styles.modalInfo}>Total items: {amount}</Text>
-                <Text style={styles.modalInfo}>Total price: {totalPrice}</Text>
-                <View style={styles.modalActions}>
-                  <TouchableOpacity
-                    onPress={toggleModal}
-                    style={[styles.modalButton, { backgroundColor: "#ff5863" }]}
-                  >
-                    <Text style={styles.modalButtonText}>Cancel</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={handlePayment}
-                    style={styles.modalButton}
-                  >
-                    <Text style={styles.modalButtonText}>Checkout</Text>
-                  </TouchableOpacity>
+              <View style={styles.paymentContainer}>
+                <View>
+                  <Text style={{ fontSize: 16, fontWeight: "200" }}>
+                    Amount Price
+                  </Text>
+                  <View style={styles.priceSection}>
+                    <Feather name="dollar-sign" size={15}></Feather>
+                    <Text style={{ fontSize: 25, fontWeight: "500" }}>
+                      {parseInt(totalPrice)}
+                    </Text>
+                  </View>
                 </View>
+
+                <TouchableOpacity onPress={toggleModal} style={styles.payButton}>
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      fontWeight: "600",
+                      color: "white",
+                      marginRight: 10,
+                    }}
+                  >
+                    Checkout
+                  </Text>
+                  <View
+                    style={{
+                      width: 30,
+                      height: 30,
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 20,
+                      backgroundColor: "white",
+                    }}
+                  >
+                    <Text
+                      style={{ fontSize: 17, fontWeight: "600", color: "#b141aa" }}
+                    >
+                      {amount}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               </View>
-            </View>
-          </Modal>
-        </SafeAreaView>
+              {/* Modal for confirmation */}
+              <Modal
+                visible={isModalVisible}
+                transparent={true}
+                animationType="fade"
+                onRequestClose={toggleModal}
+              >
+                <View style={styles.modalBackground}>
+                  <View style={styles.modalContainer}>
+                    <Text style={styles.modalTitle}>
+                      Are you sure you want to buy all items in cart?
+                    </Text>
+                    <Text style={styles.modalInfo}>Total items: {amount}</Text>
+                    <Text style={styles.modalInfo}>Total price: {totalPrice}</Text>
+                    <View style={styles.modalActions}>
+                      <TouchableOpacity
+                        onPress={toggleModal}
+                        style={[styles.modalButton, { backgroundColor: "#ff5863" }]}
+                      >
+                        <Text style={styles.modalButtonText}>Cancel</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={handlePayment}
+                        style={styles.modalButton}
+                      >
+                        <Text style={styles.modalButtonText}>Checkout</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </Modal>
+            </SafeAreaView>
+          )
+        }
+        </>                
       )}
     </>
   );
@@ -597,4 +625,38 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
+
+  // Lottie
+  lottieAnimation: {
+    width: '100%',
+    height: 400,
+    justifyContent: 'center'
+  },
+  emptyCartText: {    
+    fontSize: 22,
+    fontWeight: '600',
+    color: 'black',
+    marginTop: 20,
+    textAlign: 'center'
+  },
+  goShoppingStyle :{
+    width: '80%',
+    backgroundColor: '#b141aa',
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    marginTop: 40,
+    marginHorizontal: '10%',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3
+  },
+  shoppingText: {
+    fontSize: 19,
+    color: "white"
+  }
 });

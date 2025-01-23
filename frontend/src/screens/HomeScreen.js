@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  ActivityIndicator
 } from "react-native";
 import { FlatList, ScrollView, TextInput } from "react-native-gesture-handler";
 import Carousel from "react-native-reanimated-carousel";
@@ -100,7 +101,9 @@ export default function Home({ navigation }) {
   return (
     <>
       {isLoading ? (
-        <Text>Loading ...</Text>
+        <View style={[styles.container, {justifyContent: 'center'}]}>
+          <ActivityIndicator color={'purple'} size={'large'}/>
+        </View>
       ) : (
         <SafeAreaView style={styles.container}>
           <ScrollView style={styles.contentContainer}>
