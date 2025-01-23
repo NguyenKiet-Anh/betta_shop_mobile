@@ -1,0 +1,8 @@
+# FrontEnd
+frontend/.expo
+frontend/node_modules
+# BackEnd
+backend/ECommerceMobile
+backend/fish_shop/backend/__pycache__
+backend/fish_shop/backend/migrations
+backend/fish_shop/fish_shop/__pycache__
