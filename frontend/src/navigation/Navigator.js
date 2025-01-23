@@ -15,7 +15,7 @@ import AllPromotion from "../screens/AllPromotionsScreen";
 import Detail from "../screens/DetailScreen";
 import Wishlist from "../screens/WishlistScreen";
 import Cart from "../screens/CartScreen";
-import Notification from "../screens/NotificationScreen";
+import ChatWithShop from "../screens/ChatWithShopScreen";
 import Review from "../screens/ReviewScreen";
 import Profile from "../screens/ProfileScreen";
 import History from "../screens/PaymentHistoryScreen";
@@ -32,6 +32,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Octicons from "react-native-vector-icons/Octicons";
+import Ionicons from "react-native-vector-icons/Ionicons";
 // Import useAuth
 import { useAuth } from "../context/authContext";
 // Import api routes
@@ -116,13 +117,13 @@ export default function StackNavigator({ navigation }) {
                   <TouchableOpacity
                     style={styles.headerButton}
                     onPress={() => {
-                      navigation.navigate("Notification");
+                      navigation.navigate("ChatWithShop");
                     }}
                   >
-                    <MaterialIcons
-                      name="notifications"
+                    <Ionicons
+                      name="chatbubble"
                       size={20}
-                    ></MaterialIcons>
+                    ></Ionicons>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -419,10 +420,13 @@ export default function StackNavigator({ navigation }) {
             headerShown: false,
           }}
         ></RootStack.Screen>
-        {/* Route for Notification */}
+        {/* Route for ChatWithShop */}
         <RootStack.Screen
-          name="Notification"
-          component={Notification}
+          name="ChatWithShop"
+          component={ChatWithShop}
+          options={{
+            headerTitle: "Chat With Shop"
+          }}
         ></RootStack.Screen>
         {/* Route for see in Category */}
         <RootStack.Screen
