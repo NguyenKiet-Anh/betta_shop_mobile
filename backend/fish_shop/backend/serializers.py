@@ -162,7 +162,7 @@ class KHACHHANG_ADMIN_Serializer(ModelSerializer):
 class LimitedMATHANG_Serializer(ModelSerializer):
     class Meta:
         model = MatHang
-        fields = ["TenMatHang", "HinhAnh1"]
+        fields = ["MaMatHang", "TenMatHang", "HinhAnh1"]
 
 
 # Serializer 21

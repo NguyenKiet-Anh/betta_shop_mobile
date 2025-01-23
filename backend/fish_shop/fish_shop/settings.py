@@ -31,7 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "127.0.0.1",  # This is default
     "192.168.137.1",  # Save the IP Address here
-    "bb5c-42-112-104-70.ngrok-free.app",  # Ngrok forwarding link (Let this line stay at last. DO NOT CHANGE ORDER)
+    "596d-123-25-210-67.ngrok-free.app",  # Ngrok forwarding link (Let this line stay at last. DO NOT CHANGE ORDER)
 ]
 
 
