@@ -1,8 +1,8 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { ScrollView, View, Text, Image, StyleSheet } from "react-native";
 import ContactField from "../components/AboutUs/ContactField";
 export default function AboutUs() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* Logo Section */}
       <View style={styles.logoSection}>
         <Image
@@ -41,7 +41,7 @@ export default function AboutUs() {
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
   },
-  bContainer: {    
+  bContainer: {   
+    height: '50%', 
     backgroundColor: "white",
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
