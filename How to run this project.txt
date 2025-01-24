@@ -59,6 +59,8 @@
 
     **************************
 
-    2. Run: `npx expo start`
+    2. Open `AndroidManifest.xml` and replace `<You_GGMAP_API_KEY>` by the personal Google Maps API (located at "../frontend/android/app/src/main/AndroidManifest.xml")
 
-    3. Press `a` to open on android
+    3. Run: `npm run android`
+
+    4. Press `a` to open on android

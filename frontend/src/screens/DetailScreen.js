@@ -84,7 +84,6 @@ export default function Detail({ route, navigation }) {
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#b141aa" />
-          
         </View>
       ) : (
         <>

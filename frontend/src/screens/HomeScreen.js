@@ -110,6 +110,7 @@ export default function Home({ navigation }) {
   };
 
   const handleSearch = (text) => {
+    console.log(text);
     setSearch(text);
     if (text) {
       const results = allFishData
@@ -129,7 +130,6 @@ export default function Home({ navigation }) {
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#b141aa" />
-          
         </View>
       ) : (
         <SafeAreaView style={styles.container}>
@@ -155,6 +155,7 @@ export default function Home({ navigation }) {
                         <TouchableOpacity
                           onPress={() => {
                             setSearch("");
+                            setSearchResult([]);
                             navigation.navigate("Detail", {
                               itemId: item.MaMatHang,
                             });
@@ -170,7 +171,7 @@ export default function Home({ navigation }) {
                               />
                             </View>
                             <View style={styles.rightColumn}>
-                              <Text style={styles.title}>
+                              <Text style={styles.title} numberOfLines={3}>
                                 {item.TenMatHang}
                               </Text>
                             </View>
@@ -352,7 +353,7 @@ const styles = StyleSheet.create({
   autocompleteContainer: {
     position: "absolute",
     left: 0,
-    right: 0,
+    right: -10,
     top: 0,
     zIndex: 1,
   },
@@ -363,6 +364,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderBottomColor: "gray",
     borderBottomWidth: 1,
+    gap: 5,
   },
   leftColumn: {
     width: "35%",
@@ -374,13 +376,13 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   title: {
-    fontSize: 14,
+    fontSize: 16,
     marginBottom: 5,
     color: "#333",
   },
   searchIcon: {
     position: "absolute",
-    left: 340,
+    left: 295,
     right: 0,
     top: 9,
     zIndex: 2,

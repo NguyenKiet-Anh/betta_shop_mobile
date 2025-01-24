@@ -50,7 +50,6 @@ export default function ProductManagement({ navigation }) {
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#b141aa" />
-          
         </View>
       ) : (
         <View>

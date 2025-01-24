@@ -9,7 +9,9 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  Modal,
 } from "react-native";
+import { RadioButton } from "react-native-paper";
 // Import Hook
 import { useEffect, useState } from "react";
 // Import icons
@@ -39,6 +41,8 @@ export default function AllPromotion({ navigation }) {
   const [searchTerm, setSearchTerm] = useState(""); // Used for searching
   const [searchResults, setSearchResults] = useState([]); // For showing fishes as searching demand
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false); // For modal visibility
+  const [sortOption, setSortOption] = useState(null);
   // Declare function here
   // useEffect for getting all promotion for the first time
   useEffect(() => {
@@ -78,6 +82,22 @@ export default function AllPromotion({ navigation }) {
       alert("Add fish to wishlist failed! Fish already exists in wishlist!");
     }
   };
+  // Apply sorting to the data
+  const applySorting = (items) => {
+    let filteredItems = [...items];
+    // Apply sorting
+    if (sortOption === "name-asc") {
+      filteredItems.sort((a, b) => a.TenMatHang.localeCompare(b.TenMatHang));
+    } else if (sortOption === "name-desc") {
+      filteredItems.sort((a, b) => b.TenMatHang.localeCompare(a.TenMatHang));
+    } else if (sortOption === "price-asc") {
+      filteredItems.sort((a, b) => a.Dongia - b.Dongia);
+    } else if (sortOption === "price-desc") {
+      filteredItems.sort((a, b) => b.Dongia - a.Dongia);
+    }
+
+    return filteredItems;
+  };
   // Add fish to cart
   const handleAddFishToCart = async (id) => {
     const response = await addFishToCart(ipAddress, userInfo.ma_nguoi_dung, id);
@@ -95,7 +115,7 @@ export default function AllPromotion({ navigation }) {
     }
   };
   // Variable for showing filtered fish
-  const items = searchTerm ? searchResults : data;
+  const items = applySorting(searchTerm ? searchResults : data);
   // Return render here
   const renderItem = ({ item }) => {
     return (
@@ -162,7 +182,6 @@ export default function AllPromotion({ navigation }) {
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#b141aa" />
-          
         </View>
       ) : (
         <SafeAreaView style={styles.container}>
@@ -192,7 +211,9 @@ export default function AllPromotion({ navigation }) {
                   onChangeText={(e) => setSearchTerm(e)}
                 ></TextInput>
               </View>
-              <AntDesign name="filter" size={24}></AntDesign>
+              <TouchableOpacity onPress={() => setIsModalVisible(true)}>
+                <AntDesign name="filter" size={24} />
+              </TouchableOpacity>
             </View>
             <View style={styles.bodySection}>
               <View style={{ marginVertical: 15 }}>
@@ -225,6 +246,47 @@ export default function AllPromotion({ navigation }) {
               </View>
             </View>
           </View>
+          {isModalVisible && (
+            <Modal
+              transparent={true}
+              animationType="slide"
+              visible={isModalVisible}
+              onRequestClose={() => setIsModalVisible(false)}
+            >
+              <View style={styles.modalOverlay}>
+                <View style={styles.modalContent}>
+                  <Text style={styles.modalTitle}>Sorting</Text>
+                  <RadioButton.Group
+                    onValueChange={(value) => setSortOption(value)}
+                    value={sortOption}
+                  >
+                    <RadioButton.Item
+                      label="Fish's name: A-Z"
+                      value="name-asc"
+                    />
+                    <RadioButton.Item
+                      label="Fish's name: Z-A"
+                      value="name-desc"
+                    />
+                    <RadioButton.Item
+                      label="Fish's price: ascending"
+                      value="price-asc"
+                    />
+                    <RadioButton.Item
+                      label="Fish's price: descending"
+                      value="price-desc"
+                    />
+                  </RadioButton.Group>
+                  <TouchableOpacity
+                    style={styles.modalCloseButton}
+                    onPress={() => setIsModalVisible(false)}
+                  >
+                    <Text style={styles.modalCloseButtonText}>Close</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+          )}
         </SafeAreaView>
       )}
     </>
@@ -257,13 +319,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    gap: 15,
   },
-
   bodySection: {
     height: "80%",
     flexDirection: "column",
   },
-
   fishInCategoryFlatlistSection: {
     width: "47%",
     flexDirection: "row",
@@ -317,5 +378,39 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "350",
     color: "#b141aa",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    width: "90%",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  modalCloseButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#b141aa",
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  modalCloseButtonText: {
+    fontSize: 16,
+    color: "#fff",
+    fontWeight: "bold",
   },
 });

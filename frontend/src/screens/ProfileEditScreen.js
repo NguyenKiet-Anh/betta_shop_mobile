@@ -124,7 +124,6 @@ export default function EditProfile({ navigation }) {
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#b141aa" />
-          
         </View>
       ) : (
         <SafeAreaView style={styles.container}>
