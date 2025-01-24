@@ -32,6 +32,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Entypo from "react-native-vector-icons/Entypo";
 // Import useAuth
 import { useAuth } from "../context/authContext";
 // Import api routes
@@ -60,10 +61,13 @@ function DrawerMenu({ navigation }) {
           headerRight: () => (
             <View style={styles.headerRightBtn}>
               <TouchableOpacity
-                onPress={() => navigation.navigate("Notification")}
-              >
-                <MaterialIcons name="notifications" size={20} />
-              </TouchableOpacity>
+                  style={styles.headerButton}
+                  onPress={() => {
+                    navigation.navigate("ChatWithShop");
+                  }}
+                >
+                  <Ionicons name="chatbubble" size={20}></Ionicons>
+                </TouchableOpacity>
             </View>
           ),
         }}
@@ -154,21 +158,16 @@ function HomeTabs({ navigation }) {
         name="HomeTab"
         component={DrawerMenu}
         options={{
-          headerShown: true,
-          headerTitle: "Home",
-          headerRight: () => (
-            <View style={styles.header}>
-              <View style={styles.headerComponent}>
-                <TouchableOpacity
-                  style={styles.headerButton}
-                  onPress={() => {
-                    navigation.navigate("ChatWithShop");
-                  }}
-                >
-                  <Ionicons name="chatbubble" size={20}></Ionicons>
-                </TouchableOpacity>
-              </View>
-            </View>
+          headerShown: false,        
+          tabBarLabel: ({ focused }) => (
+            <Text style={{ color: focused ? "#b141aa" : "#a6b9c8" }}>Home</Text>
+          ),
+          tabBarIcon: ({ focused }) => (
+            <Entypo
+              name="home"
+              size={30}
+              color={focused ? "#b141aa" : "#a6b9c8"}
+            />
           ),
         }}
       />
@@ -246,7 +245,12 @@ function HomeTabs({ navigation }) {
   );
 }
 
-export default function StackNavigator() {
+export default function StackNavigator() {  
+  const { 
+    userInfo,
+    ipAddress,
+    setWishLength
+  } = useAuth();
   const handleAddFishToWishList = async (id) => {
     const response = await addFishToWishList(
       ipAddress,
@@ -254,7 +258,7 @@ export default function StackNavigator() {
       id
     );
     if (response.success) {
-      setWishLength(wishLength + 1);
+      setWishLength(preValue => preValue + 1);
       alert("Add fish to wishlist successfully!");
     } else {
       alert("Add fish to wishlist failed! Fish already exists in wishlist!");

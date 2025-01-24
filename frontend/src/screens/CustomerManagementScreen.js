@@ -46,7 +46,7 @@ export default function CustomerManagement({ navigation }) {
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#b141aa" />
-          <Text style={styles.loadingText}>Loading...</Text>
+          
         </View>
       ) : (
         <View>

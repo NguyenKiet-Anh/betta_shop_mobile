@@ -175,7 +175,7 @@ export default function WishList({ navigation, route }) {
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#b141aa" />
-          <Text style={styles.loadingText}>Loading...</Text>
+          
         </View>
       ) : (
         <>

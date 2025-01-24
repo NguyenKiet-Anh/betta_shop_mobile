@@ -129,7 +129,7 @@ export default function Home({ navigation }) {
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#b141aa" />
-          <Text style={styles.loadingText}>Loading...</Text>
+          
         </View>
       ) : (
         <SafeAreaView style={styles.container}>
@@ -186,7 +186,7 @@ export default function Home({ navigation }) {
                 {/* For carousel */}
                 <View style={styles.carouselSection}>
                   <Carousel
-                    width={344}
+                    width={367}
                     height={190}
                     loop
                     autoPlay={true}
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
   autocompleteContainer: {
     position: "absolute",
     left: 0,
-    right: -10,
+    right: 0,
     top: 0,
     zIndex: 1,
   },
@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     position: "absolute",
-    left: 295,
+    left: 340,
     right: 0,
     top: 9,
     zIndex: 2,

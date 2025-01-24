@@ -153,7 +153,7 @@ export default function Review({ route }) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#b141aa" />
-        <Text style={styles.loadingText}>Loading...</Text>
+        
       </View>
     );
   }

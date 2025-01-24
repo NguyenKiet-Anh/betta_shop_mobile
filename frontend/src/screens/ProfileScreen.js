@@ -120,7 +120,7 @@ export default function Profile({ navigation }) {
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#b141aa" />
-          <Text style={styles.loadingText}>Loading...</Text>
+          
         </View>
       ) : (
         <View style={styles.container}>

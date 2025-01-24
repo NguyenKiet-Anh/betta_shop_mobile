@@ -162,7 +162,7 @@ export default function AllPromotion({ navigation }) {
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#b141aa" />
-          <Text style={styles.loadingText}>Loading...</Text>
+          
         </View>
       ) : (
         <SafeAreaView style={styles.container}>

@@ -77,7 +77,8 @@ export default function Category({ route, navigation }) {
       setCountFish(allFishes.length);
       setData(allFishes);
     } else {
-      const filteredData = fishData
+      const allFishes = await getAllFishesAll(ipAddress);
+      const filteredData = allFishes
         .filter((fish) => fish.ma_loai_ca_info.TenLoaiMatHang === type)
         .reduce((acc, current) => {
           const x = acc.find((item) => item.MaMatHang === current.MaMatHang);
@@ -298,7 +299,7 @@ export default function Category({ route, navigation }) {
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#b141aa" />
-          <Text style={styles.loadingText}>Loading...</Text>
+          
         </View>
       ) : (
         <SafeAreaView style={styles.container}>
