@@ -110,7 +110,6 @@ export default function Home({ navigation }) {
   };
 
   const handleSearch = (text) => {
-    console.log(text);
     setSearch(text);
     if (text) {
       const results = allFishData

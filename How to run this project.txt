@@ -23,7 +23,9 @@
 
 	5. Run: `python manage.py migrate`
 
-	6. Setup ngrok (following steps in this reference: https://download.ngrok.com/windows)
+	6. Run: `python database_initial.py`
+
+	7. Setup ngrok (following steps in this reference: https://download.ngrok.com/windows)
 
     **************************
 
@@ -31,7 +33,9 @@
  
     3. Save ngrok forwarding link (remove `https://` prefix) to ALLOWED_HOSTS in `setting.py`
 
-    4. Run: `uvicorn fish_shop.asgi:application --host your_ip_address --port 8000` (run on backend project terminal)
+    4. Run: `venv\scripts\activate` (press `r` if there is a question appear)
+
+    5. Run: `uvicorn fish_shop.asgi:application --host your_ip_address --port 8000` (run on backend project terminal)
 
     + For importing each table data in database:
     1. Run: `python manage.py loaddata <file_name or absolute_path_to_file_name>.json`
@@ -59,7 +63,7 @@
 
     **************************
 
-    2. Open `AndroidManifest.xml` and replace `<You_GGMAP_API_KEY>` by the personal Google Maps API (located at "../frontend/android/app/src/main/AndroidManifest.xml")
+    2. Open `AndroidManifest.xml` (located at "../frontend/android/app/src/main/AndroidManifest.xml") and replace `<You_GGMAP_API_KEY>` by the personal Google Maps API
 
     3. Run: `npm run android`
 

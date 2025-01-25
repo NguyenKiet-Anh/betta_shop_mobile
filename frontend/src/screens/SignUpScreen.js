@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -60,7 +61,7 @@ export default function SignUp({ navigation }) {
           })
           .then((data) => {
             if (data.success) {
-              alert(
+              Alert.alert(
                 "OTP has been sent to your email! Please check your email!"
               );
               toggleModal();
