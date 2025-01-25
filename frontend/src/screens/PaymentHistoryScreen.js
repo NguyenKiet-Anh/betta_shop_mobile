@@ -15,6 +15,7 @@ import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
 
 // Import Hook
+import { useIsFocused } from "@react-navigation/native";
 import { useAuth } from "../context/authContext";
 import { getHistory } from "../routes/ProfileRoutes/ProfileRoutes";
 
@@ -22,6 +23,7 @@ const PaymentHistoryScreen = ({ navigation }) => {
   const { userInfo, ipAddress } = useAuth();
   const [paymentHistory, setPaymentHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const isFocused = useIsFocused();
   useEffect(() => {
     const fetchPaymentHistory = async () => {
       setIsLoading(true);
@@ -37,7 +39,7 @@ const PaymentHistoryScreen = ({ navigation }) => {
       }
     };
     fetchPaymentHistory();
-  }, [ipAddress, userInfo]);  
+  }, [ipAddress, userInfo, isFocused]);  
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
